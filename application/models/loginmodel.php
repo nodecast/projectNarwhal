@@ -13,17 +13,18 @@ class LoginModel extends CI_Model {
 	*/
 	function login($username, $password)
 	{
-		return $this->mongo->db->users->findOne(array("username" => $username, "password" => $this->hashPassword($password)));
+		$salt = $this->mongo->db->users->findOne("username" => $username, array('salt'))['salt'];
+		return $this->mongo->db->users->findOne(array("username" => $username, "password" => $this->hashPassword($password, $salt)));
 		//Accessed by $this->templatemodel->somefunction() elsewhere.
 	}
 	
 	/*
 	Returns the password hash for a given password
 	*/
-	// TODO change this
-	function hashPassword($password)
-    {
-		return md5($password);
+	function hashPassword($password, $usersalt)
+	{
+		//Mimics gazelle's hashing
+		return sha1(md5($usersalt) . $password . sha1($usersalt) . $this->config->item("site_salt"));
 	}
 }
 ?>
