@@ -13,8 +13,10 @@ class LoginModel extends CI_Model {
 	*/
 	function login($username, $password)
 	{
-		$salt = $this->mongo->db->users->findOne("username" => $username, array('salt'))['salt'];
-		return $this->mongo->db->users->findOne(array("username" => $username, "password" => $this->hashPassword($password, $salt)));
+	   $salt = $this->mongo->db->users->findOne(array("username" => $username), array('salt'));
+	   if($salt == null || !isset($salt['salt']))
+	       return null;
+	    return $this->mongo->db->users->findOne(array("username" => $username, "password" => $this->hashPassword($password, $salt['salt'])));
 		//Accessed by $this->templatemodel->somefunction() elsewhere.
 	}
 	
