@@ -25,6 +25,7 @@ class CI_Mongo extends Mongo{
     }catch(MongoConnectionException $e){
       //Don't show Mongo Exceptions as they can contain authentication info
       $_error =& load_class('Exceptions', 'core');
+      echo $e;
       exit($_error->show_error('MongoDB Connection Error', 'A MongoDB error occured while trying to connect to the database!', 'error_db'));           
     }catch(Exception $e){
       $_error =& load_class('Exceptions', 'core');
