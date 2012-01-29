@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= '';
+$config['base_url']	= '/';
 
 /*
 |--------------------------------------------------------------------------
@@ -225,7 +225,6 @@ $config['cache_path'] = '';
 |
 */
 $config['encryption_key'] = 'SECURE';
-$config['site_salt']      = 'SECURE'; //Should be equal to SITE_SALT from gazelle. Will be used to keep backwards compatibility with hashes
 
 /*
 |--------------------------------------------------------------------------

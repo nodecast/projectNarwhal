@@ -1,7 +1,7 @@
+<?= validation_errors(); ?>
 <div class="head center">Login</div>
 <div class="box">
-	<form action="" method="POST" class="body">
-	<?= $error ?><br>
+	<?= form_open('login', 'class="body"'); ?>
 		<table class="center">
 			<tr>
 				<td><div class="label">Username:&nbsp;&nbsp;<input type="text" name="username"></div></td>

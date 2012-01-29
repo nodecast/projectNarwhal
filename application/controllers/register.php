@@ -25,6 +25,8 @@ class Register extends CI_Controller {
 		$this->form_validation->set_rules('age', 'you are 13 or older', 'callback_checkbox');
 		
 		$this->form_validation->set_message('checkbox', 'You must check the box that says %s.');
+		$this->form_validation->set_message('matches', 'Your passwords do not match.');
+		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 
 		if($this->form_validation->run() == false) {
 			$this->load->view('register/register');
@@ -35,20 +37,6 @@ class Register extends CI_Controller {
 			$this->accountmodel->register($u, $p, $e);
 			$this->load->view('register/success');
 		}
-		/*
-		//SERIOUSLY START CHECKING THIS TODO
-		if($this->input->post('submit')) {
-			$u = $this->input->post('username');
-			$p = $this->input->post('password');
-			if(!$u || !$p) {
-				$data['error'] = "You must enter a username and password!";
-			} else {
-				$this->loginmodel->register($u, $p, "");
-				redirect('/login');
-			}
-		}
-		$this->load->view('register/register');
-		*/
 	}
 
 	public function checkbox($d) {

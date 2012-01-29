@@ -15,25 +15,30 @@ class Login extends CI_Controller {
 			redirect("");
 		}
 
-		$data['error'] = "";
-		$data['redirect'] = $this->session->flashdata('login_redirect'); // redirect on success, defaults to private index
-		if($this->input->post('submit')) {
-			$u = $this->input->post('username');
-			$p = $this->input->post('password');
-			if(!$u || !$p) {
-				$data['error'] = "You must enter a username and password!";
-			} else {
-				if(($user = $this->accountmodel->login($u, $p))) {
-					$this->session->set_userdata($user);
-					$this->session->set_userdata('logged_in', true);
-					$redir = $this->input->post('redirect');
-					redirect($redir ? $redir : "");
-					return;
-				} else {
-					$data['error'] = "Invalid username or password.";
-				}
-			}
+		$this->load->helper('form');
+		$this->load->library('form_validation');
+
+		$this->form_validation->set_rules('username', 'username', 'required|callback_check_login');
+		$this->form_validation->set_rules('password', 'password', 'required');
+		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+		
+		if($this->form_validation->run() == false) {
+			$data['redirect'] = $this->session->flashdata('login_redirect'); // redirect on success, defaults to private index
+			$this->load->view('login/login', $data);
+		} else {
+			$this->session->set_userdata($this->user_data);
+			$this->session->set_userdata('logged_in', true);
+			$redir = $this->input->post('redirect');
+			redirect($redir ? $redir : "");
 		}
-		$this->load->view('login/login', $data);
+	}
+	
+	public function check_login($name) {
+		$this->user_data = $this->accountmodel->login($this->input->post('username'), $this->input->post('password'));
+		if($this->user_data) {
+			return true;
+		}
+		$this->form_validation->set_message('check_login', 'Invalid username or password');
+		return false;
 	}
 }

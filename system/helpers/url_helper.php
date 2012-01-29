@@ -532,18 +532,18 @@ if ( ! function_exists('url_title'))
  */
 if ( ! function_exists('redirect'))
 {
-	function redirect($uri = '', $method = 'location', $http_response_code = 302)
+	function redirect($uri = '', $method = 'location', $root = true, $http_response_code = 302)
 	{
 		if ( ! preg_match('#^https?://#i', $uri))
 		{
 			$uri = site_url($uri);
 		}
-
+		$CI =& get_instance();
 		switch($method)
 		{
 			case 'refresh'	: header("Refresh:0;url=".$uri);
 				break;
-			default			: header("Location: ".$uri, TRUE, $http_response_code);
+			default			: header("Location: ".($root ? $CI->config->item('base_url') : "").$uri, TRUE, $http_response_code);
 				break;
 		}
 		exit;
