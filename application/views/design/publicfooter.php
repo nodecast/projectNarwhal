@@ -1,4 +1,6 @@
-<hr />
-Contact <?= $email ?> for enquiries.
+</div>
+<div id="footer">
+	Contact <?= $email ?> for enquiries.
+</div>
 </body>
 </html>

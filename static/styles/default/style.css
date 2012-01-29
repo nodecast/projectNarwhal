@@ -259,7 +259,7 @@ body {
   min-width: 960px;
   padding: 0 24px;
   margin: 48px auto;
-  background: #222 url(http://i.imgur.com/QPpJh.png);
+  background: #222;
   color: #444;
   font-size: 12px;
   line-height: 24px;
@@ -290,8 +290,8 @@ body {
 
   #logo {
     width: 225px;
-    height: 96px;
-    background: url(http://i.imgur.com/iSa7O.png) no-repeat center center;
+    height: 60px;
+    background: url(logo.png) no-repeat center center;
     float: left;
     clear: left;
     margin-bottom: 24px;
@@ -512,6 +512,11 @@ height:90%;
 z-index:1002;
 overflow:auto;
 padding:0;
+}
+
+.center {
+text-align:center;
+vertical-align:middle;
 }
 
 #tickets td div {
