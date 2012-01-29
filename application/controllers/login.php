@@ -12,7 +12,7 @@ class Login extends CI_Controller {
 	{  
 		if($this->utility->logged_in()) {
 			// they shouldn't be doing that!
-			redirect("/");
+			redirect("");
 		}
 
 		$data['error'] = "";
@@ -27,7 +27,7 @@ class Login extends CI_Controller {
 					$this->session->set_userdata($user);
 					$this->session->set_userdata('logged_in', true);
 					$redir = $this->input->post('redirect');
-					redirect($redir ? $redir : "/");
+					redirect($redir ? $redir : "");
 					return;
 				} else {
 					$data['error'] = "Invalid username or password.";

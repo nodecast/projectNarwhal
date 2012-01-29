@@ -12,7 +12,7 @@ class Register extends CI_Controller {
 	{  
 		if($this->utility->logged_in()) {
 			//they shouldn't be registering!
-			redirect("/");
+			redirect("");
 		}
 
 		$this->load->helper('form');

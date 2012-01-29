@@ -11,6 +11,6 @@ class Logout extends CI_Controller {
 	{  
 		$this->utility->enforce_login();
 		$this->session->sess_destroy();
-		redirect("/");
+		redirect("");
 	}
 }

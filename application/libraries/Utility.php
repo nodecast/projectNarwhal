@@ -25,7 +25,7 @@ class Utility {
 		$CI =& get_instance();
 		if(!$this->logged_in()) {
 			$CI->session->set_flashdata('login_redirect', $_SERVER['REQUEST_URI']);
-			redirect("/login/");
+			redirect("login");
 		}
 	}
 }
