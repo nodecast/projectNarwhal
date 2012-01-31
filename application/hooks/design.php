@@ -30,7 +30,7 @@ class Design extends CI_Controller {
 
 		$data['user'] = $this->session->all_userdata();
 		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);
-		$data['display']['upload'] = $this->utility->format_bytes($data['user']['download']);
+		$data['display']['download'] = $this->utility->format_bytes($data['user']['download']);
 		$data['display']['ratio'] = $this->utility->ratio($data['user']['upload'], $data['user']['download']);
 
 		$this->load->view("design/privateheader", $data);
