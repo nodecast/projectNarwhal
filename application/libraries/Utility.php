@@ -28,5 +28,66 @@ class Utility {
 			redirect("login");
 		}
 	}
+
+	function format_bytes($bytes) {
+		$suffix = array(' B', ' KiB', ' MiB', ' GiB', ' TiB', ' PiB', ' EiB');
+		$step = 0;
+		while($bytes >= 1024) {
+			$step++;
+			$bytes /= 1024;
+		}
+		return number_format($bytes, 2).$suffix[$step];
+	}
+
+	function get_ratio_color($ratio) {
+		if ($ratio < 0.1) return 'r00';
+		if ($ratio < 0.2) return 'r01';
+		if ($ratio < 0.3) return 'r02';
+		if ($ratio < 0.4) return 'r03';
+		if ($ratio < 0.5) return 'r04';
+		if ($ratio < 0.6) return 'r05';
+		if ($ratio < 0.7) return 'r06';
+		if ($ratio < 0.8) return 'r07';
+		if ($ratio < 0.9) return 'r08';
+		if ($ratio < 1) return 'r09';
+		if ($ratio < 2) return 'r10';
+		if ($ratio < 5) return 'r20';
+		return 'r50';
+	}
+
+	function ratio($ul, $dl, $color = true) {
+		if($dl == 0 && $ul == 0)
+			return '--';
+		elseif($dl == 0)
+			return '<span class="r99">&#8734;</span>';
+		elseif($ul == 0 && $dl > 0)
+			return '<span class="r00">-&#8734;</span>';
+
+		$ratio = number_format($ul/$dl, 2);
+		if($color) {
+			$class = $this->get_ratio_color($ratio);
+			if($class)
+				$ratio = '<span class="'.$class.'">'.$ratio.'</span>';
+		}
+		return $ratio;
+	}
+
+	function time_diff_string($t1, $t2 = -1) {
+		if($t2 == -1)
+			$t2 = time();
+		$diffu = array('seconds'=>2, 'minutes' => 120, 'hours' => 7200, 'days' => 172800, 'months' => 5259487, 'years' =>  63113851);
+		$diff = $t2 - $t1;
+		$dt = '0 seconds';
+		foreach($diffu as $u => $n)
+			if($diff>$n)
+				$dt = floor($diff / (.5 * $n)).' '.$u;
+		return $dt;
+	}
+	
+	function update_user_data() {
+		$CI =& get_instance();
+		$res = $CI->mongo->db->users->findOne(array('id'=>$CI->session->userdata('id')));
+		$CI->session->set_userdata($res);
+	}
 }
 

@@ -25,7 +25,15 @@ class Design extends CI_Controller {
 	}
 
 	function privateheader() {
-		$this->load->view("design/privateheader");
+		// TODO no!
+		$this->utility->update_user_data();
+
+		$data['user'] = $this->session->all_userdata();
+		$data['display']['ul'] = $this->utility->format_bytes($data['user']['ul']);
+		$data['display']['dl'] = $this->utility->format_bytes($data['user']['dl']);
+		$data['display']['ratio'] = $this->utility->ratio($data['user']['ul'], $data['user']['dl']);
+
+		$this->load->view("design/privateheader", $data);
 	}
 
 	function publicfooter() {
@@ -34,7 +42,8 @@ class Design extends CI_Controller {
 	}
 
 	function privatefooter() {
-		$this->load->view("design/privatefooter");
+		$data['email'] = $this->config->item("contact_email");
+		$this->load->view("design/privatefooter", $data);
 	}
 }
 

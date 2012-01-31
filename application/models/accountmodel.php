@@ -24,9 +24,26 @@ class AccountModel extends CI_Model {
 	Registers a user
 	*/
 	function register($username, $password, $email) {
-		$salt = $this->utility->make_secret();
-		//todo finish
-		$this->mongo->db->users->save(array("username" => $username, "password" => $this->utility->make_hash($password, $salt), "email" => $email, "salt" => $salt));
+		//autoincrement, also, ewww
+		$c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'userid'), 'update'=>array('$inc'=>array('c'=>1))));
+		//TODO finish
+		$data = array();
+		$data['id'] = $c['value']['c'];
+		$data['username'] = $username;
+		$data['salt'] = $this->utility->make_secret();
+		$data['password'] = $this->utility->make_hash($password, $data['salt']);
+		$data['email'] = $email;
+		$data['ul'] = 0;
+		$data['dl'] = 0;
+		$data['points'] = $this->config->item('free_points');
+		$data['invites'] = 0;
+		$data['enabled'] = 0;
+		$data['torrent_pass'] = $this->utility->make_secret();
+		$data['irc_key'] = "";
+		$data['freeleeches'] = array();
+		$data['can_leech'] = 1;
+		
+		$this->mongo->db->users->save($data);
 	}
 }
 ?>
