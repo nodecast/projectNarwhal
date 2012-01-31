@@ -9,8 +9,8 @@ class Logout extends CI_Controller {
 
 	public function index()
 	{  
-		$this->utility->enforce_login();
-		$this->session->sess_destroy();
-		redirect("");
+    $this->utility->enforce_login();
+    $this->session->sess_destroy();
+    redirect("/");
 	}
 }
