@@ -33,8 +33,8 @@ class AccountModel extends CI_Model {
 		$data['salt'] = $this->utility->make_secret();
 		$data['password'] = $this->utility->make_hash($password, $data['salt']);
 		$data['email'] = $email;
-		$data['ul'] = 0;
-		$data['dl'] = 0;
+		$data['upload'] = 0;
+		$data['download'] = 0;
 		$data['points'] = $this->config->item('free_points');
 		$data['invites'] = 0;
 		$data['enabled'] = 0;

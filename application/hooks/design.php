@@ -29,9 +29,9 @@ class Design extends CI_Controller {
 		$this->utility->update_user_data();
 
 		$data['user'] = $this->session->all_userdata();
-		$data['display']['ul'] = $this->utility->format_bytes($data['user']['ul']);
-		$data['display']['dl'] = $this->utility->format_bytes($data['user']['dl']);
-		$data['display']['ratio'] = $this->utility->ratio($data['user']['ul'], $data['user']['dl']);
+		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);
+		$data['display']['upload'] = $this->utility->format_bytes($data['user']['download']);
+		$data['display']['ratio'] = $this->utility->ratio($data['user']['upload'], $data['user']['download']);
 
 		$this->load->view("design/privateheader", $data);
 	}

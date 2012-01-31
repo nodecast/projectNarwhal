@@ -19,8 +19,8 @@
 			<li class="brackets"><strong><a href="/user/invite">Invite (<?= $user['invites'] ?>)</a></strong></li>
 		</ul>
 		<ul id="userinfo_stats">
-			<li>Up: <span class="stat"><?= $display['ul'] ?></span></li>
-			<li>Down: <span class="stat"><?= $display['dl'] ?></span></li>
+			<li>Up: <span class="stat"><?= $display['upload'] ?></span></li>
+			<li>Down: <span class="stat"><?= $display['download'] ?></span></li>
 			<li id="ratiopipe"> | </li>
 			<li>Ratio: <span class="stat"><?= $display['ratio'] ?></span></li>
 			<li>(<a href="kb.php?id=5">required</a>: <span class="stat">--</span>)</li>
