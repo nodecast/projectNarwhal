@@ -12,20 +12,20 @@
 
 /* For Header and Footer */
 $hook['pre_controller'][] = array(
-                                'class'    => 'Design',
-                                'function' => 'header',
-                                'filename' => 'design.php',
-                                'filepath' => 'hooks',
-                                'params'   => array()
-                                );
+								'class'		=> 'Design',
+								'function'	=> 'header',
+								'filename'	=> 'design.php',
+								'filepath'	=> 'hooks',
+								'params'	=> array()
+								);
 
 $hook['post_controller'][] = array(
-                                'class'    => 'Design',
-                                'function' => 'footer',
-                                'filename' => 'design.php',
-                                'filepath' => 'hooks',
-                                'params'   => array()
-                                );
+								'class'		=> 'Design',
+								'function'	=> 'footer',
+								'filename'	=> 'design.php',
+								'filepath'	=> 'hooks',
+								'params'	=> array()
+								);
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */
