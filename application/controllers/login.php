@@ -12,7 +12,7 @@ class Login extends CI_Controller {
 	{  
 		if($this->utility->logged_in()) {
 			// they shouldn't be doing that!
-			redirect("");
+			redirect("/");
 		}
 
 		$this->load->helper('form');
