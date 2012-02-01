@@ -2,6 +2,8 @@
 <div class="head center">Registration</div>
 <div class="box">
 	<?= form_open('register', 'class="body"'); ?>
+
+		<input type="hidden" name="code" value="<?= $code ?>">
 		<table>
 			<tr>
 				<td><div class="label">Desired Username:</div></td>
@@ -28,6 +30,6 @@
 				<td><input type="checkbox" name="age" value="age" <?= set_checkbox("age", "age"); ?>></td>
 			</tr>
 		</table>
-		<div class="center"><input type="submit" name="submit" value="Register"></div>
+		<div class="center"><input type="submit" name="reg_submit" value="Register"></div>
 	</form>
 </div>

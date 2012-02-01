@@ -23,7 +23,7 @@ class AccountModel extends CI_Model {
 	/*
 	Registers a user
 	*/
-	function register($username, $password, $email) {
+	function register($username, $password, $email, $invitedby) {
 		//autoincrement, also, ewww
 		$c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'userid'), 'update'=>array('$inc'=>array('c'=>1))));
 		//TODO finish
@@ -33,6 +33,7 @@ class AccountModel extends CI_Model {
 		$data['salt'] = $this->utility->make_secret();
 		$data['password'] = $this->utility->make_hash($password, $data['salt']);
 		$data['email'] = $email;
+		$data['invitedby'] = $invitedby;
 		$data['upload'] = 0;
 		$data['download'] = 0;
 		$data['points'] = $this->config->item('free_points');
@@ -44,6 +45,34 @@ class AccountModel extends CI_Model {
 		$data['can_leech'] = 1;
 		
 		$this->mongo->db->users->save($data);
+	}
+
+	/*
+	Checks to see if an invite exists, if so, returns row
+	*/
+	function invite_exists($code) {
+		return $this->mongo->db->invites->findOne(array('code'=>$code));
+	}
+
+	/*
+	Deletes an invite code
+	*/
+	function delete_invite($code) {
+		$this->mongo->db->invites->remove(array('code'=>$code));
+	}
+
+	/*
+	Checks to see if a username belongs to a user
+	*/
+	function user_exists($name) {
+		return count($this->mongo->db->users->findOne(array("username"=> new MongoRegex('/^'.preg_quote($name).'$/i'))));
+	}
+	
+	/*
+	Checks to see if an email is in use
+	*/
+	function email_exists($email) {
+		return count($this->mongo->db->users->findOne(array("email"=> new MongoRegex('/^'.preg_quote($email).'$/i'))));
 	}
 }
 ?>

@@ -12,3 +12,9 @@ $config['free_points']		= 5000;
 
 //Minutes until a cached page is marked dirty
 $config['cache_time'] = 5;
+
+//Is registration open?
+$config['open_registration'] = false;
+
+//What is the maximum number of users
+$config['max_users'] = 5000;

@@ -21,7 +21,8 @@ class Design extends CI_Controller {
 	}
 
 	function publicheader() {
-		$this->load->view("design/publicheader");
+		$data['open_reg'] = $this->config->item('open_registration');
+		$this->load->view("design/publicheader", $data);
 	}
 
 	function privateheader() {

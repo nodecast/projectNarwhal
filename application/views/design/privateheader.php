@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>Narwhal</title>
-        <link rel="stylesheet" href="static/styles/default/style.css" type="text/css" media="screen">
+        <link rel="stylesheet" href="/static/styles/default/style.css" type="text/css" media="screen">
 	<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
 </head>
 <body>
