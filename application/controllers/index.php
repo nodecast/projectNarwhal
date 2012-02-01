@@ -16,8 +16,10 @@ class Index extends CI_Controller {
 			$data['user'] = $this->session->all_userdata();
 			$data['news'] = $this->newsmodel->getNews();
 
+			$this->utility->page_title('News');
 			$this->load->view('index/privateindex', $data);
 		} else {
+			$this->utility->page_title('');
 			$this->load->view('index/publicindex');
 		}
 	}

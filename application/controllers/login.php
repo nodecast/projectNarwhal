@@ -6,6 +6,7 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('accountmodel');
+		$this->utility->page_title('Login');
 	}
 
 	public function index()

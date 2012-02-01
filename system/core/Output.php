@@ -367,6 +367,10 @@ class CI_Output {
 			$output = str_replace('{memory_usage}', $memory, $output);
 		}
 
+		if (isset($CI)) {
+			$output = str_replace('{title}', $CI->config->item('page_title'), $output);
+		}
+
 		// --------------------------------------------------------------------
 
 		// Is compression requested?

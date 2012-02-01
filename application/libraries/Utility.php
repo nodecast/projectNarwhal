@@ -1,6 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 class Utility {
+	public function __construct()
+	{
+		$this->CI =& get_instance();
+	}
+
 	function make_secret($length = 32) {
 		$Secret = "";
 		$Chars='abcdefghijklmnopqrstuvwxyz0123456789';
@@ -12,19 +17,16 @@ class Utility {
 	}
 
 	function make_hash($Str,$Secret) {
-		$CI =& get_instance();
-		return sha1(md5($Secret).$Str.sha1($Secret).$CI->config->item("site_salt"));
+		return sha1(md5($Secret).$Str.sha1($Secret).$this->CI->config->item("site_salt"));
 	}
 
 	function logged_in() {
-		$CI =& get_instance();
-		return $CI->session->userdata('logged_in');
+		return $this->CI->session->userdata('logged_in');
 	}
 
 	function enforce_login() {
-		$CI =& get_instance();
 		if(!$this->logged_in()) {
-			$CI->session->set_flashdata('login_redirect', $_SERVER['REQUEST_URI']);
+			$this->CI->session->set_flashdata('login_redirect', $_SERVER['REQUEST_URI']);
 			redirect("login");
 		}
 	}
@@ -85,9 +87,13 @@ class Utility {
 	}
 	
 	function update_user_data() {
-		$CI =& get_instance();
-		$res = $CI->mongo->db->users->findOne(array('id'=>$CI->session->userdata('id')));
-		$CI->session->set_userdata($res);
+		$res = $this->CI->mongo->db->users->findOne(array('id'=>$this->CI->session->userdata('id')));
+		$this->CI->session->set_userdata($res);
+	}
+
+	function page_title($title) {
+		$title = (strlen($title)) ? ($title." :: ") : "";
+		$this->CI->config->set_item('page_title', $title.$this->CI->config->item('site_name'));
 	}
 }
 
