@@ -34,7 +34,7 @@ class Register extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');	
 
 		if($this->form_validation->run() == false) {
-			if(!$this->input->post('reg_submit')) {
+			if(!$this->input->post('reg_submit') && !$this->config->item('open_registration')) {
 				$this->load->view('register/closed');
 			} else {
 				$data['code'] = $this->input->post('code');
@@ -48,9 +48,13 @@ class Register extends CI_Controller {
 				$u = trim($this->input->post('username'));
 				$p = $this->input->post('password');
 				$e = $this->input->post('email');
-				$i = $this->accountmodel->invite_exists($this->input->post('code'));
+				if(!$this->config->item('open_registration')) {
+					$i = $this->accountmodel->invite_exists($this->input->post('code'));
+					$i = $this->accountmodel->delete_invite($i['code']);
+				} else {
+					$i = array('owner' => 0);
+				}
 				$this->accountmodel->register($u, $p, $e, $i['owner']);
-				$i = $this->accountmodel->delete_invite($i['code']);
 				$this->load->view('register/success');
 			}
 		}

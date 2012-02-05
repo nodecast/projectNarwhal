@@ -19,7 +19,7 @@ class Login extends CI_Controller {
 		$this->load->helper('form');
 		$this->load->library('form_validation');
 
-		$this->form_validation->set_rules('username', 'username', 'required|callback_check_login');
+		$this->form_validation->set_rules('username', 'username', 'required|callback_check_login|callback_check_enabled');
 		$this->form_validation->set_rules('password', 'password', 'required');
 		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 		
@@ -41,5 +41,9 @@ class Login extends CI_Controller {
 		}
 		$this->form_validation->set_message('check_login', 'Invalid username or password');
 		return false;
+	}
+	public function check_enabled($name) {
+		$this->form_validation->set_message('check_enabled', 'Your account is disabled.');
+		return ($this->user_data['enabled'] == true);
 	}
 }

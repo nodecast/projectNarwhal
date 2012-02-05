@@ -4,7 +4,6 @@ class AccountModel extends CI_Model {
 	function __construct()
 	{	
 		parent::__construct();
-		$this->load->library("utility");
 	}
 
 	/*
@@ -38,11 +37,14 @@ class AccountModel extends CI_Model {
 		$data['download'] = 0;
 		$data['points'] = $this->config->item('free_points');
 		$data['invites'] = 0;
-		$data['enabled'] = 0;
+		$data['enabled'] = 1;
 		$data['torrent_pass'] = $this->utility->make_secret();
 		$data['irc_key'] = "";
 		$data['freeleeches'] = array();
 		$data['can_leech'] = 1;
+		$data['lastaccess'] = 0;
+		$data['avatar'] =  $this->config->item('default_avatar');
+		$data['title'] = "";
 		
 		$this->mongo->db->users->save($data);
 	}

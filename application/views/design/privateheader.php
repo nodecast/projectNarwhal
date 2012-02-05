@@ -38,16 +38,16 @@
 	</div>
 	<div id="menu">
 		<ul>
-			<li id="nav_index"><a href=".">Home</a></li>
-			<li id="nav_torrents"><a href="torrents/view">Torrents</a></li>
-			<li id="nav_requests"><a href="requests/view">Requests</a></li>
-			<li id="nav_forums"><a href="forums">Forums</a></li>
-			<li id="nav_top10"><a href="top10">Top&nbsp;10</a></li>
+			<li id="nav_index"><a href="/">Home</a></li>
+			<li id="nav_torrents"><a href="/torrents/view">Torrents</a></li>
+			<li id="nav_requests"><a href="/requests/view">Requests</a></li>
+			<li id="nav_forums"><a href="/forums">Forums</a></li>
+			<li id="nav_top10"><a href="/top10">Top&nbsp;10</a></li>
 			<li id="nav_rules"><a href="#">Rules</a></li>
-			<li id="nav_kb"><a href="kb">Knowledge&nbsp;Base</a></li>
-			<li id="nav_staff"><a href="staff">Staff</a></li>
-			<li id="nav_tickets"><a href="tickets">Tickets</a></li>
-			<li id="nav_chat"><a href="chat">Chat</a></li>
+			<li id="nav_kb"><a href="/kb">Knowledge&nbsp;Base</a></li>
+			<li id="nav_staff"><a href="/staff">Staff</a></li>
+			<li id="nav_tickets"><a href="/tickets">Tickets</a></li>
+			<li id="nav_chat"><a href="/chat">Chat</a></li>
 		</ul>
 	</div>
 	<div id="alerts">

@@ -61,9 +61,9 @@ class Utility {
 		if($dl == 0 && $ul == 0)
 			return '--';
 		elseif($dl == 0)
-			return '<span class="r99">&#8734;</span>';
+			return ($color) ? '<span class="r99">&#8734;</span>' : '&#8734';
 		elseif($ul == 0 && $dl > 0)
-			return '<span class="r00">-&#8734;</span>';
+			return ($color) ? '<span class="r00">-&#8734;</span>' : '-&#8734';
 
 		$ratio = number_format($ul/$dl, 2);
 		if($color) {
@@ -87,7 +87,8 @@ class Utility {
 	}
 	
 	function update_user_data() {
-		$res = $this->CI->mongo->db->users->findOne(array('id'=>$this->CI->session->userdata('id')));
+		$this->CI->load->model('usermodel');
+		$res = $this->CI->usermodel->getData($this->CI->session->userdata('id'), true);
 		$this->CI->session->set_userdata($res);
 	}
 

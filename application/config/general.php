@@ -10,11 +10,8 @@ $config['site_salt'] = 'SECURE';
 //Free points given on register
 $config['free_points'] = 5000;
 
-//Minutes until a cached page is marked dirty
-$config['cache_time'] = 5;
-
 //Is registration open?
-$config['open_registration'] = false;
+$config['open_registration'] = true;
 
 //What is the maximum number of users
 $config['max_users'] = 5000;
@@ -24,3 +21,9 @@ $config['site_name'] = "Narwhal";
 
 //Page title - DO NOT CHANGE
 $config['page_title'] = $config['site_name'];
+
+//Default Avatar
+$config['default_avatar'] = "/static/common/avatar.png";
+
+//User data cache time, in seconds
+$config['userdata_cache'] = 300; // 5 min

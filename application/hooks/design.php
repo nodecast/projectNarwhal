@@ -26,8 +26,14 @@ class Design extends CI_Controller {
 	}
 
 	function privateheader() {
-		// TODO no!
-		$this->utility->update_user_data();
+		$id = $this->session->userdata('id');
+		
+		$this->load->model('usermodel');
+		$res = $this->usermodel->getData($this->session->userdata('id'));
+		$this->session->set_userdata($res);
+
+		$this->load->model('statsmodel');
+		$this->statsmodel->lastAccess($id);
 
 		$data['user'] = $this->session->all_userdata();
 		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);

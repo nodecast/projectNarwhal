@@ -385,6 +385,16 @@ td h4,td p
   padding:0 24px 24px;
 }
 
+#content:after
+{
+  clear:both;
+  content:".";
+  display:block;
+  height:0;
+  visibility:hidden;
+  font-size:0;
+}
+
 .box
 {
   background:#e3e3e3;
