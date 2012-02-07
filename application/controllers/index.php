@@ -29,6 +29,8 @@ class Index extends CI_Controller {
 			$stats['requests'] = number_format($r);
 			$stats['requests_percent'] = number_format($this->statsmodel->getRequestsFilled() / ($r == 0 ? 1 : $r), 2);
 			$stats['snatches'] = number_format($this->statsmodel->getSnatches());
+			
+			//TODO peer stats
 
 			$data['stats'] = $stats;
 			$this->utility->page_title('News');

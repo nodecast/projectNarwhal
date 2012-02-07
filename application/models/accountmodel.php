@@ -45,6 +45,11 @@ class AccountModel extends CI_Model {
 		$data['lastaccess'] = 0;
 		$data['avatar'] =  $this->config->item('default_avatar');
 		$data['title'] = "";
+		$data['joined'] = time();
+		$data['paranoia'] = 0;
+		$classes = $this->config->item('classes');
+		$data['class'] = $classes['USER'];
+		$data['profile'] = "";
 		
 		$this->mongo->db->users->save($data);
 	}

@@ -21,7 +21,7 @@
 <div class="main_column">
 	<?php foreach($news as $item): ?>
 	<div class="box">
-		<div class="head"><strong><?= $item['name'] ?></strong><span class="date">posted <?= $item['ago'] ?> ago</span></div>
+		<div class="head"><strong><?= $item['name'] ?></strong><span class="date">posted <?= $item['ago'] ?></span></div>
 		<div class="pad">
 			<?= $item['body'] ?>
 		</div>

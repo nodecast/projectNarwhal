@@ -27,3 +27,12 @@ $config['default_avatar'] = "/static/common/avatar.png";
 
 //User data cache time, in seconds
 $config['userdata_cache'] = 300; // 5 min
+
+//Stats cache time, in seconds
+$config['stats_cache'] = 86400; // 24 hours
+
+//Configuration data cache time, in seconds
+$config['config_cache'] = 900; // 15 min
+
+//user classes, for permissions and stuff. actual permissions and levels can be found in the collection 'permissions'
+$config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'DONOR' => 20, 'ARTIST' => 18, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'LEGEND' => 8, 'CELEB' => 9, 'COMM_MOD' => 10, 'MOD' => 11, 'STAFF_LEADER' => 12, 'DESIGNER' => 13, 'CODER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);

@@ -8,13 +8,21 @@ class StatsModel extends CI_Model {
 
 	function getEnabledUsers()
 	{
-		return $this->mongo->db->users->find(array('enabled'=>1))->count();
+		if(($data = $this->mcache->m->get('stats_enabled')) === FALSE) {
+			$data = $this->mongo->db->users->find(array('enabled'=>1))->count();
+			$this->mcache->m->set('stats_enabled', $data, $this->config->item('stats_cache'));
+		}
+		return $data;
 	}
 
-	function getActiveUsers($time)
+	function getActiveUsers($timeD)
 	{
-		$time = time() - $time;
-		return $this->mongo->db->users->find(array('enabled'=>1, 'lastaccess'=>array('$gt'=>$time)))->count();
+		$time = time() - $timeD;
+		if(($data = $this->mcache->m->get('stats_active_'.$timeD)) === FALSE) {
+			$data = $this->mongo->db->users->find(array('enabled'=>1, 'lastaccess'=>array('$gt'=>$time)))->count();
+			$this->mcache->m->set('stats_active_'.$timeD, $data, $timeD);
+		}
+		return $data;
 	}
 
 	function lastAccess($id)
@@ -24,27 +32,43 @@ class StatsModel extends CI_Model {
 	
 	function getTorrents()
 	{
-		return $this->mongo->db->torrents->count();
+		if(($data = $this->mcache->m->get('stats_requests_filled')) === FALSE) {
+			$data = $this->mongo->db->requests->count();
+			$this->mcache->m->set('stats_requests_filled', $data, $this->config->item('stats_cache'));
+		}
+		return $data;
 	}
 	
 	function getRequests()
 	{
-		return $this->mongo->db->requests->count();
+		if(($data = $this->mcache->m->get('stats_requests_filled')) === FALSE) {
+			$data = $this->mongo->db->requests->count();
+			$this->mcache->m->set('stats_requests_filled', $data, $this->config->item('stats_cache'));
+		}
+		return $data;
 	}
 	
 	function getRequestsFilled()
 	{
-		return $this->mongo->db->requests->find(array('filled' => array('$gt' => 0)))->count();
+		if(($data = $this->mcache->m->get('stats_requests_filled')) === FALSE) {
+			$data = $this->mongo->db->requests->find(array('filled' => array('$gt' => 0)))->count();
+			$this->mcache->m->set('stats_requests_filled', $data, $this->config->item('stats_cache'));
+		}
+		return $data;
 	}
 
 	function getSnatches()
 	{
-		$map = new MongoCode('function() { emit("snatches", this.snatched); }');
-		$reduce = new MongoCode('function(k, v) { var sum = 0; for (var i in v) { sum += v[i]; } return sum; }');
-		$res = $this->mongo->db->command(array('mapreduce' => 'torrents', 'map' => $map, 'reduce' => $reduce));
+		if(($data = $this->mcache->m->get('stats_snatches')) === FALSE) {
+			$map = new MongoCode('function() { emit("snatches", this.snatched); }');
+			$reduce = new MongoCode('function(k, v) { var sum = 0; for (var i in v) { sum += v[i]; } return sum; }');
+			$res = $this->mongo->db->command(array('mapreduce' => 'torrents', 'map' => $map, 'reduce' => $reduce));
 		
-		$snatches = $this->mongo->db->selectCollection($res['result'])->findOne();
-		return $snatches['value'];
+			$snatches = $this->mongo->db->selectCollection($res['result'])->findOne();
+			$data = $snatches['value'];
+			$this->mcache->m->set('stats_snatches', $data, $this->config->item('stats_cache'));
+		}
+		return $data;
 	}
 }
 ?>

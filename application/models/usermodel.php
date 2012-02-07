@@ -20,5 +20,122 @@ class UserModel extends CI_Model {
 			return $this->mongo->db->users->findOne(array('id'=>$id));
 		}
 	}
+	
+	/*
+	Builds percentile tables
+	*/
+	function buildPercentile($w) {
+		if(($data = $this->mcache->m->get('percentile_table_'.$w)) === FALSE) {
+			// TODO alright really? this is probably very inefficient
+			$field = 'value';
+			switch($w) {
+				case 0: //uploaded
+					$res = $this->mongo->db->users->find()->sort(array("upload"=>1));
+					$field = 'upload';
+					break;
+				case 1: //downloaded
+					$res = $this->mongo->db->users->find()->sort(array("download"=>1));
+					$field = 'download';
+					break;
+				case 2: //torrents uploaded
+					$map = new MongoCode('function() {emit(this.owner, 1);}');
+					$reduce = new MongoCode('function(key,values){var num=0;values.forEach(function(value){num+=value;});return num;}');
+					$r = $this->mongo->db->command(array('mapreduce' => 'torrents', 'map' => $map, 'reduce' => $reduce));
+					$res = $this->mongo->db->selectCollection($r['result'])->find()->sort(array("value"=>1));
+					break;
+				case 3: //requests filled
+					$map = new MongoCode('function() {emit(this.filledby, 1);}');
+					$reduce = new MongoCode('function(key,values){var num=0;values.forEach(function(value){num+=value;});return num;}');
+					$r = $this->mongo->db->command(array('mapreduce' => 'requests', 'map' => $map, 'reduce' => $reduce));
+					$res = $this->mongo->db->selectCollection($r['result'])->find()->sort(array("value"=>1));
+					break;
+				case 4: // TODO posts made
+					break;
+				default:
+					return null;
+					break;
+			}
+			
+			$this->mongo->db->temp->drop();
+			$i = 0;
+			foreach ($res as $doc) {
+				$doc['order'] = $i;
+				$this->mongo->db->temp->insert($doc);
+				$i++;
+			}
+			$map = new MongoCode('function() {emit(Math.ceil(this.order/('.$i.'/100)), this.'.$field.');}');
+			$reduce = new MongoCode('function(key,values){var num=0;return values[0];}');
+			$r = $this->mongo->db->command(array('mapreduce' => 'temp', 'map' => $map, 'reduce' => $reduce));
+			$this->mongo->db->temp->drop();
+			
+			$data = iterator_to_array($this->mongo->db->selectCollection($r['result'])->find());
+			
+			$this->mcache->m->set('percentile_table_'.$w, $data, $this->config->item('stats_cache'));
+		}
+		return $data;
+	}
+	
+	function getPercentile($what, $value) {
+		if($what == 4) // TODO ^^
+			return 0;
+		$t = $this->buildPercentile($what);
+		$LastPercentile = 0;
+		$Percentile = 0;
+		foreach($t as $p) {
+			if($p['value'] >= $value) {
+				return $LastPercentile;
+			}
+			$LastPercentile++;
+		}
+		return 100; // 100th percentile
+	}
+	
+	function overallPercentile($ul, $dl, $uploads, $req, $posts, $uploaded, $downloaded) {
+		if($uploaded == 0 && $downloaded == 0)
+			$ratio = 0;
+		else if($uploaded > 0 && $downloaded == 0)
+			$ratio = 1;
+		else if($uploaded == 0 && $downloaded > 0)
+			$ratio = 0;
+		else
+			$ratio = min($uploaded / $downloaded, 1);
+			
+		$score = 0;
+		$score += $ul * 15;
+		$score += $dl * 8;
+		$score += $uploads * 25;
+		$score += $req * 2;
+		$score += $posts * 1;
+		$score /= (15+8+25+2+1);
+		$score *= $ratio;
+		return ceil($score);
+	}
+	
+	function numUploads($id) {
+		return $this->mongo->db->torrents->find(array('owner' => $id))->count();
+	}
+	
+	function numRequests($id) {
+		return $this->mongo->db->requests->find(array('owner' => $id))->count();
+	}
+	
+	function numPosts($id) {
+		// TODO this
+		return 0;
+	}
+	
+	function getPermissions($id) {
+		if(($data = $this->mcache->m->get('permissions_'.$id)) === FALSE) {
+				$user = $this->getData($id);
+				$data = $this->mongo->db->permissions->findOne(array('id' => $user['class']));
+				$this->mcache->m->set('permissions_'.$id, $data, $this->config->item('config_cache'));
+		}
+		return $data;
+	}
+	
+	function isStaff($id)  {
+		$p = $this->getPermissions($id);
+		return $p['staff'];
+	}
 }
 ?>

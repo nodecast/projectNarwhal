@@ -74,7 +74,9 @@ class Utility {
 		return $ratio;
 	}
 
-	function time_diff_string($t1, $t2 = -1) {
+	function time_diff_string($t1, $t2 = -1, $ago = true) {
+		if($t1 == 0)
+			return "Never";
 		if($t2 == -1)
 			$t2 = time();
 		$diffu = array('seconds'=>2, 'minutes' => 120, 'hours' => 7200, 'days' => 172800, 'months' => 5259487, 'years' =>  63113851);
@@ -83,7 +85,13 @@ class Utility {
 		foreach($diffu as $u => $n)
 			if($diff>$n)
 				$dt = floor($diff / (.5 * $n)).' '.$u;
-		return $dt;
+		return $dt.($ago ? " ago" : "");
+	}
+	
+	function format_datetime($t = -1) {
+		if($t == -1)
+			$t = time();
+		return date('M d Y, H:i', $t);
 	}
 	
 	function update_user_data() {
