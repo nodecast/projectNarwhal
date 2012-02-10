@@ -11,9 +11,9 @@ class UserModel extends CI_Model {
 	*/
 	function getData($id, $cache = true) {
 		if($cache) {
-			if(!($data = $this->mcache->m->get('user_'.$id.'_data'))) {
+			if(!($data = $this->mcache->get('user_'.$id.'_data'))) {
 				$data = $this->mongo->db->users->findOne(array('id'=>$id));
-				$this->mcache->m->set('user_'.$id.'_data', $data, $this->config->item('userdata_cache'));
+				$this->mcache->set('user_'.$id.'_data', $data, $this->config->item('userdata_cache'));
 			}
 			return $data;
 		} else {
@@ -25,7 +25,7 @@ class UserModel extends CI_Model {
 	Builds percentile tables
 	*/
 	function buildPercentile($w) {
-		if(($data = $this->mcache->m->get('percentile_table_'.$w)) === FALSE) {
+		if(($data = $this->mcache->get('percentile_table_'.$w)) === FALSE) {
 			// TODO alright really? this is probably very inefficient
 			$field = 'value';
 			switch($w) {
@@ -70,7 +70,7 @@ class UserModel extends CI_Model {
 			
 			$data = iterator_to_array($this->mongo->db->selectCollection($r['result'])->find());
 			
-			$this->mcache->m->set('percentile_table_'.$w, $data, $this->config->item('stats_cache'));
+			$this->mcache->set('percentile_table_'.$w, $data, $this->config->item('stats_cache'));
 		}
 		return $data;
 	}
@@ -125,10 +125,10 @@ class UserModel extends CI_Model {
 	}
 	
 	function getPermissions($id) {
-		if(($data = $this->mcache->m->get('permissions_'.$id)) === FALSE) {
+		if(($data = $this->mcache->get('permissions_'.$id)) === FALSE) {
 				$user = $this->getData($id);
 				$data = $this->mongo->db->permissions->findOne(array('id' => $user['class']));
-				$this->mcache->m->set('permissions_'.$id, $data, $this->config->item('config_cache'));
+				$this->mcache->set('permissions_'.$id, $data, $this->config->item('config_cache'));
 		}
 		return $data;
 	}

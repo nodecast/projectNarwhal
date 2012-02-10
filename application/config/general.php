@@ -34,5 +34,14 @@ $config['stats_cache'] = 86400; // 24 hours
 //Configuration data cache time, in seconds
 $config['config_cache'] = 900; // 15 min
 
+//Torrent data (browsing, etc.) cache time, in seconds
+$config['torrent_cache'] = 60; // 1 min
+
 //user classes, for permissions and stuff. actual permissions and levels can be found in the collection 'permissions'
 $config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'DONOR' => 20, 'ARTIST' => 18, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'LEGEND' => 8, 'CELEB' => 9, 'COMM_MOD' => 10, 'MOD' => 11, 'STAFF_LEADER' => 12, 'DESIGNER' => 13, 'CODER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);
+
+//categories
+$config['categories'] = array('Music', 'Applications', 'E-Books', 'Audiobooks', 'E-Learning Videos', 'Magazines', 'Comics', 'Anime', 'Movies', 'TV', 'Games - PC', 'Games - Console', 'Documentaries', 'Misc');
+
+//category icons
+$config['category_icons'] = array('music.png', 'apps.png', 'ebook.png', 'audiobook.png', 'elearning.png', 'magazines.png', 'comics.png', 'anime.png', 'movies.png', 'tv.png', 'games-pc.png', 'games-console.png', 'documentaries.png','misc.png');

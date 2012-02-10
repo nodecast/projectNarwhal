@@ -27,7 +27,7 @@ class Index extends CI_Controller {
 			$stats['torrents'] = number_format($this->statsmodel->getTorrents());
 			$r = $this->statsmodel->getRequests();
 			$stats['requests'] = number_format($r);
-			$stats['requests_percent'] = number_format($this->statsmodel->getRequestsFilled() / ($r == 0 ? 1 : $r), 2);
+			$stats['requests_percent'] = number_format(($this->statsmodel->getRequestsFilled() / ($r == 0 ? 1 : $r)) * 100, 2);
 			$stats['snatches'] = number_format($this->statsmodel->getSnatches());
 			
 			//TODO peer stats

@@ -5,7 +5,6 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->driver('cache', array('adapter' => 'memcached', 'backup' => 'file'));
 		$this->load->model('usermodel');
 		$this->utility->enforce_login();
 	}

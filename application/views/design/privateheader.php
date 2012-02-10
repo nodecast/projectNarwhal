@@ -39,8 +39,8 @@
 	<div id="menu">
 		<ul>
 			<li id="nav_index"><a href="/">Home</a></li>
-			<li id="nav_torrents"><a href="/torrents/view">Torrents</a></li>
-			<li id="nav_requests"><a href="/requests/view">Requests</a></li>
+			<li id="nav_torrents"><a href="/torrents/browse">Torrents</a></li>
+			<li id="nav_requests"><a href="/requests/browse">Requests</a></li>
 			<li id="nav_forums"><a href="/forums">Forums</a></li>
 			<li id="nav_top10"><a href="/top10">Top&nbsp;10</a></li>
 			<li id="nav_rules"><a href="#">Rules</a></li>
