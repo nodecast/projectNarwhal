@@ -23,13 +23,13 @@
 				<?php endforeach; ?>
 			</div>
 		</td>
-		<td>13</td>
-		<td class="nobr"><?= $ci->utility->time_diff_string($torrent['time']); ?></td>
-		<td class="nobr"><?= $ci->utility->format_bytes($torrent['size']); ?></td>
-		<td><?= number_format(count($torrent['comments'])); ?></td>
-		<td><?= number_format($torrent['snatched']); ?></td>
-		<td><?= number_format($torrent['seeders']); ?></td>
-		<td><?= number_format($torrent['leechers']); ?></td>
+		<td class="stat"><?= number_format($torrent['files']); ?></td>
+		<td class="nobr stat"><?= $ci->utility->time_diff_string($torrent['time']); ?></td>
+		<td class="nobr stat"><?= $ci->utility->format_bytes($torrent['size']); ?></td>
+		<td class="stat"><?= number_format(count($torrent['comments'])); ?></td>
+		<td class="stat"><?= number_format($torrent['snatched']); ?></td>
+		<td class="stat"><?= number_format($torrent['seeders']); ?></td>
+		<td class="stat"><?= number_format($torrent['leechers']); ?></td>
 	</tr>
 	<?php endforeach; ?>
 </table>
