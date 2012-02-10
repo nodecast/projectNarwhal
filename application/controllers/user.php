@@ -16,10 +16,16 @@ class User extends CI_Controller {
 
 	public function view($id = -1) {
 		$this->usermodel->buildpercentile(0);
-		if($id == -1)
+		if($id == -1 || !is_numeric($id))
 			$id = $this->session->userdata('id'); 
+		$id = floor($id);
 
 		$data['user'] = $this->usermodel->getData(intval($id), false); //don't cache user view
+		if(!$data['user']) {
+			$this->load->view('user/view_dne');
+			return;
+		}
+		
 		$data['view'] = $data['user']['paranoia'];
 		if($id == $this->session->userdata('id'))
 			$data['view'] = -1;
@@ -47,10 +53,7 @@ class User extends CI_Controller {
 		$data['percent']['posts'] = $this->usermodel->getPercentile(4, $data['user']['posts']);
 		$data['percent']['overall'] = $this->usermodel->overallPercentile($data['percent']['upload'], $data['percent']['download'], $data['percent']['uploads'], $data['percent']['requests'], $data['percent']['posts'], $data['user']['upload'], $data['user']['download']);
 		
-		
-		if($data['user'])
-			$this->load->view('user/view', $data);
-		else
-			$this->load->view('user/view_dne');
+
+		$this->load->view('user/view', $data);
 	}
 }
