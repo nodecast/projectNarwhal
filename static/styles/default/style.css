@@ -398,7 +398,7 @@ td h4,td p
 .box
 {
   background:#e3e3e3;
-  margin-bottom:24px;
+  margin-bottom:16px;
 }
 
 .head
@@ -411,6 +411,11 @@ td h4,td p
   float:right;
   clear:right;
   width:240px;
+}
+
+.stat
+{
+  min-width:96px;
 }
 
 .stats
@@ -532,7 +537,7 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
 
 .pad,.box .body
 {
-  padding:12px;
+  padding:10px;
 }
 
 .alertbar,.error_message

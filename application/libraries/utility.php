@@ -104,5 +104,65 @@ class Utility {
 		$title = (strlen($title)) ? ($title." :: ") : "";
 		$this->CI->config->set_item('page_title', $title.$this->CI->config->item('site_name'));
 	}
+	
+	// TODO rewrite this
+	function get_page_nav($location, $start_item, $total_number, $per_page, $show_record_count = true, $show_pages = 10) {
+		$pages = "";
+		$start_item = ceil($start_item);
+		if($start_item == 0)
+			$start_item = 1;
+
+		if($total_number > 0) {
+			if($start_item > ceil($total_number / $per_page))
+				$start_item = ceil($total_number / $per_page);
+			$show_pages--;
+			$total_pages = ceil($total_number / $per_page);
+
+			if($total_pages > $show_pages) {
+				$start_position = $start_item - round($show_pages / 2);
+				if($start_position <= 0) {
+					$start_position = 1;
+				} else {
+					if($start_position >= ($total_pages - $show_pages))
+						$start_position = $total_pages - $show_pages;
+				}
+				$stop_page = $show_pages + $start_position;
+			} else {
+				$stop_page = $total_pages;
+				$start_position = 1;
+			}
+			if($start_position < 1)
+				$start_position = 1;
+			if($start_item > 1) {
+				$pages = '<a href="'.$location.'1"><strong>&lt;&lt; First</strong></a> ';
+				$pages .= '<a href="'.$location.($start_item-1).'"><strong>&lt; Prev</strong></a> | ';
+			}
+			for($i = $start_position; $i <= $stop_page; $i++) {
+				if($i != $start_item)
+					$pages .= '<a href="'.$location.$i.'">';
+				$pages .= "<strong>";
+				if($show_record_count) {
+					if($i * $per_page > $total_number)
+						$pages .= ((($i - 1) * $per_page) + 1).'-'.($total_number);
+					else
+						$pages .= ((($i - 1) * $per_page) + 1).'-'.($i * $per_page);
+				} else {
+					$pages .= $i;
+				}
+				$pages .= "</strong>";
+				if($i != $start_item)
+					$pages .= '</a>';
+				if($i < $stop_page)
+					$pages .= " | ";
+		}
+
+		if ($start_item < $total_pages) {
+			$pages .= ' | <a href="'.$location.($start_item + 1).'"><strong>Next &gt;</strong></a> ';
+			$pages .= '<a href="'.$location.$total_pages.'"><strong> Last &gt;&gt;</strong></a>';
+		}
+	}
+
+	if ($total_pages>1) { return $pages; }
+}
 }
 

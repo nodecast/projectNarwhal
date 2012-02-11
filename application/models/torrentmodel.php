@@ -6,11 +6,20 @@ class TorrentModel extends CI_Model {
 		parent::__construct();
 	}
 	
-	function getTorrents($limit = 25, $skip = 0, $query = null) {
+	function getTorrents($limit = 50, $skip = 0, $query = null, $order = 'time', $way = -1) {
 		if(!$query)
 			$query = array();
-		$result = $this->mongo->db->torrents->find()->sort(array('time'=>-1))->limit($limit)->skip($skip);
-		return iterator_to_array($result);
+		$key = 'torrent_search_'.md5(serialize($query).$limit.$skip.$order.$way);
+		
+		if(($data = $this->mcache->get($key)) === FALSE) {
+			$result = $this->mongo->db->torrents->find($query)->sort(array($order => $way));
+			$count = $result->count();
+			$result = $result->limit($limit)->skip($skip);
+			$result = iterator_to_array($result);
+			$data = array('data' => $result, 'count' => $count);
+			$this->mcache->set($key, $data, $this->config->item('torrent_cache'));
+		}
+		return $data;
 	}
 
 	/*
