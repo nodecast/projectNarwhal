@@ -1,9 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE HTML>
 <html>
 <head>
 	<title>{title}</title>
 	<link rel="stylesheet" href="/static/styles/default/style.css" type="text/css" media="screen">
 	<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
+	<script type="text/javascript" src="/static/scripts/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/scripts/global.js"></script>
 </head>
 <body>
 <div id="header">
@@ -21,10 +23,10 @@
 		<ul id="userinfo_stats">
 			<li>Up: <span class="stat"><?= $display['upload'] ?></span></li>
 			<li>Down: <span class="stat"><?= $display['download'] ?></span></li>
-			<li id="ratiopipe"> | </li>
+			<li class="ratiopipe"> | </li>
 			<li>Ratio: <span class="stat"><?= $display['ratio'] ?></span></li>
 			<li>(<a href="kb.php?id=5">required</a>: <span class="stat">--</span>)</li>
-			<li id="ratiopipe"> | </li>
+			<li class="ratiopipe"> | </li>
 			<li>Points: <span class="stat"><a href="exchange.php"><?= number_format($user['points']) ?></a></span></li>
 		</ul>
 		<ul id="userinfo_minor">

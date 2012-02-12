@@ -1,8 +1,8 @@
 <?= validation_errors(); ?>
 <div class="head center">Login</div>
-<div class="box">
+<div class="box center">
 	<?= form_open('login', 'class="body"'); ?>
-		<table class="center">
+		<table>
 			<tr>
 				<td><div class="label">Username:&nbsp;&nbsp;<input type="text" name="username"></div></td>
 			</tr>

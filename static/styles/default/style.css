@@ -131,6 +131,12 @@ textarea
   padding:12px;
 }
 
+.upload
+{
+  width: 800px;
+  margin: 0px auto;
+}
+
 tr
 {
   background:#e3e3e3;
@@ -162,7 +168,7 @@ td.body
   padding:24px;
 }
 
-td h3,td h4
+td h3,td h4,.left
 {
   text-align:left;
 }
@@ -523,6 +529,12 @@ td h4,td p
 strong,.label
 {
   font-weight:700;
+}
+
+.automargin
+{
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .box table tr,table table tr,.box .box

@@ -41,7 +41,29 @@ $config['torrent_cache'] = 300; // 5 min
 $config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'DONOR' => 20, 'ARTIST' => 18, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'LEGEND' => 8, 'CELEB' => 9, 'COMM_MOD' => 10, 'MOD' => 11, 'STAFF_LEADER' => 12, 'DESIGNER' => 13, 'CODER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);
 
 //categories
-$config['categories'] = array('Music', 'Applications', 'E-Books', 'Audiobooks', 'E-Learning Videos', 'Magazines', 'Comics', 'Anime', 'Movies', 'TV', 'Games - PC', 'Games - Console', 'Documentaries', 'Misc');
+$config['categories'] = array(
+	array('name' => 'Music', 'icon' => 'music.png', 'metadata' => array()),
+	array('name' => 'Applications', 'icon' => 'apps.png', 'metadata' => array()),
+	array('name' => 'E-Books', 'icon' => 'ebook.png', 'metadata' => array('format_ebook', 'isbn')),
+	array('name' => 'Audiobooks', 'icon' => 'audiobook.png', 'metadata' => array()),
+	array('name' => 'E-Learning Videos', 'icon' => 'elearning.png', 'metadata' => array()),
+	array('name' => 'Magazines', 'icon' => 'magazines.png', 'metadata' => array()),
+	array('name' => 'Comics', 'icon' => 'comics.png', 'metadata' => array()),
+	array('name' => 'Anime', 'icon' => 'anime.png', 'metadata' => array()),
+	array('name' => 'Movies', 'icon' => 'movies.png', 'metadata' => array()),
+	array('name' => 'TV', 'icon' => 'tv.png', 'metadata' => array()),
+	array('name' => 'Games - PC', 'icon' => 'games-pc.png', 'metadata' => array()),
+	array('name' => 'Games - Console', 'icon' => 'games-console.png', 'metadata' => array()),
+	array('name' => 'Documentaries', 'icon' => 'documentaries.png', 'metadata' => array()),
+	array('name' => 'Misc', 'icon' => 'misc.png', 'metadata' => array())
+);
+	
+//metadata
+//types: 0 - *, 1 - enum, 2 - true/false
+//required: number required
+// TODO complete this, as well as put it in ^^ above
+$config['metadata'] = array(
+	'format_ebook' => array('display' => 'Format', 'type' => 1, 'multiple' => true, 'required' => 1, 'enum' => array('EPUB', 'MOBI', 'HTML', 'PDF', 'LIT', 'LRF', 'RTF')),
+	'isbn' => array('display' => 'ISBN', 'type' => 0, 'multiple' => false, 'required' => 1)
+);
 
-//category icons
-$config['category_icons'] = array('music.png', 'apps.png', 'ebook.png', 'audiobook.png', 'elearning.png', 'magazines.png', 'comics.png', 'anime.png', 'movies.png', 'tv.png', 'games-pc.png', 'games-console.png', 'documentaries.png','misc.png');

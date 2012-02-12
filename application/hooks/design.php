@@ -7,6 +7,8 @@ class Design extends CI_Controller {
 	}
 
 	function header() {
+		if($this->router->fetch_class() == "ajax")
+			return;
 		if($this->utility->logged_in())
 			$this->privateheader();
 		else
@@ -14,6 +16,8 @@ class Design extends CI_Controller {
 	}
 
 	function footer() {
+		if($this->router->fetch_class() == "ajax")
+			return;
 		if($this->utility->logged_in())
 			$this->privatefooter();
 		else

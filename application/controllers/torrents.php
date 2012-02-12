@@ -7,6 +7,7 @@ class Torrents extends CI_Controller {
 		parent::__construct();
 		$this->utility->enforce_login();
 		$this->load->model('torrentmodel');
+		$this->load->helper('form');
 	}
 
 	public function index()
@@ -23,12 +24,18 @@ class Torrents extends CI_Controller {
 		$t = $this->torrentmodel->getTorrents(50, $off, null);
 		$data['torrents'] = $t['data'];
 		$data['results'] = $t['count'];
-		$data['caticons'] = $this->config->item('category_icons');
 		$data['categories'] = $this->config->item('categories');
 		$data['ci'] =& get_instance();
 		$data['page'] = $page;
 		$data['off'] = $off;
 		
 		$this->load->view('torrents/browse', $data);
+	}
+	
+	public function upload() {
+		$data = array();
+		$data['categories'] = $this->config->item('categories');
+		
+		$this->load->view('torrents/upload', $data);
 	}
 }
