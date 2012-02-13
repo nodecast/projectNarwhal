@@ -40,14 +40,14 @@ class UserModel extends CI_Model {
 				case 2: //torrents uploaded
 					$map = new MongoCode('function() {emit(this.owner, 1);}');
 					$reduce = new MongoCode('function(key,values){var num=0;values.forEach(function(value){num+=value;});return num;}');
-					$r = $this->mongo->db->command(array('mapreduce' => 'torrents', 'map' => $map, 'reduce' => $reduce));
-					$res = $this->mongo->db->selectCollection($r['result'])->find()->sort(array("value"=>1));
+					$r = $this->mongo->db->command(array('mapreduce' => 'torrents', 'map' => $map, 'reduce' => $reduce, 'out' => array('replace' => 'tmp')));
+					$res = $this->mongo->db->tmp->find()->sort(array("value"=>1));
 					break;
 				case 3: //requests filled
 					$map = new MongoCode('function() {emit(this.filledby, 1);}');
 					$reduce = new MongoCode('function(key,values){var num=0;values.forEach(function(value){num+=value;});return num;}');
-					$r = $this->mongo->db->command(array('mapreduce' => 'requests', 'map' => $map, 'reduce' => $reduce));
-					$res = $this->mongo->db->selectCollection($r['result'])->find()->sort(array("value"=>1));
+					$r = $this->mongo->db->command(array('mapreduce' => 'requests', 'map' => $map, 'reduce' => $reduce, 'out' => array('replace' => 'tmp')));
+					$res = $this->mongo->db->tmp->find()->sort(array("value"=>1));
 					break;
 				case 4: // TODO posts made
 					break;
@@ -56,19 +56,19 @@ class UserModel extends CI_Model {
 					break;
 			}
 			
-			$this->mongo->db->temp->drop();
+			$this->mongo->db->tmp->drop();
 			$i = 0;
 			foreach ($res as $doc) {
 				$doc['order'] = $i;
-				$this->mongo->db->temp->insert($doc);
+				$this->mongo->db->tmp->insert($doc);
 				$i++;
 			}
 			$map = new MongoCode('function() {emit(Math.ceil(this.order/('.$i.'/100)), this.'.$field.');}');
 			$reduce = new MongoCode('function(key,values){var num=0;return values[0];}');
-			$r = $this->mongo->db->command(array('mapreduce' => 'temp', 'map' => $map, 'reduce' => $reduce));
-			$this->mongo->db->temp->drop();
+			$r = $this->mongo->db->command(array('mapreduce' => 'tmp', 'map' => $map, 'reduce' => $reduce, 'out' => array('replace' => 'tmp')));
+			$this->mongo->db->tmp->drop();
 			
-			$data = iterator_to_array($this->mongo->db->selectCollection($r['result'])->find());
+			$data = iterator_to_array($this->mongo->db->tmp->find());
 			
 			$this->mcache->set('percentile_table_'.$w, $data, $this->config->item('stats_cache'));
 		}

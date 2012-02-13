@@ -64,9 +64,9 @@ class StatsModel extends CI_Model {
 				return 0;
 			$map = new MongoCode('function() { emit("snatches", this.snatched); }');
 			$reduce = new MongoCode('function(k, v) { var sum = 0; for (var i in v) { sum += v[i]; } return sum; }');
-			$res = $this->mongo->db->command(array('mapreduce' => 'torrents', 'map' => $map, 'reduce' => $reduce));
+			$res = $this->mongo->db->command(array('mapreduce' => 'torrents', 'map' => $map, 'reduce' => $reduce, 'out' => array('replace' => 'tmp')));
 		
-			$snatches = $this->mongo->db->selectCollection($res['result'])->findOne();
+			$snatches = $this->mongo->db->tmp->findOne();
 			$data = $snatches['value'];
 			$this->mcache->set('stats_snatches', $data, $this->config->item('stats_cache'));
 		}
