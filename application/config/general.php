@@ -44,7 +44,7 @@ $config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'DONOR' => 
 $config['categories'] = array(
 	array('name' => 'Music', 'icon' => 'music.png', 'metadata' => array()),
 	array('name' => 'Applications', 'icon' => 'apps.png', 'metadata' => array()),
-	array('name' => 'E-Books', 'icon' => 'ebook.png', 'metadata' => array('format_ebook', 'isbn')),
+	array('name' => 'E-Books', 'icon' => 'ebook.png', 'metadata' => array('author', 'format_ebook', 'isbn', 'genre_ebook')),
 	array('name' => 'Audiobooks', 'icon' => 'audiobook.png', 'metadata' => array()),
 	array('name' => 'E-Learning Videos', 'icon' => 'elearning.png', 'metadata' => array()),
 	array('name' => 'Magazines', 'icon' => 'magazines.png', 'metadata' => array()),
@@ -60,10 +60,11 @@ $config['categories'] = array(
 	
 //metadata
 //types: 0 - *, 1 - enum, 2 - true/false
-//required: number required
 // TODO complete this, as well as put it in ^^ above
 $config['metadata'] = array(
-	'format_ebook' => array('display' => 'Format', 'type' => 1, 'multiple' => true, 'required' => 1, 'enum' => array('EPUB', 'MOBI', 'HTML', 'PDF', 'LIT', 'LRF', 'RTF')),
-	'isbn' => array('display' => 'ISBN', 'type' => 0, 'multiple' => false, 'required' => 1)
+	'format_ebook' => array('display' => 'Format(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('EPUB', 'MOBI', 'HTML', 'PDF', 'LIT', 'LRF', 'RTF')),
+	'isbn' => array('display' => 'ISBN', 'type' => 0, 'multiple' => false, 'required' => true),
+	'author' => array('display' => 'Author(s)', 'type' => 0, 'multiple' => true, 'required' => true),
+	'genre_ebook' => array('display' => 'Genre(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('Action/Adventure', 'Crime/Thriller', 'Food', 'History', 'Humor', 'Juvenile', 'Literary Classics', 'Math/Science/Tech', 'Political/Sociological/Religion', 'Romance', 'Science Fiction/Fantasy', 'Young Adult'))
 );
 

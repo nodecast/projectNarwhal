@@ -16,6 +16,7 @@ class Torrents extends CI_Controller {
 	}
 
 	public function browse($page = 1) {
+		$this->utility->enforce_perm('site_torrents_search');
 		if($page < 1)
 			$page = 1;
 		$off = ($page - 1) * 50;

@@ -105,6 +105,22 @@ class Utility {
 		$this->CI->config->set_item('page_title', $title.$this->CI->config->item('site_name'));
 	}
 	
+	function check_perm($perm, $id = -1) {
+		if($id == -1)
+			$id = $this->CI->session->userdata('id');
+		$this->CI->load->model('usermodel');
+		
+		$p = $this->CI->usermodel->getPermissions($id);
+		return in_array($perm, $p['values']);
+	}
+	
+	function enforce_perm($perm) {
+		// TODO undo this
+		return;
+		if(!$this->check_perm($perm))
+			show_error('You are not authorized to use this feature.', 403);
+	}
+	
 	// TODO rewrite this
 	function get_page_nav($location, $start_item, $total_number, $per_page, $show_record_count = true, $show_pages = 10) {
 		$pages = "";

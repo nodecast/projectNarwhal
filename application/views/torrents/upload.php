@@ -11,11 +11,8 @@
 		<script type="text/javascript">
 			function load_form(id) {
 				$("#upload_table").html("<h2>Retrieving Form...</h2>").load("/ajax/upload_form/" + id);
-				/*$("#categories_upload").change(function(){
-					load_form($('#categories_upload').val());
-				});*/
 			}
-			load_form(2);
+			load_form(0);
 		</script>
 
 		<div class="center box pad">
