@@ -17,9 +17,14 @@
 				<td class="label">Title</td>
 				<td><input type="text" id="title" name="title" size="60"></td>
 			</tr>
-			<tr id="title_row">
+			<tr>
 				<td class="label">Tags</td>
-				<td><input type="text" id="tags" name="tags" size="60"></td>
+				<td>
+					<div id="tags_div">
+						<input type="text" id="tags" name="tags[]" size="60">
+					</div>
+					<a href="javascript:;" onclick="$('#tags_div').append('<input type=\'text\' size=\'60\' name=\'tags[]\'><br>')">Add another</a>
+				</td>
 			</tr>
 			<?php
 				foreach($category['metadata'] as $key) {
@@ -31,18 +36,18 @@
 					<?php
 						switch($data['type']) {
 							case 0: // *
-								$field = '<input type="text" id="metadata-'.$key.'" size="60" name="metadata-'.$key.'[]">';
+								$field = '<input type="text" id="metadata-'.$key.'" size="60" name="metadata-'.$key.($data['multiple'] ? '[]' : '').'">';
 								echo "<div id=\"metadata-$key\">\n".$field."</div>\n";
 								if($data['multiple']) {
-									echo '<a href=\'javascript:;\' onclick=\'$("#metadata-'.$key.'").append("<input type=\"text\" size=\"60\" name=\"metadata-'.$key.'[]\"><br>")\'>Add another</a>';
+									echo '<a href=\'javascript:;\' onclick=\'$("#metadata-'.$key.'").append("<input type=\"text\" size=\"60\" name=\"metadata-'.$key.($data['multiple'] ? '[]' : '').'\"><br>")\'>Add another</a>';
 								}
 								break;
 							case 1: // enum
 								if($data['multiple'])
 									echo '<i>Hold \'CTRL\' to select multiple values.</i><br>';
-								echo '<select size="6" name="metadata-'.$key.'[]"'.($data['multiple'] ? ' multiple >' : ' >');
-								foreach($data['enum'] as $option) {
-									echo '<option value="'.$option.'">'.$option.'</option>';
+								echo '<select size="6" name="metadata-'.$key.($data['multiple'] ? '[]' : '').'"'.($data['multiple'] ? ' multiple >' : ' >');
+								for($i = 0; $i < count($data['enum']); $i++) {
+									echo '<option value="'.$i.'">'.$data['enum'][$i].'</option>';
 								}
 								echo '</select>';
 								break;

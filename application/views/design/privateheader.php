@@ -8,8 +8,8 @@
 	<script type="text/javascript" src="/static/scripts/global.js"></script>
 </head>
 <body>
-<div id="header">
-	<div id="logo"></div>
+	<div id="header">
+		<a href="/"><div id="logo"></div></a>
 		<div id="userinfo">
 		<ul id="userinfo_username">
 			<li><a href="/user/view/<?= $user['id'] ?>" class="username"><?= $user['username']; ?></a></li>

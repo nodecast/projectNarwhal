@@ -36,5 +36,12 @@ class TorrentModel extends CI_Model {
 			return $this->mongo->db->users->findOne(array('id'=>$id));
 		}
 	}
+	
+	/*
+	Gets the torrent based on an infohash
+	*/
+	function getByInfohash($hash) {
+		return $this->mongo->db->torrents->findOne(array('info_hash' => new MongoBinData($hash)));
+	}
 }
 ?>

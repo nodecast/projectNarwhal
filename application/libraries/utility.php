@@ -170,15 +170,19 @@ class Utility {
 					$pages .= '</a>';
 				if($i < $stop_page)
 					$pages .= " | ";
+			}
+
+			if ($start_item < $total_pages) {
+				$pages .= ' | <a href="'.$location.($start_item + 1).'"><strong>Next &gt;</strong></a> ';
+				$pages .= '<a href="'.$location.$total_pages.'"><strong> Last &gt;&gt;</strong></a>';
+			}
 		}
 
-		if ($start_item < $total_pages) {
-			$pages .= ' | <a href="'.$location.($start_item + 1).'"><strong>Next &gt;</strong></a> ';
-			$pages .= '<a href="'.$location.$total_pages.'"><strong> Last &gt;&gt;</strong></a>';
-		}
+		if ($total_pages>1) { return $pages; }
 	}
-
-	if ($total_pages>1) { return $pages; }
-}
+	
+	// TODO this does nothing right now
+	function log($str) {
+	}
 }
 

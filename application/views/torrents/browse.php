@@ -13,9 +13,9 @@
 	<div class="box center">
 		<?= number_format($results); ?> results found.
 	</div>
-	<?php if($results > 50) { ?>
+	<?php if($results > $perpage) { ?>
 	<div class="linkbox">
-	<?= $ci->utility->get_page_nav('/torrents/browse/', $page, $results, 50); ?>
+	<?= $ci->utility->get_page_nav('/torrents/browse/', $page, $results, $perpage); ?>
 	</div>
 	<?php } foreach($torrents as $torrent): ?>
 	<tr class="torrent  ">
@@ -31,7 +31,7 @@
 				<?php endforeach; ?>
 			</div>
 		</td>
-		<td><?= number_format($torrent['files']); ?></td>
+		<td><?= number_format(count($torrent['files'])); ?></td>
 		<td><?= $ci->utility->time_diff_string($torrent['time']); ?></td>
 		<td><?= $ci->utility->format_bytes($torrent['size']); ?></td>
 		<td><?= number_format(count($torrent['comments'])); ?></td>

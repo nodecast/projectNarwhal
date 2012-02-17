@@ -1,10 +1,11 @@
+<?= validation_errors(); ?>
 <div class="upload center">
 	<p>
 		Your personal announce url is:
 		<br>
 		<input type="text" value="" size="71">
 	</p>
-	<?= form_open_multipart() ?>
+	<?= form_open_multipart('torrents/upload/') ?>
 		<div id="upload_table">
 		</div>
 
