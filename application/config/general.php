@@ -1,14 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-function valuesByKey($array, $key) {
-	$r = array();
-	foreach($array as $item) {
-		if(array_key_exists($key, $item))
-			$r[] = $item[$key];
-	}
-	return $r;
-}
-
 // Public contact email
 $config['contact_email'] = "narwhal@projectnarwhal.org";
 
@@ -85,9 +76,5 @@ $config['metadata'] = array(
 	'format_ebook' => array('display' => 'Format(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('EPUB', 'MOBI', 'HTML', 'PDF', 'LIT', 'LRF', 'RTF')),
 	'isbn' => array('display' => 'ISBN', 'type' => 0, 'multiple' => false, 'required' => true),
 	'author' => array('display' => 'Author(s)', 'type' => 0, 'multiple' => true, 'required' => true),
-	'genre_ebook' => array('display' => 'Genre(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('Action/Adventure', 'Crime/Thriller', 'Food', 'History', 'Humor', 'Juvenile', 'Literary Classics', 'Math/Science/Tech', 'Political/Sociological/Religion', 'Romance', 'Science Fiction/Fantasy', 'Young Adult')),
-	
-	// do not use OR remove
-	'categories_upload' => array('enum' => valuesByKey($config['categories'], 'name'))
-);
-
+	'genre_ebook' => array('display' => 'Genre(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('Action/Adventure', 'Crime/Thriller', 'Food', 'History', 'Humor', 'Juvenile', 'Literary Classics', 'Math/Science/Tech', 'Political/Sociological/Religion', 'Romance', 'Science Fiction/Fantasy', 'Young Adult'))
+ );
