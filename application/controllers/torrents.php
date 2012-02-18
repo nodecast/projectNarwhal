@@ -71,7 +71,37 @@ class Torrents extends CI_Controller {
 			$this->load->view('torrents/upload', $data);
 		} else {
 			//continue processing on the torrent files
+			$c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'torrentid'), 'update'=>array('$inc'=>array('c'=>1))));
 			
+			$data = array();
+			$data['id'] = $c['value']['c'];
+			$data['name'] = $this->input->post('title');
+			$data['owner'] = $this->session->userdata('id');
+			$data['description'] = $this->input->post('description');
+			$data['category'] = $this->input->post('type');
+			$data['seeders'] = 0;
+			$data['leechers'] = 0;
+			$data['snatched'] = 0;
+			$data['size'] = $this->totalsize;
+			$data['files'] = array();
+			foreach($this->files as $f) {
+				$data['files'][] = array('name' => $f[1], 'size' => $f[0]);
+			}
+			$data['time'] = time();
+			$img = $this->input->post('image');
+			$data['image'] = (preg_match('/^https?:\/\/([a-zA-Z0-9\-\_]+\.)+([a-zA-Z]{1,5}[^\.])(\/[^<>]+)+\.(jpg|jpeg|gif|png|tif|tiff|bmp)$/i', $img)) ? '' : $img;
+			$data['comments'] = array();
+			$data['info_hash'] = new MongoBinData($this->infohash);
+			$data['freetorrent'] = 0;
+			$data['tags'] = $this->input->post('tags');
+			$data['metadata'] = array();
+			$cat = $this->config->item('categories');
+			$cat = $cat[$data['category']];
+			foreach($cat['metadata'] as $m) {
+				$data['metadata'][$m] = $this->input->post('metadata-'.$m);
+			}
+			
+			$this->mongo->db->torrents->save($data);
 		}
 	}
 	

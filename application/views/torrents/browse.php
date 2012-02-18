@@ -27,7 +27,7 @@
 			<br>
 			<div class="tags">
 				<?php foreach($torrent['tags'] as $tag): ?>
-				<a href="/torrents/tag/x"><?= $tag ?></a>&nbsp;
+				<a href="/torrents/tag/<?= $tag ?>"><?= $tag ?></a>&nbsp;
 				<?php endforeach; ?>
 			</div>
 		</td>
