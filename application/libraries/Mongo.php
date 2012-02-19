@@ -6,6 +6,9 @@ class CI_Mongo extends Mongo {
 
 	function __construct()
 	{   
+		//allow mongo to use 64bit ints
+		ini_set('mongo.native_long', 1);
+		
 		// Fetch CodeIgniter instance
 		$ci = get_instance();
 		// Load Mongo configuration file
