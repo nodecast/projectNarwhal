@@ -32,7 +32,6 @@ $config['torrent_maxsize'] = 2097152; // 2 MiB
 $config['freeleech_size'] = 10737418240; // 10 GiB
 
 
-
 //CACHE
 //User data cache time, in seconds
 $config['userdata_cache'] = 300; // 5 min

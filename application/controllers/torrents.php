@@ -103,7 +103,7 @@ class Torrents extends CI_Controller {
 			$this->mongo->db->torrents->save($data);
 			
 			//save the file
-			//TODO torrent saving
+			file_put_contents($this->config->item('root').'/torrents/'.$data['id'].'.torrent', $this->torrent->enc());
 			
 			// TODO irc announce
 		}
@@ -129,7 +129,7 @@ class Torrents extends CI_Controller {
 			return false;
 		}
 		
-		require(dirname(__DIR__).'/libraries/torrent.php');
+		require($this->config->item('root').'/libraries/torrent.php');
 		$this->torrent = new TORRENT(file_get_contents($file['tmp_name']));
 		$this->torrent->make_private();
 		$this->torrent->set_announce_url('ANNOUNCE_URL');
