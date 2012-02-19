@@ -83,7 +83,6 @@ class Torrents extends CI_Controller {
 			$data['leechers'] = 0;
 			$data['snatched'] = 0;
 			$data['size'] = $this->totalsize;
-			echo $this->totalsize;
 			$data['files'] = array();
 			foreach($this->files as $f) {
 				$data['files'][] = array('name' => $f[1], 'size' => $f[0]);
