@@ -92,7 +92,7 @@ class Torrents extends CI_Controller {
 			$data['image'] = (preg_match('/^https?:\/\/([a-zA-Z0-9\-\_]+\.)+([a-zA-Z]{1,5}[^\.])(\/[^<>]+)+\.(jpg|jpeg|gif|png|tif|tiff|bmp)$/i', $img)) ? '' : $img;
 			$data['comments'] = array();
 			$data['info_hash'] = new MongoBinData($this->infohash);
-			$data['freetorrent'] = 0;
+			$data['freetorrent'] = ($data['size'] < $this->config->item('freeleech_size')) ? 0 : 1;
 			$data['tags'] = $this->input->post('tags');
 			$data['metadata'] = array();
 			$cat = $this->config->item('categories');
@@ -100,8 +100,12 @@ class Torrents extends CI_Controller {
 			foreach($cat['metadata'] as $m) {
 				$data['metadata'][$m] = $this->input->post('metadata-'.$m);
 			}
-			
 			$this->mongo->db->torrents->save($data);
+			
+			//save the file
+			//TODO torrent saving
+			
+			// TODO irc announce
 		}
 	}
 	
