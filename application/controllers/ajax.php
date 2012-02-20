@@ -22,6 +22,12 @@ class Ajax extends CI_Controller {
 		$data['category'] = $data['categories'][$id];
 		$data['metadata'] = $this->config->item('metadata');
 		
-		$this->load->view('ajax/upload_form.php', $data);
+		$this->load->view('ajax/upload_form', $data);
+	}
+	
+	public function peerlist($id = -1)
+	{
+		//TODO
+		$this->load->view('ajax/peerlist');
 	}
 }

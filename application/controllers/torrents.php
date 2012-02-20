@@ -112,6 +112,7 @@ class Torrents extends CI_Controller {
 			
 			// TODO irc announce
 			
+			redirect('/torrents/view/'.$data['id']);
 		}
 	}
 	
@@ -156,6 +157,7 @@ class Torrents extends CI_Controller {
 	public function view($id = -1) {
 		$this->utility->enforce_perm('site_torrents_view');
 		$this->load->model('usermodel');
+		$this->load->library('textformat');
 		$torrent = $this->torrentmodel->getData($id, false);
 		
 		if(!$torrent) {
@@ -163,6 +165,16 @@ class Torrents extends CI_Controller {
 		} else {
 			$data = array();
 			$data['torrent'] = $torrent;
+			$data['torrent']['description'] = <<<DERP
+		Hey
+		hey
+		hi
+		[b]hi[/b]
+		http://www.php.net/manual/en/bbcode.constants.php
+		well, yeah
+		[url]http://www.php.net/manual/en/bbcode.constants.php[/url]
+		[url=http://www.php.net/manual/en/bbcode.constants.php]bbcode[/url]
+DERP;
 			$data['owner'] = $this->usermodel->getData($torrent['owner']);
 			$data['user'] = $this->session->all_userdata();
 			$data['categories'] = $this->config->item('categories');

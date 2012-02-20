@@ -64,121 +64,48 @@
 						Uploaded by <a href="/user/view/<?= $owner['id']; ?>"><?= $owner['username']; ?></a> on <span title="<?= $ci->utility->time_diff_string($torrent['time']); ?>"><?= $ci->utility->format_datetime($torrent['time']); ?></span>
 					</blockquote>
 					<div class="center">
-						<a href="javascript:;" onclick="$('#filelist').fadeToggle('fast', 'swing')">Show/Hide Filelist</a>
+						<a href="javascript:;" onclick="$('#filelist').fadeToggle('fast', 'swing');">Show/Hide Filelist</a>
 						<blockquote id="filelist">
-							awefawef
-							awefawef<br>
-							awefajweoguij<br>
-							awiejfaowejfoi<br>
-							wef
+							<table style="overflow-x:auto;">
+								<tr class="colhead_dark"><td><strong>File Name</strong></td><td><strong>Size</strong></td></tr>
+								<?php foreach($torrent['files'] as $file): ?>
+									<tr><td><?= $file['name'] ?></td><td><?= $ci->utility->format_bytes($file['size']); ?></td></tr>
+								<?php endforeach; ?>
+							</table>
 						</blockquote>
-						
 						<br>
-						<br>
-						
-						<a href="javascript:;" >Show/Hide Peerlist</a>
-						<div id="peerlist" class="box">
-						</div>
+						<a href="javascript:;" onclick="loadPeerlist(); $('#peerlist').fadeToggle('fast', 'swing');">Show/Hide Peerlist</a>
+						<blockquote id="peerlist">
+						</blockquote>
+						<script type="text/javascript">
+							var peerlistLoaded = false;
+							function loadPeerlist() {
+								if(!peerlistLoaded) {
+									$.get('/ajax/peerlist/<?= $torrent['id'] ?>', function(data) {
+										$('#peerlist').html(data);
+									});
+									peerlistLoaded = true;
+								}
+							}
+							
+							$('#filelist').hide();
+							$('#peerlist').hide();
+						</script>
 					</div>
 				</td>
 			</tr>
-
-			<tr class="pad hide" id="torrent_194">
-				<td colspan="6">
-										<div class="linkbox"><a href="torrents.php?id=193&amp;torrentid=194&amp;peers=194#peers_194">[Show/hide peer list]</a></div>
-
-
-					<table style="overflow-x:auto;"><tr class="colhead_dark"><td><strong>File Name</strong></td><td><strong>Size</strong></td></tr><tr><td>DupeDB.com.txt</td><td>298.00 B</td></tr><tr><td>lap-moon.avi</td><td>700.84 MB</td></tr></table>
-
-				</td>
-			</tr>
 		</table>
+		
 		<div class="box">
-			<div class="head"><strong>Torrent info</strong></div>
-			<div class="body"><u><strong>Moon (2009)</strong></u><br />
-<br />
-<strong>Genres:</strong>	Drama | Mystery | Sci-Fi | Thriller<br />
-
-<br />
-<strong>Director:</strong>	Duncan Jones<br />
-<strong>Country:</strong>	UK<br />
-<strong>Runtime:</strong> 97 min<br />
-<strong>Rating:</strong>	8.0/10<br />
-
-<strong>Outline:</strong>	Astronaut Sam Bell has a quintessentially personal encounter toward the end of his three-year stint on the Moon, where he, working alongside his computer, GERTY, sends back to Earth parcels of a resource that has helped diminish our planet&#39;s power problems.<br />
-<br />
-<strong>Cast:</strong>	Sam Rockwell | Sam Bell<br />
-Kevin Spacey | GERTY (voice)<br />
-Dominique McElligott | Tess Bell<br />
-Rosie Shaw | Little Eve<br />
-<br />
-
-<strong>Mediainfo</strong> Wrote: <blockquote><br />
-General<br />
-Format                           : AVI<br />
-Format/Info                      : Audio Video Interleave<br />
-File size                        : 701 MiB<br />
-Duration                         : 1h 32mn<br />
-Overall bit rate                 : 1 055 Kbps<br />
-Writing application              : VirtualDubMod 1.5.10.2 (build 2540/release)<br />
-
-Writing library                  : VirtualDubMod build 2540/release<br />
-<br />
-Video<br />
-ID                               : 0<br />
-Format                           : MPEG-4 Visual<br />
-Format profile                   : Advanced Simple@L5<br />
-Format settings, BVOP            : Yes<br />
-Format settings, QPel            : No<br />
-Format settings, GMC             : No warppoints<br />
-
-Format settings, Matrix          : Default (H.263)<br />
-Muxing mode                      : Packed bitstream<br />
-Codec ID                         : XVID<br />
-Codec ID/Hint                    : XviD<br />
-Duration                         : 1h 32mn<br />
-Bit rate                         : 908 Kbps<br />
-Width                            : 592 pixels<br />
-Height                           : 240 pixels<br />
-Display aspect ratio             : 2.467<br />
-
-Frame rate                       : 25.000 fps<br />
-Resolution                       : 8 bits<br />
-Colorimetry                      : 4:2:0<br />
-Scan type                        : Progressive<br />
-Bits/(Pixel*Frame)               : 0.256<br />
-Stream size                      : 603 MiB (86%)<br />
-Writing library                  : XviD 1.2.1 (UTC 2008-12-04)<br />
-<br />
-Audio<br />
-
-ID                               : 1<br />
-Format                           : MPEG Audio<br />
-Format version                   : Version 1<br />
-Format profile                   : Layer 3<br />
-Mode                             : Joint stereo<br />
-Format_Settings_ModeExtension    : MS Stereo<br />
-Codec ID                         : 55<br />
-Codec ID/Hint                    : MP3<br />
-Duration                         : 1h 32mn<br />
-
-Bit rate mode                    : Variable<br />
-Bit rate                         : 134 Kbps<br />
-Minimum bit rate                 : 32.0 Kbps<br />
-Channel(s)                       : 2 channels<br />
-Sampling rate                    : 48.0 KHz<br />
-Stream size                      : 88.9 MiB (13%)<br />
-Alignment                        : Aligned on interleaves<br />
-Interleave, duration             : 24 ms (0.60 video frame)<br />
-Interleave, preload duration     : 215 ms<br />
-
-Writing library                  : LAME3.98 <br />
-Encoding settings                : -m j -V 4 -q 0 -lowpass 17.5 --vbr-new -b 32<br />
-</blockquote></div>
+			<div class="head"><strong>Info</strong></div>
+			<div class="body">
+			<?= $ci->textformat->parse($torrent['description']); ?>
+			</div>
 		</div>
-		<div class="linkbox"><strong>1-10</strong> | <a href="torrents.php?page=2&amp;id=193"><strong>11-20</strong></a> | <a href="torrents.php?page=3&amp;id=193"><strong>21-30</strong></a> | <a href="torrents.php?page=2&amp;id=193"><strong>Next &gt;</strong></a> <a href="torrents.php?page=3&amp;id=193"><strong> Last &gt;&gt;</strong></a></div>
+		
+		<div class="linkbox"> LINKS </div>
 
-<table class="forum_post box vertical_margin" id="post199">
+		<table class="forum_post box vertical_margin">
 	<tr class="colhead_dark">
 		<td colspan="2">
 			<span style="float:left;"><a href='#post199'>#199</a>
@@ -433,8 +360,5 @@ Encoding settings                : -m j -V 4 -q 0 -lowpass 17.5 --vbr-new -b 32<
 		</div>
 	</form>
 </div>
-
-		<div class="linkbox"><strong>1-10</strong> | <a href="torrents.php?page=2&amp;id=193"><strong>11-20</strong></a> | <a href="torrents.php?page=3&amp;id=193"><strong>21-30</strong></a> | <a href="torrents.php?page=2&amp;id=193"><strong>Next &gt;</strong></a> <a href="torrents.php?page=3&amp;id=193"><strong> Last &gt;&gt;</strong></a></div>
-
 	</div>
 </div>		
