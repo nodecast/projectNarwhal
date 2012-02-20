@@ -166,14 +166,20 @@ class Torrents extends CI_Controller {
 			$data = array();
 			$data['torrent'] = $torrent;
 			$data['torrent']['description'] = <<<DERP
-		Hey
-		hey
-		hi
 		[b]hi[/b]
+		[i]hi[/i]
+		[i]hi [b]blah[/b] hi [/i]
+		[s]strikethough[u]underline[/u][/s]
+		[u]underline[/u]
+		
 		http://www.php.net/manual/en/bbcode.constants.php
 		well, yeah
 		[url]http://www.php.net/manual/en/bbcode.constants.php[/url]
 		[url=http://www.php.net/manual/en/bbcode.constants.php]bbcode[/url]
+		[s]strikethrough[/s]
+		[align=center]blah[/align]
+		[img]http://i.imgur.com/dmmmJ.jpg[/img]
+		<3
 DERP;
 			$data['owner'] = $this->usermodel->getData($torrent['owner']);
 			$data['user'] = $this->session->all_userdata();

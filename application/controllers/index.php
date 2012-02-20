@@ -12,10 +12,12 @@ class Index extends CI_Controller {
 		if($this->utility->logged_in()) {
 			$this->load->model('newsmodel');
 			$this->load->model('statsmodel');
+			$this->load->library('textformat');
 
 			$data = array();
 			$data['user'] = $this->session->all_userdata();
 			$data['news'] = $this->newsmodel->getNews();
+			$data['ci'] =& get_instance();
 
 			$stats = array();
 			$stats['max_users'] = number_format($this->config->item('max_users'));

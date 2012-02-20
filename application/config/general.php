@@ -50,6 +50,27 @@ $config['torrent_cache'] = 300; // 5 min
 //PERPAGE
 $config['torrent_perpage'] = 50;
 
+//site urls
+$config['https_siteurl'] = '192.168.1.11';
+$config['http_siteurl'] = '192.168.1.11';
+
+//allowed image hosts
+$config['allowed_imagehosts'] = '('
+	.'baconbits\.org|'
+	.'(i\.)?imgur\.com|'
+	.'[a-z]\.imagehost\.org|'
+	.'img[0-9]+\.imageshack\.us|'
+	.'upload\.wikimedia\.org|'
+	.'commons\.wikimedia\.org|'
+	.'whatimg\.com|'
+	.'madderist\.baconbits\.org|'
+	// i.min.us issues 302 redirects to i.minus.com
+	// so i.minus.com is the preferred host
+	.'(i\.)?min\.us|'
+	.'(i\.)?minus\.com|'
+	.'images\.baconbits\.org'
+	.')\/';
+
 //user classes, for permissions and stuff. actual permissions and levels can be found in the collection 'permissions'
 $config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'DONOR' => 20, 'ARTIST' => 18, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'LEGEND' => 8, 'CELEB' => 9, 'COMM_MOD' => 10, 'MOD' => 11, 'STAFF_LEADER' => 12, 'DESIGNER' => 13, 'CODER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);
 

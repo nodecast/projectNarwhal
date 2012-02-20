@@ -107,6 +107,11 @@ blockquote
   padding:24px 24px 24px 20px;
 }
 
+pre
+{
+	background:#ddd;
+}
+
 input
 {
   font-family:"Helvetica Neue", Arial, sans-serif;
@@ -539,6 +544,17 @@ em
 u
 {
 	text-decoration:underline;
+}
+
+s
+{
+	text-decoration:line-through;
+}
+
+/* oh why am I doing this no please stop */
+blink
+{
+	text-decoration: blink;
 }
 
 .automargin

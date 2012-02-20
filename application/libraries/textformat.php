@@ -1,25 +1,52 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed'); 
 
 class TextFormat {
+	function convertlinebreaks($text) {
+    	return str_replace("\n", "<br>\n", $text);
+	}
+	
+	function do_bbcode_url($action, $attributes, $content, $params, $node_object) {
+		if(!isset($attributes['default'])) {
+			$url = $content;
+			$text = htmlspecialchars($content);
+		} else {
+			$url = $attributes['default'];
+			$text = $content;
+		}
+		if($action == 'validate') {
+			if(substr($url, 0, 5) == 'data:' || substr($url, 0, 5) == 'file:' || substr($url, 0, 11) == 'javascript:' || substr($url, 0, 4) == 'jar:')
+				return false;
+    	    return true;
+    	}
+    	return '<a href="http://dereferer.org/?'.htmlspecialchars($url).'">'.$text.'</a>';
+	}
+	
+	function do_bbcode_img($action, $attributes, $content, $params, $node_object) {
+		if ($action == 'validate') {
+			$pattern = '/(https?:\/\/'.$this->CI->config->item('allowed_imagehosts').'[^\s\'\"<>()]+(\.(jpg|jpeg|gif|png|tif|tiff|bmp)))/is';
+			if(!preg_match($pattern, $content))
+            	return false;
+        	return true;
+		}
+		return '<img src="'.htmlspecialchars($content).'" alt="'.htmlspecialchars($content).'" onload="scale(this);" onclick="scale(this);" >';
+	}
+	
 	public function __construct()
 	{
 		$this->CI =& get_instance();
+		require_once('stringparser_bbcode.class.php');
 		
-		$tags = array();
-		$tags['b'] = array('type' => BBCODE_TYPE_NOARG, 'open_tag' => '<strong>', 'close_tag' => '</strong>', 'flags' => BBCODE_FLAGS_ARG_PARSING);
-		$tags['i'] = array('type' => BBCODE_TYPE_NOARG, 'open_tag' => '<em>', 'close_tag' => '</em>', 'flags' => BBCODE_FLAGS_ARG_PARSING);
-		$tags['u'] = array('type' => BBCODE_TYPE_NOARG, 'open_tag' => '<u>', 'close_tag' => '</u>', 'flags' => BBCODE_FLAGS_ARG_PARSING);
-		$tags['url'] = array(
-		'type'              =>  BBCODE_TYPE_OPTARG, 
-		'open_tag'          =>  '<a href="{PARAM}">', 
-		'close_tag'         =>  '</a>',
-		'childs'            =>	'b,i,img',
-		'default_arg'       =>	'{CONTENT}',
-		);
+		$this->bbcode = new StringParser_BBCode();
+		$this->bbcode->addFilter(STRINGPARSER_FILTER_PRE, array(&$this, 'convertlinebreaks'));
 		
-		$this->bbcode = bbcode_create($tags);
+		$this->bbcode->addCode('b', 'simple_replace', null, array('start_tag' => '<strong>', 'end_tag' => '</strong>'), 'inline', array('block', 'inline'), array());
+		$this->bbcode->addCode('i', 'simple_replace', null, array('start_tag' => '<em>', 'end_tag' => '</em>'), 'inline', array('block', 'inline'), array());
+		$this->bbcode->addCode('u', 'simple_replace', null, array('start_tag' => '<u>', 'end_tag' => '</u>'), 'inline', array('block', 'inline'), array());
+		$this->bbcode->addCode('s', 'simple_replace', null, array('start_tag' => '<s>', 'end_tag' => '</s>'), 'inline', array('block', 'inline'), array());
+		$this->bbcode->addCode('url', 'usecontent', array(&$this, 'do_bbcode_url'), array('usecontent_param' => 'default'), 'link', array('block', 'inline'), array());
+		$this->bbcode->addCode('img', 'usecontent', array(&$this, 'do_bbcode_img'), array(), 'inline', array('block', 'inline'), array());
 		
-		bbcode_add_smiley($this->bbcode, "\n", '<br>');
+		/*bbcode_add_smiley($this->bbcode, "\n", '<br>');
 		$this->smiley(':angry:', '/static/common/smileys/angry.gif');
 		$this->smiley(':-D'	, '/static/common/smileys/biggrin.gif');
 		$this->smiley(':D'	, '/static/common/smileys/biggrin.gif');
@@ -60,15 +87,11 @@ class TextFormat {
 		$this->smiley(':wtf:'	, '/static/common/smileys/wtf.gif');
 		$this->smiley(':wub:'	, '/static/common/smileys/wub.gif');
 		$this->smiley(':baconbits:', '/static/common/smileys/ilbb.gif');
-		$this->smiley(':iluvbacon:', '/static/common/smileys/ilbacon.gif');
+		$this->smiley(':iluvbacon:', '/static/common/smileys/ilbacon.gif');*/
 	}
 	
 	public function parse($str) {
-		return auto_link(bbcode_parse($this->bbcode, $str));
-	}
-	
-	public function smiley($t, $img) {
-		bbcode_add_smiley($this->bbcode, $t, '<img src="'.$img.'" alt="'.$t.'">');
+		return $this->bbcode->parse($str);
 	}
 	
 	public function __destruct()

@@ -4,5 +4,7 @@
 	Contact <?= $email ?> for enquiries.<br><br>
 	This page was created in {elapsed_time} second(s) on <?= date("d M Y, H:i O") ?>.
 </div>
+<div id="lightbox" class="lightbox"></div>
+<div id="curtain" class="curtain"></div>
 </body>
 </html>
