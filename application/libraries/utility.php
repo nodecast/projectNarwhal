@@ -181,8 +181,19 @@ class Utility {
 		if ($total_pages>1) { return $pages; }
 	}
 	
+	function format_name($id) {
+		$this->load->model('usermodel');
+		$data = $this->usermodel->getData($id);
+		
+		return '<a href="/user/view/'.$data['id'].'">'.$data['username'].'</a>';
+	}
+	
 	// TODO this does nothing right now
-	function log($str) {
+	/* codes:
+	0 - normal
+	-10 - problem
+	*/
+	function log($str, $code = 0) {
 	}
 }
 

@@ -52,6 +52,8 @@ class AccountModel extends CI_Model {
 		$data['profile'] = "";
 		
 		$this->mongo->db->users->save($data);
+		
+		return $data['id'];
 	}
 
 	/*

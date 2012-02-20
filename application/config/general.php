@@ -31,6 +31,8 @@ $config['torrent_maxsize'] = 2097152; // 2 MiB
 //Freeleech size, any torrents larger than this are freeleech
 $config['freeleech_size'] = 10737418240; // 10 GiB
 
+//Avatar for 'system'
+$config['system_avatar'] = "/static/common/avatar_system.png";
 
 //CACHE
 //User data cache time, in seconds

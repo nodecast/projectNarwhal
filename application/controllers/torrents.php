@@ -36,12 +36,14 @@ class Torrents extends CI_Controller {
 	}
 	
 	public function upload() {
+		$this->utility->enforce_perm('site_torrents_upload');
+		
 		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 		$this->form_validation->set_rules('title', 'title', 'required');
 		$this->form_validation->set_rules('type', 'category', 'required');
 		$this->form_validation->set_rules('tags[]', 'tags', 'required');
 		$this->form_validation->set_rules('description', 'description', 'required');
-		$this->form_validation->set_rules('file_input', 'file_input', 'callback_file_upload');
+		$this->form_validation->set_rules('file_input', 'file_input', 'callback__file_upload');
 		
 		//metadata based rules
 		$c = $this->config->item('categories');
@@ -105,27 +107,31 @@ class Torrents extends CI_Controller {
 			//save the file
 			file_put_contents($this->config->item('root').'/torrents/'.$data['id'].'.torrent', $this->torrent->enc());
 			
+			// log
+			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has uploaded torrent '.$data['id'].' "'.$data['name'].'"');
+			
 			// TODO irc announce
+			
 		}
 	}
 	
-	public function file_upload($file) {
+	public function _file_upload($file) {
 		$file = $_FILES['file_input'];
 
 		if($file['error'] > 2 && $file['error'] != 4) {
-			$this->form_validation->set_message('file_upload', 'An unexpected error has occurred. Please try again. Code: '.$file['error']);
+			$this->form_validation->set_message('_file_upload', 'An unexpected error has occurred. Please try again. Code: '.$file['error']);
 			return false;
 		}
 		if($file['size'] > $this->config->item('torrent_maxsize') || $file['error'] == 1 || $file['error'] == 2) {
-			$this->form_validation->set_message('file_upload', 'Your torrent file may not be larger than '.$this->utility->format_bytes($file['size']).'. Try increasing your piece size.');
+			$this->form_validation->set_message('_file_upload', 'Your torrent file may not be larger than '.$this->utility->format_bytes($file['size']).'. Try increasing your piece size.');
 			return false;
 		}
 		if(!is_uploaded_file($file['tmp_name']) || !filesize($file['tmp_name']) || $file['error'] == 4) {
-			$this->form_validation->set_message('file_upload', 'You must select a file to upload!');
+			$this->form_validation->set_message('_file_upload', 'You must select a file to upload!');
 			return false;
 		}
 		if(end(explode('.', $file['name'])) !== "torrent") {
-			$this->form_validation->set_message('file_upload', 'You have not selected a valid torrent file.');
+			$this->form_validation->set_message('_file_upload', 'You have not selected a valid torrent file.');
 			return false;
 		}
 		
@@ -140,10 +146,28 @@ class Torrents extends CI_Controller {
 		
 		$this->infohash = pack("H*", sha1($this->torrent->Val['info']->enc()));
 		if($this->torrentmodel->getByInfohash($this->infohash)) {
-			$this->form_validation->set_message('file_upload', 'The same torrent has already been uploaded.');
+			$this->form_validation->set_message('_file_upload', 'The same torrent has already been uploaded.');
 			return false;
 		}
 	
 		return true;
+	}
+	
+	public function view($id = -1) {
+		$this->utility->enforce_perm('site_torrents_view');
+		$this->load->model('usermodel');
+		$torrent = $this->torrentmodel->getData($id, false);
+		
+		if(!$torrent) {
+			$this->load->view('torrents/view_dne');
+		} else {
+			$data = array();
+			$data['torrent'] = $torrent;
+			$data['owner'] = $this->usermodel->getData($torrent['owner']);
+			$data['user'] = $this->session->all_userdata();
+			$data['categories'] = $this->config->item('categories');
+			$data['ci'] =& get_instance();
+			$this->load->view('torrents/view', $data);
+		}
 	}
 }

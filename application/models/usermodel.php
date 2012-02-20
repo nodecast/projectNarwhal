@@ -10,6 +10,10 @@ class UserModel extends CI_Model {
 	Gets the data for a given username.
 	*/
 	function getData($id, $cache = true) {
+		if($id == 0) { //system
+			return array('id' => 0, 'username' => 'System', 'avatar' => $this->config->item('system_avatar'));
+		}
+		
 		if($cache) {
 			if(!($data = $this->mcache->get('user_'.$id.'_data'))) {
 				$data = $this->mongo->db->users->findOne(array('id'=>$id));

@@ -16,7 +16,7 @@ class User extends CI_Controller {
 
 	public function view($id = -1) {
 		$this->usermodel->buildpercentile(0);
-		if($id == -1 || !is_numeric($id))
+		if($id <= 0 || !is_numeric($id))
 			$id = $this->session->userdata('id'); 
 		$id = floor($id);
 

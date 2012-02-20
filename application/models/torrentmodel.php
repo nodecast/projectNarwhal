@@ -26,6 +26,7 @@ class TorrentModel extends CI_Model {
 	Gets the data for a given torrent
 	*/
 	function getData($id, $cache = true) {
+		$id = intval($id);
 		if($cache) {
 			if(($data = $this->mcache->get('torrent_'.$id.'_data')) === FALSE) {
 				$data = $this->mongo->db->torrents->findOne(array('id'=>$id));
@@ -33,7 +34,7 @@ class TorrentModel extends CI_Model {
 			}
 			return $data;
 		} else {
-			return $this->mongo->db->users->findOne(array('id'=>$id));
+			return $this->mongo->db->torrents->findOne(array('id' => $id));
 		}
 	}
 	
