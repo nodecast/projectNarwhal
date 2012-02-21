@@ -3,7 +3,7 @@
 	<p>
 		Your personal announce url is:
 		<br>
-		<input type="text" value="" size="71">
+		<input type="text" value="<?= $announce; ?>" size="71">
 	</p>
 	<?= form_open_multipart('torrents/upload/') ?>
 		<div id="upload_table">

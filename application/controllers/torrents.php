@@ -70,6 +70,7 @@ class Torrents extends CI_Controller {
 		if(!$this->form_validation->run()) {
 			$data = array();
 			$data['categories'] = $this->config->item('categories');
+			$data['announce'] = $this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce';
 			$this->load->view('torrents/upload', $data);
 		} else {
 			//continue processing on the torrent files
@@ -105,7 +106,7 @@ class Torrents extends CI_Controller {
 			$this->mongo->db->torrents->save($data);
 			
 			//save the file
-			file_put_contents($this->config->item('root').'/torrents/'.$data['id'].'.torrent', $this->torrent->enc());
+			file_put_contents(APPPATH.'/torrents/'.$data['id'].'.torrent', $this->torrent->enc());
 			
 			// log
 			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has uploaded torrent '.$data['id'].' "'.$data['name'].'"');
@@ -171,5 +172,29 @@ class Torrents extends CI_Controller {
 			$data['ci'] =& get_instance();
 			$this->load->view('torrents/view', $data);
 		}
+	}
+	
+	public function download($id = -1) {
+		$this->utility->enforce_perm('site_torrents_download');
+		$this->load->model('usermodel');
+		require(APPPATH.'/libraries/torrent.php');
+		
+		if(!is_numeric($id))
+			show_error('Torrent not found.', 404);
+		$file = APPPATH.'/torrents/'.$id.'.torrent';
+		if (!is_file($file) || !is_readable($file))
+			show_error('Torrent not found.', 404);
+		
+		$tor = new TORRENT(file_get_contents($file));
+		$tor->set_announce_url($this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce');
+		unset($tor->Val['announce-list']);
+		
+		//TODO txt download
+		header('Content-Disposition: attachment; filename="'.$this->utility->torrent_name($id, false).'.torrent"');
+		header('Content-Type: application/x-bittorrent');
+		
+		echo $tor->enc();
+		$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') downloaded torrent '.$id);
+		exit();
 	}
 }

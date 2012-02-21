@@ -48,7 +48,7 @@
 			<tr class="group_torrent">
 				<td class="center"><a href="#"><img src="/static/common/category/<?= $categories[$torrent['category']]['icon']; ?>" alt="<?= $categories[$torrent['category']]['name']; ?>" title="<?= $categories[$torrent['category']]['name']; ?>" width="24" height="24"></a></td>
 				<td>
-					<span>[<a href=#" title="Download">DL</a>&nbsp;|&nbsp;<a href="#" title="Report">RP</a>]</span>
+					<span>[<a href="/torrents/download/<?= $torrent['id']; ?>" title="Download">DL</a>&nbsp;|&nbsp;<a href="#" title="Report">RP</a>]</span>
 					<?= $torrent['name']; ?>
 				</td>
 				<td><?= number_format(count($torrent['files'])); ?></td>

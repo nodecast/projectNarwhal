@@ -181,6 +181,13 @@ class Utility {
 		if ($total_pages>1) { return $pages; }
 	}
 	
+	function torrent_name($id, $pretty = true) {
+		$this->CI->load->model('torrentmodel');
+		$d = $this->CI->torrentmodel->getData($id);
+		return $d['name'];
+		// TODO metadata and such
+	}
+	
 	function format_name($id) {
 		$this->load->model('usermodel');
 		$data = $this->usermodel->getData($id);

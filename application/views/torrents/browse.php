@@ -21,7 +21,7 @@
 	<tr class="torrent  ">
 		<td class="center"><a href="#"><img src="/static/common/category/<?= $categories[$torrent['category']]['icon']; ?>" alt="<?= $categories[$torrent['category']]['name']; ?>" title="<?= $categories[$torrent['category']]['name']; ?>" width="24" height="24"></a></td>
 		<td>
-			<span>[<a href="#" title="Download">DL</a> | <a href="#" title="Report">RP</a>] </span>
+			<span>[<a href="/torrents/download/<?= $torrent['id']; ?>" title="Download">DL</a> | <a href="#" title="Report">RP</a>] </span>
 			<a href="/torrents/view/<?= $torrent['id']; ?>" title="View Torrent"><?= $torrent['name']; ?></a>
 			<?php if($torrent['freetorrent']) echo "[<strong>Freeleech!</strong>]"; ?>
 			<br>
