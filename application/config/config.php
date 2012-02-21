@@ -293,6 +293,7 @@ $config['global_xss_filtering'] = TRUE;
 | 'csrf_cookie_name' = The cookie name
 | 'csrf_expire' = The number in seconds the token should expire.
 */
+
 $config['csrf_protection'] = TRUE;
 $config['csrf_token_name'] = 'narwhal_token';
 $config['csrf_cookie_name'] = 'narwhal_sec';

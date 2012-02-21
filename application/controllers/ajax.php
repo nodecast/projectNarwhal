@@ -30,4 +30,10 @@ class Ajax extends CI_Controller {
 		//TODO
 		$this->load->view('ajax/peerlist');
 	}
+	
+	public function preview()
+	{
+		$this->load->library('textformat');
+		echo $this->textformat->parse($this->input->post('text'));
+	}
 }

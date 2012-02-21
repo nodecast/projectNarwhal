@@ -109,7 +109,9 @@ blockquote
 
 pre
 {
-	background:#ddd;
+	background:#ccc;
+	font-family: monospace;
+	padding:5px;
 }
 
 input
@@ -518,6 +520,46 @@ td h4,td p
   z-index:1002;
   overflow:auto;
   padding:0;
+}
+
+span.size1 {
+font-size:.75em;
+}
+
+span.size2 {
+font-size:1em;
+}
+
+span.size3 {
+font-size:1.25em;
+}
+
+span.size4 {
+font-size:1.5em;
+}
+
+span.size5 {
+font-size:1.75em;
+}
+
+span.size6 {
+font-size:2em;
+}
+
+span.size7 {
+font-size:2.25em;
+}
+
+span.size8 {
+font-size:2.5em;
+}
+
+span.size9 {
+font-size:2.75em;
+}
+
+span.size10 {
+font-size:3em;
 }
 
 .center

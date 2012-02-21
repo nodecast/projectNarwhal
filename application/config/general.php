@@ -17,7 +17,7 @@ $config['open_registration'] = true;
 $config['max_users'] = 5000;
 
 //Site name
-$config['site_name'] = "Narwhal";
+$config['site_name'] = "Project Narwhal";
 
 //Page title - DO NOT CHANGE
 $config['page_title'] = $config['site_name'];
