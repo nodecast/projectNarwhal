@@ -358,9 +358,6 @@ $config['rewrite_short_tags'] = FALSE;
 */
 $config['proxy_ips'] = '';
 
-//root directory (often /var/www), no trailing slash
-$config['root'] = dirname(dirname(__FILE__));
-
 
 /* End of file config.php */
 /* Location: ./application/config/config.php */

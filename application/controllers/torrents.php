@@ -136,7 +136,7 @@ class Torrents extends CI_Controller {
 			return false;
 		}
 		
-		require($this->config->item('root').'/libraries/torrent.php');
+		require(APPPATH.'/libraries/torrent.php');
 		$this->torrent = new TORRENT(file_get_contents($file['tmp_name']));
 		$this->torrent->make_private();
 		$this->torrent->set_announce_url('ANNOUNCE_URL');

@@ -83,7 +83,7 @@ class TextFormat {
 	public function __construct()
 	{
 		$this->CI =& get_instance();
-		require_once('stringparser_bbcode.class.php');
+		require_once(APPPATH.'/libraries/stringparser_bbcode.class.php');
 		
 		$this->bbcode = new StringParser_BBCode();
 		$this->bbcode->addParser(array('block', 'inline', 'link', 'img', 'pre'), 'htmlspecialchars');
@@ -204,10 +204,5 @@ DERP;
 		elseif ($IsLink && $URL) { return $IsLink.$URL; }
 		elseif (!$IsLink && (!$URL || $URL == '/"' || $URL == "/'")) { return $this->CI->config->item('site_name'); }
 		elseif (!$IsLink && $URL) { return $URL; }
-	}
-	
-	public function __destruct()
-	{
-		bbcode_destroy($this->bbcode);
 	}
 }
