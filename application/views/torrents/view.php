@@ -15,23 +15,28 @@
 		<?php } ?>
 		<div class="box">
 			<div class="head"><strong>Tags</strong></div>
-			<ul class="stats nobullet">
-				<?php foreach($torrent['tags'] as $tag): ?>
-				<li>
+			<ul class="stats nobullet" id="tags">
+<?php foreach($torrent['tags'] as $tag): ?>
+				<li id="tag_<?= $tag ?>">
+					<?= form_open('/torrents/tag', array('id' => 'tag_delete_'.$tag), array('action' => 'delete', 'id' => $torrent['id'], 'tag' => $tag)); ?>
 					<a href="#"><?= str_replace('.', ' ', $tag) ?></a>
-					<a href="#">[X]</a>
+					<?= ($can_delete_tags) ? '<a href="javascript:$(\'#tag_delete_<?= $tag ?>\').submit();">[X]</a>' : ''; ?>
+					</form>
 				</li>
-				<?php endforeach; ?>
+<?php endforeach; ?>
 			</ul>
 		</div>
+		<?php if($can_add_tags): ?>
 		<div class="box">
 			<div class="head"><strong>Add tag</strong></div>
 			<div class="body center">
-				<?php
-				// TODO this
-				?>
+				<?= form_open('/torrents/tag', '', array('action' => 'add', 'id' => $torrent['id'])); ?>
+					<input type="text" name="tag"><br>
+					<input type="submit" name="submit" value="+">
+				</form>
 			</div>
 		</div>
+		<?php endif; ?>
 	</div>
 	
 	<div class="main_column">

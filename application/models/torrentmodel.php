@@ -44,5 +44,30 @@ class TorrentModel extends CI_Model {
 	function getByInfohash($hash) {
 		return $this->mongo->db->torrents->findOne(array('info_hash' => new MongoBinData($hash)));
 	}
+	
+	/*
+	Adds a new tag to a torrent
+	*/
+	function addTag($id, $tag) {
+		$data = $this->getData($id, false);
+		$data = $data['tags'];
+		$data[] = $tag;
+		$data = array_unique($data);
+		$this->mongo->db->torrents->update(array('id' => $id), array('$set' => array('tags' => $data)));
+	}
+	
+	/*
+	Removes a tag from a torrent
+	*/
+	function removeTag($id, $tag) {
+		$data = $this->getData($id, false);
+		$data = $data['tags'];
+		foreach($data as $key => $value) {
+			if($value == $tag)
+				unset($data[$key]);
+		}
+		$data = array_values($data);
+		$this->mongo->db->torrents->update(array('id' => $id), array('$set' => array('tags' => $data)));
+	}
 }
 ?>

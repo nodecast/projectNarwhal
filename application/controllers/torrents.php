@@ -170,6 +170,8 @@ class Torrents extends CI_Controller {
 			$data['user'] = $this->session->all_userdata();
 			$data['categories'] = $this->config->item('categories');
 			$data['ci'] =& get_instance();
+			$data['can_delete_tags'] = $this->utility->check_perm('site_torrents_tags_delete');
+			$data['can_add_tags'] = $this->utility->check_perm('site_torrents_tags_add');
 			$this->load->view('torrents/view', $data);
 		}
 	}
@@ -196,5 +198,28 @@ class Torrents extends CI_Controller {
 		echo $tor->enc();
 		$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') downloaded torrent '.$id);
 		exit();
+	}
+	
+	public function tag() {
+		$action = $this->input->post('action');
+		$id = $this->input->post('id');
+		$tag = $this->input->post('tag');
+		if(!$this->torrentmodel->getData($id)) {
+			show_error('The page you have requested could not be found.', 404);
+		}
+		if(!$tag) {
+			redirect('/torrents/view/'.$id);
+		}
+		if($action == 'add') {
+			$this->utility->enforce_perm('site_torrents_tags_add');
+			$this->torrentmodel->addTag(intval($id), $tag);
+			redirect('/torrents/view/'.$id);
+		} else if($action == 'delete') {
+			$this->utility->enforce_perm('site_torrents_tags_delete');
+			$this->torrentmodel->removeTag(intval($id), $tag);
+			redirect('/torrents/view/'.$id);
+		} else {
+			show_error('The page you have requested could not be found.', 404);
+		}
 	}
 }

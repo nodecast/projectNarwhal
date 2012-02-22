@@ -30,6 +30,9 @@ class TextFormat {
 	}
 	
 	function do_bbcode_img($action, $attributes, $content, $params, $node_object) {
+		if(isset($attributes['default'])) {
+			$content = $attributes['default'];
+		}
 		if ($action == 'validate') {
 			$pattern = '/(https?:\/\/'.$this->CI->config->item('allowed_imagehosts').'[^\s\'\"<>()]+(\.(jpg|jpeg|gif|png|tif|tiff|bmp)))/is';
 			if(!preg_match($pattern, $content))
@@ -86,9 +89,9 @@ class TextFormat {
 		require_once(APPPATH.'/libraries/stringparser_bbcode.class.php');
 		
 		$this->bbcode = new StringParser_BBCode();
-		$this->bbcode->addParser(array('block', 'inline', 'link', 'img', 'pre'), 'htmlspecialchars');
+		$this->bbcode->setGlobalCaseSensitive(false);
 		$this->bbcode->addParser(array('block', 'inline', 'link'), 'nl2br');
-		$this->bbcode->addParser(array('block', 'inline'), array($this, 'smiley'));
+		$this->bbcode->addParser(array('block', 'inline'), array($this, 'smileys'));
 		$this->bbcode->addParser(array('block', 'inline'), array($this, 'urls'));
 		
 		$this->bbcode->addCode('b', 'simple_replace', null, array('start_tag' => '<strong>', 'end_tag' => '</strong>'), 'inline', array('block', 'inline'), array());
@@ -99,7 +102,7 @@ class TextFormat {
 		$this->bbcode->addCode('quote', 'callback_replace', array(&$this, 'do_bbcode_quote'), array('usecontent_param' => 'default'), 'block', array('block', 'inline'), array());
 		$this->bbcode->addCode('align', 'usecontent?', array(&$this, 'do_bbcode_align'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline'), array());
 		$this->bbcode->addCode('size', 'usecontent?', array(&$this, 'do_bbcode_size'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline'), array());
-		$this->bbcode->addCode('img', 'usecontent?', array(&$this, 'do_bbcode_img'), array(), 'img', array('block', 'inline'), array());
+		$this->bbcode->addCode('img', 'usecontent?', array(&$this, 'do_bbcode_img'), array('usecontent_param' => 'default'), 'img', array('block', 'inline'), array());
 		$this->bbcode->addCode('youtube', 'usecontent?', array(&$this, 'do_bbcode_yt'), array(), 'block', array('block', 'inline'), array());
 		$this->bbcode->addCode('color', 'usecontent?', array(&$this, 'do_bbcode_color'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline'), array());
 		$this->bbcode->addCode('list', 'simple_replace', null, array('start_tag' => '<ul>', 'end_tag' => '</ul>'), 'list', array('block', 'inline', 'listitem'), array());
@@ -120,6 +123,7 @@ DERP;
 		$this->bbcode->addCode('spoiler', 'simple_replace', null, array('start_tag' => $spoiler1, 'end_tag' => $spoiler2), 'pre', array('block', 'inline'), array());
 		
 		$this->bbcode->setCodeFlag('*', 'closetag', BBCODE_CLOSETAG_OPTIONAL);
+		$this->bbcode->setCodeFlag('img', 'closetag', BBCODE_CLOSETAG_OPTIONAL);
 		
 		$this->smileys = array(
 			':angry:' => 'angry.gif',
@@ -170,7 +174,7 @@ DERP;
 		return $this->bbcode->parse($str);
 	}
 	
-	public function smiley($str) {
+	public function smileys($str) {
 		foreach($this->smileys as $k => $v) {
 			$str = str_replace($k, '<img src="/static/common/smileys/'.$v.'" alt="'.$k.'" title="'.$k.'">', $str);
 		}
