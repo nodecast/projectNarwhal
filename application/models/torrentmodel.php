@@ -21,6 +21,14 @@ class TorrentModel extends CI_Model {
 		}
 		return $data;
 	}
+	
+	/*
+	Gets torrent comments
+	*/
+	function getComments($id, $limit = 10, $skip = 0, $cache = true) {
+		$data = $this->getData($id, $cache);
+		return $data['comments'];
+	}
 
 	/*
 	Gets the data for a given torrent

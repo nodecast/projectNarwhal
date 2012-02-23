@@ -155,11 +155,15 @@ class Torrents extends CI_Controller {
 		return true;
 	}
 	
-	public function view($id = -1) {
+	public function view($id = -1, $page = 1) {
 		$this->utility->enforce_perm('site_torrents_view');
 		$this->load->model('usermodel');
 		$this->load->library('textformat');
 		$torrent = $this->torrentmodel->getData($id, false);
+		
+		if($page < 1)
+			$page = 1;
+		$off = ($page - 1) * $this->config->item('torrent_perpage');
 		
 		if(!$torrent) {
 			$this->load->view('torrents/view_dne');
@@ -172,6 +176,9 @@ class Torrents extends CI_Controller {
 			$data['ci'] =& get_instance();
 			$data['can_delete_tags'] = $this->utility->check_perm('site_torrents_tags_delete');
 			$data['can_add_tags'] = $this->utility->check_perm('site_torrents_tags_add');
+			$data['per_page'] = $this->config->item('torrent_comments_perpage');
+			$data['comments'] = $this->torrentmodel->getComments($id, $data['per_page'], $off, false);
+			$data['page'] = $page;
 			$this->load->view('torrents/view', $data);
 		}
 	}

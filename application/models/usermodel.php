@@ -11,7 +11,7 @@ class UserModel extends CI_Model {
 	*/
 	function getData($id, $cache = true) {
 		if($id == 0) { //system
-			return array('id' => 0, 'username' => 'System', 'avatar' => $this->config->item('system_avatar'));
+			return array('id' => 0, 'username' => 'System', 'title' => 'Totally Not Self-Aware', 'avatar' => $this->config->item('system_avatar'));
 		}
 		
 		if($cache) {

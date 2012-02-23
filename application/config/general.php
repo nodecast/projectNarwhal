@@ -37,18 +37,16 @@ $config['system_avatar'] = "/static/common/avatar_system.png";
 //CACHE
 //User data cache time, in seconds
 $config['userdata_cache'] = 300; // 5 min
-
 //Stats cache time, in seconds
 $config['stats_cache'] = 86400; // 24 hours
-
 //Configuration data cache time, in seconds
 $config['config_cache'] = 900; // 15 min
-
 //Torrent data (browsing, etc.) cache time, in seconds
 $config['torrent_cache'] = 300; // 5 min
 
 //PERPAGE
 $config['torrent_perpage'] = 50;
+$config['torrent_comments_perpage'] = 10;
 
 //site urls
 $config['https_siteurl'] = '192.168.1.11';
