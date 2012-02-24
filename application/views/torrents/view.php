@@ -108,9 +108,9 @@
 			</div>
 		</div>
 		
-		<?php if(count($comments) > $per_page): ?>
+		<?php if($results > $per_page): ?>
 			<div class="linkbox">
-				<?= $ci->utility->get_page_nav('/torrents/view/'.$torrent['id'].'/', $page,  count($comments), $per_page); ?>
+				<?= $ci->utility->get_page_nav('/torrents/view/'.$torrent['id'].'/', $page,  $results, $per_page); ?>
 			</div>
 		<?php endif; ?>
 
@@ -124,10 +124,10 @@
 		<div class="box pad" style="padding:20px 10px 10px 10px;">
 			<form id="quickpostform" action="" method="post" style="display: block; text-align: center;">
 				<div id="quickreplypreview" class="box" style="text-align: left; display: none; padding: 10px;"></div>
-				<div id="quickreplytext">
+				<div id="quickreplytext" class="center">
 					<input type="hidden" name="action" value="reply" />
 					<input type="hidden" name="thread" value="193" />
-					<textarea id="quickpost" name="body"  style="width:100%" rows="8"></textarea> <br />
+					<textarea id="quickpost" name="body" style="width:90%" rows="8"></textarea> <br />
 				</div>
 				<div id="quickreplybuttons">
 					<input type="button" value="Toggle Visual" onclick="tinyMCE.execCommand('mceToggleEditor',false,'quickpost');" />

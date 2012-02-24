@@ -163,7 +163,7 @@ class Torrents extends CI_Controller {
 		
 		if($page < 1)
 			$page = 1;
-		$off = ($page - 1) * $this->config->item('torrent_perpage');
+		$off = ($page - 1) * $this->config->item('torrent_comments_perpage');
 		
 		if(!$torrent) {
 			$this->load->view('torrents/view_dne');
@@ -178,6 +178,8 @@ class Torrents extends CI_Controller {
 			$data['can_add_tags'] = $this->utility->check_perm('site_torrents_tags_add');
 			$data['per_page'] = $this->config->item('torrent_comments_perpage');
 			$data['comments'] = $this->torrentmodel->getComments($id, $data['per_page'], $off, false);
+			$data['results'] = $data['comments']['length'];
+			$data['comments'] = $data['comments']['data'];
 			$data['page'] = $page;
 			$this->load->view('torrents/view', $data);
 		}

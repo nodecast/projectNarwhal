@@ -27,7 +27,11 @@ class TorrentModel extends CI_Model {
 	*/
 	function getComments($id, $limit = 10, $skip = 0, $cache = true) {
 		$data = $this->getData($id, $cache);
-		return $data['comments'];
+		$data = $data['comments'];
+		$l = count($data);
+		$data = array_slice($data, $skip, $limit);
+		var_dump($skip);
+		return array('data' => $data, 'length' => $l);
 	}
 
 	/*

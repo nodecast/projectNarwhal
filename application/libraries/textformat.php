@@ -83,6 +83,22 @@ class TextFormat {
 		return '<span class="size'.$size.'">'.$content.'</span>';
 	}
 	
+	function do_bbcode_spoiler($action, $attributes, $content, $params, $node_object) {
+		if(!isset($attributes['default'])) {
+			$text = 'Spoiler';
+		} else {
+			$text = $attributes['default'];
+		}
+		if($action == 'validate') {
+    	    return true;
+    	}
+    	$spoiler1 = <<<DERP
+<div><div style="text-align:center;"><input type="button" value="Show/Hide %s" onclick="if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = '';this.innerText = ''; this.value = 'Hide %s'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerText = ''; this.value = 'Show %s'; }"></div><div><div style="display: none;">
+DERP;
+		$spoiler2 = '</div></div></div>';
+    	return sprintf($spoiler1, $text, $text, $text).$content.$spoiler2;
+	}
+	
 	public function __construct()
 	{
 		$this->CI =& get_instance();
@@ -94,21 +110,26 @@ class TextFormat {
 		$this->bbcode->addParser(array('block', 'inline'), array($this, 'smileys'));
 		$this->bbcode->addParser(array('block', 'inline'), array($this, 'urls'));
 		
-		$this->bbcode->addCode('b', 'simple_replace', null, array('start_tag' => '<strong>', 'end_tag' => '</strong>'), 'inline', array('block', 'inline'), array());
-		$this->bbcode->addCode('i', 'simple_replace', null, array('start_tag' => '<em>', 'end_tag' => '</em>'), 'inline', array('block', 'inline'), array());
-		$this->bbcode->addCode('u', 'simple_replace', null, array('start_tag' => '<u>', 'end_tag' => '</u>'), 'inline', array('block', 'inline'), array());
-		$this->bbcode->addCode('s', 'simple_replace', null, array('start_tag' => '<s>', 'end_tag' => '</s>'), 'inline', array('block', 'inline'), array());
-		$this->bbcode->addCode('url', 'usecontent?', array(&$this, 'do_bbcode_url'), array('usecontent_param' => 'default'), 'link', array('block', 'inline'), array());
-		$this->bbcode->addCode('quote', 'callback_replace', array(&$this, 'do_bbcode_quote'), array('usecontent_param' => 'default'), 'block', array('block', 'inline'), array());
-		$this->bbcode->addCode('align', 'usecontent?', array(&$this, 'do_bbcode_align'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline'), array());
-		$this->bbcode->addCode('size', 'usecontent?', array(&$this, 'do_bbcode_size'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline'), array());
-		$this->bbcode->addCode('img', 'usecontent?', array(&$this, 'do_bbcode_img'), array('usecontent_param' => 'default'), 'img', array('block', 'inline'), array());
-		$this->bbcode->addCode('youtube', 'usecontent?', array(&$this, 'do_bbcode_yt'), array(), 'block', array('block', 'inline'), array());
-		$this->bbcode->addCode('color', 'usecontent?', array(&$this, 'do_bbcode_color'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline'), array());
+		$this->bbcode->addCode('b', 'simple_replace', null, array('start_tag' => '<strong>', 'end_tag' => '</strong>'), 'inline', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('i', 'simple_replace', null, array('start_tag' => '<em>', 'end_tag' => '</em>'), 'inline', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('u', 'simple_replace', null, array('start_tag' => '<u>', 'end_tag' => '</u>'), 'inline', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('s', 'simple_replace', null, array('start_tag' => '<s>', 'end_tag' => '</s>'), 'inline', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('url', 'usecontent?', array(&$this, 'do_bbcode_url'), array('usecontent_param' => 'default'), 'link', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('quote', 'callback_replace', array(&$this, 'do_bbcode_quote'), array(), 'block', array('block', 'inline'), array());
+		$this->bbcode->addCode('align', 'usecontent?', array(&$this, 'do_bbcode_align'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('size', 'usecontent?', array(&$this, 'do_bbcode_size'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('img', 'usecontent?', array(&$this, 'do_bbcode_img'), array('usecontent_param' => 'default'), 'img', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('youtube', 'usecontent?', array(&$this, 'do_bbcode_yt'), array(), 'block', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('color', 'usecontent?', array(&$this, 'do_bbcode_color'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline', 'list'), array());
 		$this->bbcode->addCode('list', 'simple_replace', null, array('start_tag' => '<ul>', 'end_tag' => '</ul>'), 'list', array('block', 'inline', 'listitem'), array());
 		$this->bbcode->addCode('*', 'simple_replace', null, array('start_tag' => '<li>', 'end_tag' => '</li>'), 'listitem', array('list'), array());
-		$this->bbcode->addCode('code', 'simple_replace', null, array('start_tag' => '<pre>', 'end_tag' => '</pre>'), 'pre', array('block', 'inline'), array());
-		$this->bbcode->addCode('pre', 'simple_replace', null, array('start_tag' => '<pre>', 'end_tag' => '</pre>'), 'pre', array('block', 'inline'), array());
+		$this->bbcode->addCode('code', 'simple_replace', null, array('start_tag' => '<pre>', 'end_tag' => '</pre>'), 'pre', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('pre', 'simple_replace', null, array('start_tag' => '<pre>', 'end_tag' => '</pre>'), 'pre', array('block', 'inline', 'list'), array());
+		
+		$this->bbcode->setOccurrenceType('img', 'image');
+		$this->bbcode->setOccurrenceType('youtube', 'video');
+		$this->bbcode->setMaxOccurrences('image', $this->CI->config->item('max_img_per_post'));
+		$this->bbcode->setMaxOccurrences('video', $this->CI->config->item('max_yt_per_post'));
 		
 		$mediainfo1 = <<<DERP
 <div><div style="text-align:center;"><input type="button" value="Show/Hide MediaInfo" onclick="if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = '';this.innerText = ''; this.value = 'Hide MediaInfo'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerText = ''; this.value = 'Show MediaInfo'; }"></div><div><div style="display: none;"><pre>
@@ -116,11 +137,7 @@ DERP;
 		$mediainfo2 = '</pre></div></div></div>';
 		$this->bbcode->addCode('mediainfo', 'simple_replace', null, array('start_tag' => $mediainfo1, 'end_tag' => $mediainfo2), 'pre', array('block', 'inline'), array());
 		
-		$spoiler1 = <<<DERP
-<div><div style="text-align:center;"><input type="button" value="Show/Hide Spoiler" onclick="if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = '';this.innerText = ''; this.value = 'Hide Spoiler'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerText = ''; this.value = 'Show Spoiler'; }"></div><div><div style="display: none;"><pre>
-DERP;
-		$spoiler2 = '</pre></div></div></div>';
-		$this->bbcode->addCode('spoiler', 'simple_replace', null, array('start_tag' => $spoiler1, 'end_tag' => $spoiler2), 'pre', array('block', 'inline'), array());
+		$this->bbcode->addCode('spoiler', 'callback_replace', array(&$this, 'do_bbcode_spoiler'), array(), 'block', array('block', 'inline', 'list'), array());
 		
 		$this->bbcode->setCodeFlag('*', 'closetag', BBCODE_CLOSETAG_OPTIONAL);
 		$this->bbcode->setCodeFlag('img', 'closetag', BBCODE_CLOSETAG_OPTIONAL);

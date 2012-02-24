@@ -216,7 +216,7 @@ class Utility {
 					<img src="'.$data['avatar'].'" width="150" alt="'.$data['username'].'\'s avatar" />
 				</td>
 				<td class="body" valign="top">
-					<div id="content592">
+					<div id="content'.$id.'">
 					'.$this->CI->textformat->parse($content).'
 					</div>
 				</td>

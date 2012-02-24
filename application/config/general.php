@@ -34,6 +34,11 @@ $config['freeleech_size'] = 10737418240; // 10 GiB
 //Avatar for 'system'
 $config['system_avatar'] = "/static/common/avatar_system.png";
 
+//regarding posts
+$config['max_img_per_post'] = 7;
+$config['max_yt_per_post'] = 2;
+$config['max_bytes_per_post'] = 8192; //8KiB
+
 //CACHE
 //User data cache time, in seconds
 $config['userdata_cache'] = 300; // 5 min
