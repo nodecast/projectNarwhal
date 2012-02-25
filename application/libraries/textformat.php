@@ -14,7 +14,9 @@ class TextFormat {
 				return false;
     	    return true;
     	}
-    	return '<a href="http://dereferer.org/?'.htmlspecialchars($url).'">'.$text.'</a>';
+    	$domain = parse_url($url, PHP_URL_HOST);
+    	$derefer = !($domain == $this->CI->config->item('http_siteurl')) && !($domain == $this->CI->config->item('https_siteurl'));
+    	return '<a href="'.($derefer ? 'http://dereferer.org/?' : '').htmlspecialchars($url).'">'.$text.'</a>';
 	}
 	
 	function do_bbcode_quote($action, $attributes, $content, $params, $node_object) {
