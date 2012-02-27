@@ -83,7 +83,7 @@ $config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'DONOR' => 
 $config['categories'] = array(
 	array('name' => 'Music', 'icon' => 'music.png', 'metadata' => array()),
 	array('name' => 'Applications', 'icon' => 'apps.png', 'metadata' => array()),
-	array('name' => 'E-Books', 'icon' => 'ebook.png', 'metadata' => array('author', 'format_ebook', 'isbn', 'genre_ebook'), 'secondary' => array('author', 'format_ebook')),
+	array('name' => 'E-Books', 'icon' => 'ebook.png', 'metadata' => array('author', 'format_ebook', 'isbn', 'genre_ebook', 'retail_ebook'), 'secondary' => array('author', 'format_ebook', 'retail_ebook')),
 	array('name' => 'Audiobooks', 'icon' => 'audiobook.png', 'metadata' => array()),
 	array('name' => 'E-Learning Videos', 'icon' => 'elearning.png', 'metadata' => array()),
 	array('name' => 'Magazines', 'icon' => 'magazines.png', 'metadata' => array()),
@@ -105,5 +105,6 @@ $config['metadata'] = array(
 	'format_ebook' => array('display' => 'Format(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('EPUB', 'MOBI', 'HTML', 'PDF', 'LIT', 'LRF', 'RTF')),
 	'isbn' => array('display' => 'ISBN', 'type' => 0, 'multiple' => false, 'required' => true),
 	'author' => array('display' => 'Author(s)', 'type' => 0, 'multiple' => true, 'required' => true),
-	'genre_ebook' => array('display' => 'Genre(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('Action/Adventure', 'Crime/Thriller', 'Food', 'History', 'Humor', 'Juvenile', 'Literary Classics', 'Math/Science/Tech', 'Political/Sociological/Religion', 'Romance', 'Science Fiction/Fantasy', 'Young Adult'))
+	'genre_ebook' => array('display' => 'Genre(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('Action/Adventure', 'Crime/Thriller', 'Food', 'History', 'Humor', 'Juvenile', 'Literary Classics', 'Math/Science/Tech', 'Political/Sociological/Religion', 'Romance', 'Science Fiction/Fantasy', 'Young Adult')),
+	'retail_ebook' => array('display' => 'Retail', 'type' => 2, 'required' => true)
  );

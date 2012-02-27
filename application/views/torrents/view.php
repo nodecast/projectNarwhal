@@ -62,6 +62,41 @@
 				<td><?= number_format($torrent['seeders']); ?></td>
 				<td><?= number_format($torrent['leechers']); ?></td>
 			</tr>
+		<?php if(count($torrent['metadata'])): // heh?>
+			<tr class="group_torrent">
+				<td colspan="7">
+					<table class="border left">
+						<tr class="colhead">
+							<td class="stat">Name</td>
+							<td width="100%">Value</td>
+						</tr>
+						<?php foreach($torrent['metadata'] as $key => $val):
+							$schema = $ci->config->item('metadata');
+							$schema = $schema[$key];
+							
+							if($schema['type'] == 0) {
+								$display = implode('<br>', $val);
+							}
+							if($schema['type'] == 1) {
+								$enum = array();
+								foreach($val as $v) {
+									$enum[] = $schema['enum'][$v];
+								}
+								$display = implode('<br>', $enum);
+							}
+							if($schema['type'] == 2) {
+								$display = ($val) ? '<span class="check">&#10004;</span>' : '<span class="x">&#10008;</span>';
+							}
+						?>
+						<tr>
+							<td class="metadata left"><strong><?= $schema['display']; ?></strong></td>
+							<td class="metadata left"><?= $display; ?></td>
+						</tr>
+						<?php endforeach; ?>
+					</table>
+				</td>
+			</tr>
+		<?php endif; ?>
 			<tr>
 				<td colspan="7">
 					<blockquote>

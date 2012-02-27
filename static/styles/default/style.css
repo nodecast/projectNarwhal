@@ -149,6 +149,11 @@ tr
   background:#e3e3e3;
 }
 
+tr.cancel_nth
+{
+	background:#e3e3e3;
+}
+
 tr:nth-child(even)
 {
   background:#cfcfcf;
@@ -441,6 +446,23 @@ td h4,td p
   margin-right:264px;
 }
 
+.x
+{
+	color: red;
+	font-size: 3em;
+}
+
+.check
+{
+	color: green;
+	font-size: 3em;
+}
+
+td.metadata
+{
+	padding: 10px;
+}
+
 #footer
 {
   color:#999;
@@ -506,6 +528,11 @@ td h4,td p
 .torrent span
 {
 	float:right;
+}
+
+.metadata_table
+{
+	margin: 0px;
 }
 
 .lightbox

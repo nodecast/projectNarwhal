@@ -52,7 +52,7 @@ class Torrents extends CI_Controller {
 			$m = $this->config->item('metadata');
 			$m = $m[$key];
 			
-			$rules = (($m['required']) ? 'required|' : '');
+			$rules = (($m['required'] && !($m['type'] == 2)) ? 'required|' : '');
 			switch($m['type']) {
 				case 0:
 					// no additional rules
@@ -101,7 +101,9 @@ class Torrents extends CI_Controller {
 			$cat = $this->config->item('categories');
 			$cat = $cat[$data['category']];
 			foreach($cat['metadata'] as $m) {
-				$data['metadata'][$m] = $this->input->post('metadata-'.$m);
+				$val = $this->input->post('metadata-'.$m);
+				$val = (is_array($val)) ? $val : array($val);
+				$data['metadata'][$m] = $val;
 			}
 			$this->mongo->db->torrents->save($data);
 			

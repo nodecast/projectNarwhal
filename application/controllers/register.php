@@ -28,7 +28,7 @@ class Register extends CI_Controller {
 		$this->form_validation->set_rules('rules', 'you will read the rules', 'callback__checkbox');
 		$this->form_validation->set_rules('age', 'you are 13 or older', 'callback__checkbox');
 		
-		$this->form_validation->set_message('checkbox', 'You must check the box that says %s.');
+		$this->form_validation->set_message('_checkbox', 'You must check the box that says %s.');
 		$this->form_validation->set_message('matches', 'Your passwords do not match.');
 		}
 		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');	

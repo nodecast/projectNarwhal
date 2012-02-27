@@ -41,7 +41,7 @@ class TextFormat {
             	return false;
         	return true;
 		}
-		return '<img src="'.htmlspecialchars($content).'" alt="'.htmlspecialchars($content).'" onload="scale(this);" onclick="scale(this);" >';
+		return '<img src="'.htmlspecialchars($content).'" alt="'.htmlspecialchars($content).'" onload="scale(this);" onclick="scale(this);" >'.(isset($attributes['default']) ? '<br>' : '');
 	}
 	
 	function do_bbcode_yt($action, $attributes, $content, $params, $node_object) {
@@ -98,7 +98,7 @@ class TextFormat {
 <div><div style="text-align:center;"><input type="button" value="Show/Hide %s" onclick="if (this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display != '') { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = '';this.innerText = ''; this.value = 'Hide %s'; } else { this.parentNode.parentNode.getElementsByTagName('div')[1].getElementsByTagName('div')[0].style.display = 'none'; this.innerText = ''; this.value = 'Show %s'; }"></div><div><div style="display: none;">
 DERP;
 		$spoiler2 = '</div></div></div>';
-    	return sprintf($spoiler1, $text, $text, $text).$content.$spoiler2;
+    	return sprintf($spoiler1, $text, addslashes($text), addslashes($text)).$content.$spoiler2;
 	}
 	
 	public function __construct()
