@@ -85,7 +85,7 @@
 								$display = implode('<br>', $enum);
 							}
 							if($schema['type'] == 2) {
-								$display = ($val) ? '<span class="check">&#10004;</span>' : '<span class="x">&#10008;</span>';
+								$display = ($val[0]) ? '<span class="check">&#10004;</span>' : '<span class="x">&#10008;</span>';
 							}
 						?>
 						<tr>
