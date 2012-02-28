@@ -22,8 +22,11 @@ $config['site_name'] = "Project Narwhal";
 //Page title - DO NOT CHANGE
 $config['page_title'] = $config['site_name'];
 
+//static server, '/static' by default
+$config['static_server'] = '/static';
+
 //Default Avatar
-$config['default_avatar'] = "/static/common/avatar.png";
+$config['default_avatar'] = $config['static_server'].'/common/avatar.png';
 
 //Max torrent size.
 $config['torrent_maxsize'] = 2097152; // 2 MiB
@@ -32,7 +35,10 @@ $config['torrent_maxsize'] = 2097152; // 2 MiB
 $config['freeleech_size'] = 10737418240; // 10 GiB
 
 //Avatar for 'system'
-$config['system_avatar'] = "/static/common/avatar_system.png";
+$config['system_avatar'] = $config['static_server'].'/common/avatar_system.png';
+
+//stylesheets
+$config['stylesheets'] = array($config['static_server'].'/styles/default/style.css');
 
 //regarding posts
 $config['max_img_per_post'] = 7;
@@ -102,7 +108,7 @@ $config['categories'] = array(
 // TODO complete this, as well as put it in ^^ above
 $config['metadata'] = array(
 	// ebooks
-	'format_ebook' => array('display' => 'Format(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('EPUB', 'MOBI', 'HTML', 'PDF', 'LIT', 'LRF', 'RTF')),
+	'format_ebook' => array('display' => 'Format(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('EPUB', 'MOBI', 'HTML', 'PDF', 'DJVU', 'LRF', 'RTF')),
 	'isbn' => array('display' => 'ISBN', 'type' => 0, 'multiple' => false, 'required' => true),
 	'author' => array('display' => 'Author(s)', 'type' => 0, 'multiple' => true, 'required' => true),
 	'genre_ebook' => array('display' => 'Genre(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('Action/Adventure', 'Crime/Thriller', 'Food', 'History', 'Humor', 'Juvenile', 'Literary Classics', 'Math/Science/Tech', 'Political/Sociological/Religion', 'Romance', 'Science Fiction/Fantasy', 'Young Adult')),

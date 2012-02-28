@@ -26,6 +26,7 @@ class Design extends CI_Controller {
 
 	function publicheader() {
 		$data['open_reg'] = $this->config->item('open_registration');
+		$data['static_server'] = $this->config->item('static_server');
 		$this->load->view("design/publicheader", $data);
 	}
 
@@ -43,6 +44,7 @@ class Design extends CI_Controller {
 		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);
 		$data['display']['download'] = $this->utility->format_bytes($data['user']['download']);
 		$data['display']['ratio'] = $this->utility->ratio($data['user']['upload'], $data['user']['download']);
+		$data['static_server'] = $this->config->item('static_server');
 
 		$this->load->view("design/privateheader", $data);
 	}

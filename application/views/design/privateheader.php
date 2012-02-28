@@ -2,10 +2,10 @@
 <html>
 <head>
 	<title>{title}</title>
-	<link rel="stylesheet" href="/static/styles/default/style.css" type="text/css" media="screen">
+	<link rel="stylesheet" href="<?= $user['stylesheet']; ?>" type="text/css" media="screen">
 	<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
-	<script type="text/javascript" src="/static/scripts/jquery.min.js"></script>
-	<script type="text/javascript" src="/static/scripts/global.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/jquery.min.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/global.js"></script>
 </head>
 <body>
 	<div id="header">

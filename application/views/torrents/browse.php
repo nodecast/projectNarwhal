@@ -5,10 +5,10 @@
 		<td>Files</td>
 		<td class="stat"><a href="#">Added</a></td>
 		<td class="stat"><a href="#">Size</a></td>
-		<td class="sign"><img src="/static/common/icons/comments.png" alt="Comments" title="Comments"></td>
-		<td class="sign"><a href="#"><img src="/static/common/icons/snatched.png" alt="Snatches" title="Snatches"></a></td>
-		<td class="sign"><a href="#"><img src="/static/common/icons/seeders.png" alt="Seeders" title="Seeders"></a></td>
-		<td class="sign"><a href="#"><img src="/static/common/icons/leechers.png" alt="Leechers" title="Leechers"></a></td>
+		<td class="sign"><img src="<?= $static_server; ?>/common/icons/comments.png" alt="Comments" title="Comments"></td>
+		<td class="sign"><a href="#"><img src="<?= $static_server; ?>/common/icons/snatched.png" alt="Snatches" title="Snatches"></a></td>
+		<td class="sign"><a href="#"><img src="<?= $static_server; ?>/common/icons/seeders.png" alt="Seeders" title="Seeders"></a></td>
+		<td class="sign"><a href="#"><img src="<?= $static_server; ?>/common/icons/leechers.png" alt="Leechers" title="Leechers"></a></td>
 	</tr>
 	<div class="box center">
 		<?= number_format($results); ?> results found.
@@ -19,7 +19,7 @@
 	</div>
 	<?php } foreach($torrents as $torrent): ?>
 	<tr class="torrent  ">
-		<td class="center"><a href="#"><img src="/static/common/category/<?= $categories[$torrent['category']]['icon']; ?>" alt="<?= $categories[$torrent['category']]['name']; ?>" title="<?= $categories[$torrent['category']]['name']; ?>" width="24" height="24"></a></td>
+		<td class="center"><a href="#"><img src="<?= $static_server; ?>/common/category/<?= $categories[$torrent['category']]['icon']; ?>" alt="<?= $categories[$torrent['category']]['name']; ?>" title="<?= $categories[$torrent['category']]['name']; ?>" width="24" height="24"></a></td>
 		<td>
 			<span>[<a href="/torrents/download/<?= $torrent['id']; ?>" title="Download">DL</a> | <a href="#" title="Report">RP</a>] </span>
 			<a href="/torrents/view/<?= $torrent['id']; ?>" title="View Torrent"><?= $torrent['name']; ?></a>

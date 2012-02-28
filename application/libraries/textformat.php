@@ -116,7 +116,7 @@ DERP;
 		$this->bbcode->addCode('i', 'simple_replace', null, array('start_tag' => '<em>', 'end_tag' => '</em>'), 'inline', array('block', 'inline', 'list'), array());
 		$this->bbcode->addCode('u', 'simple_replace', null, array('start_tag' => '<u>', 'end_tag' => '</u>'), 'inline', array('block', 'inline', 'list'), array());
 		$this->bbcode->addCode('s', 'simple_replace', null, array('start_tag' => '<s>', 'end_tag' => '</s>'), 'inline', array('block', 'inline', 'list'), array());
-		$this->bbcode->addCode('url', 'usecontent?', array(&$this, 'do_bbcode_url'), array('usecontent_param' => 'default'), 'link', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('url', 'usecontent?', array(&$this, 'do_bbcode_url'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline', 'list'), array());
 		$this->bbcode->addCode('quote', 'callback_replace', array(&$this, 'do_bbcode_quote'), array(), 'block', array('block', 'inline'), array());
 		$this->bbcode->addCode('align', 'usecontent?', array(&$this, 'do_bbcode_align'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline', 'list'), array());
 		$this->bbcode->addCode('size', 'usecontent?', array(&$this, 'do_bbcode_size'), array('usecontent_param' => 'default'), 'inline', array('block', 'inline', 'list'), array());
@@ -127,6 +127,7 @@ DERP;
 		$this->bbcode->addCode('*', 'simple_replace', null, array('start_tag' => '<li>', 'end_tag' => '</li>'), 'listitem', array('list'), array());
 		$this->bbcode->addCode('code', 'simple_replace', null, array('start_tag' => '<pre>', 'end_tag' => '</pre>'), 'pre', array('block', 'inline', 'list'), array());
 		$this->bbcode->addCode('pre', 'simple_replace', null, array('start_tag' => '<pre>', 'end_tag' => '</pre>'), 'pre', array('block', 'inline', 'list'), array());
+		$this->bbcode->addCode('br', 'simple_replace_single', null, array('start_tag' => '<br>'), 'block', array('block', 'inline', 'listitem'), array());
 		
 		$this->bbcode->setOccurrenceType('img', 'image');
 		$this->bbcode->setOccurrenceType('youtube', 'video');
@@ -195,7 +196,7 @@ DERP;
 	
 	public function smileys($str) {
 		foreach($this->smileys as $k => $v) {
-			$str = str_replace($k, '<img src="/static/common/smileys/'.$v.'" alt="'.$k.'" title="'.$k.'">', $str);
+			$str = str_replace($k, '<img src="'.$this->CI->config->item('static_server').'/common/smileys/'.$v.'" alt="'.$k.'" title="'.$k.'">', $str);
 		}
 		return $str;
 	}

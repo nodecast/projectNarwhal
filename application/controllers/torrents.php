@@ -31,6 +31,7 @@ class Torrents extends CI_Controller {
 		$data['ci'] =& get_instance();
 		$data['page'] = $page;
 		$data['off'] = $off;
+		$data['static_server'] = $this->config->item('static_server');
 		
 		$this->load->view('torrents/browse', $data);
 	}
@@ -183,6 +184,7 @@ class Torrents extends CI_Controller {
 			$data['results'] = $data['comments']['length'];
 			$data['comments'] = $data['comments']['data'];
 			$data['page'] = $page;
+			$data['static_server'] = $this->config->item('static_server');
 			$this->load->view('torrents/view', $data);
 		}
 	}

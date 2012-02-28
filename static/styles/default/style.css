@@ -525,11 +525,6 @@ td.metadata
   opacity:0.8;
 }
 
-.torrent span
-{
-	float:right;
-}
-
 .metadata_table
 {
 	margin: 0px;

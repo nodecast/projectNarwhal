@@ -47,6 +47,8 @@ class AccountModel extends CI_Model {
 		$data['title'] = "";
 		$data['joined'] = time();
 		$data['paranoia'] = 0;
+		$data['stylesheet'] = $this->config->item('stylesheets');
+		$data['stylesheet'] = $data['stylesheet'][0];
 		$classes = $this->config->item('classes');
 		$data['class'] = $classes['USER'];
 		$data['profile'] = "";
