@@ -53,6 +53,7 @@ class User extends CI_Controller {
 		$data['percent']['posts'] = $this->usermodel->getPercentile(4, $data['user']['posts']);
 		$data['percent']['overall'] = $this->usermodel->overallPercentile($data['percent']['upload'], $data['percent']['download'], $data['percent']['uploads'], $data['percent']['requests'], $data['percent']['posts'], $data['user']['upload'], $data['user']['download']);
 		
+		$this->utility->page_title($data['user']['username']);
 
 		$this->load->view('user/view', $data);
 	}

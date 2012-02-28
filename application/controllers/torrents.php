@@ -33,11 +33,14 @@ class Torrents extends CI_Controller {
 		$data['off'] = $off;
 		$data['static_server'] = $this->config->item('static_server');
 		
+		$this->utility->page_title('Browse Torrents');
+		
 		$this->load->view('torrents/browse', $data);
 	}
 	
 	public function upload() {
 		$this->utility->enforce_perm('site_torrents_upload');
+		$this->utility->page_title('Upload');
 		
 		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 		$this->form_validation->set_rules('title', 'title', 'required');
@@ -169,6 +172,7 @@ class Torrents extends CI_Controller {
 		$off = ($page - 1) * $this->config->item('torrent_comments_perpage');
 		
 		if(!$torrent) {
+			$this->utility->page_title('Non-existant torrent');
 			$this->load->view('torrents/view_dne');
 		} else {
 			$data = array();
@@ -185,6 +189,7 @@ class Torrents extends CI_Controller {
 			$data['comments'] = $data['comments']['data'];
 			$data['page'] = $page;
 			$data['static_server'] = $this->config->item('static_server');
+			$this->utility->page_title($data['torrent']['name']);
 			$this->load->view('torrents/view', $data);
 		}
 	}

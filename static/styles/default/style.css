@@ -652,7 +652,7 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
   padding:6px 12px;
 }
 
-.head .date,.group_torrent span
+.head .date,.group_torrent span,.right
 {
   float:right;
 }
