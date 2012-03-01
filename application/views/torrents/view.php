@@ -156,19 +156,15 @@
 		?>
 		
 		<h3>Reply</h3>
-		<div class="box pad" style="padding:20px 10px 10px 10px;">
-			<form id="quickpostform" action="" method="post" style="display: block; text-align: center;">
-				<div id="quickreplypreview" class="box" style="text-align: left; display: none; padding: 10px;"></div>
+		<?= validation_errors(); ?>
+		<div class="box pad" style="padding:20px 10px 10px 10px;display: block; text-align: center;">
+			<?= form_open('/torrents/view/'.$torrent['id']); ?>
 				<div id="quickreplytext" class="center">
-					<input type="hidden" name="action" value="reply" />
-					<input type="hidden" name="thread" value="193" />
-					<textarea id="quickpost" name="body" style="width:90%" rows="8"></textarea> <br />
+					<input type="hidden" name="action" value="reply">
+					<textarea id="quickpost" name="text" style="width:90%" rows="8"></textarea><br>
 				</div>
 				<div id="quickreplybuttons">
-					<input type="button" value="Toggle Visual" onclick="tinyMCE.execCommand('mceToggleEditor',false,'quickpost');" />
-
-					<input type="button" value="Preview" onclick="Quick_Preview();" />
-					<input type="submit" value="Submit reply" />
+					<input type="submit" value="Submit">
 				</div>
 			</form>
 		</div>

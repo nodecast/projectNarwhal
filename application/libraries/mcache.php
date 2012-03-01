@@ -14,5 +14,9 @@ class MCache {
 	{
 		return $this->m->get($key);
 	}
+	public function delete($key)
+	{
+		return $this->m->delete($key);
+	}
 }
 
