@@ -79,7 +79,7 @@ class Utility {
 			return "Never";
 		if($t2 == -1)
 			$t2 = time();
-		$diffu = array('seconds'=>2, 'minutes' => 120, 'hours' => 7200, 'days' => 172800, 'months' => 5259487, 'years' =>  63113851);
+		$diffu = array('seconds' => 2, 'minutes' => 120, 'hours' => 7200, 'days' => 172800, 'months' => 5259487, 'years' =>  63113851);
 		$diff = $t2 - $t1;
 		$dt = '0 seconds';
 		foreach($diffu as $u => $n)

@@ -87,7 +87,7 @@ class TorrentModel extends CI_Model {
 	function addComment($id, $owner, $body) {
 		$c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'torrentcommentid'), 'update'=>array('$inc'=>array('c'=>1))));
 		$push = array('comments' => array('id' => $c['value']['c'], 'time' => time(), 'owner' => $owner, 'body' => $body));
-		$this->mongo->db->torrents->update(array('id' => $id), array('$push' => $push));
+		$this->mongo->db->torrents->update(array('id' => intval($id)), array('$push' => $push));
 	}
 }
 ?>

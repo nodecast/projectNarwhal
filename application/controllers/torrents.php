@@ -102,6 +102,7 @@ class Torrents extends CI_Controller {
 			$data['freetorrent'] = ($data['size'] < $this->config->item('freeleech_size')) ? 0 : 1;
 			$data['tags'] = $this->input->post('tags');
 			$data['metadata'] = array();
+			$data['data'] = new MongoBinData($this->torrent->enc());
 			$cat = $this->config->item('categories');
 			$cat = $cat[$data['category']];
 			foreach($cat['metadata'] as $m) {
@@ -110,10 +111,7 @@ class Torrents extends CI_Controller {
 				$data['metadata'][$m] = $val;
 			}
 			$this->mongo->db->torrents->save($data);
-			
-			//save the file
-			file_put_contents(APPPATH.'/torrents/'.$data['id'].'.torrent', $this->torrent->enc());
-			
+
 			// log
 			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has uploaded torrent '.$data['id'].' "'.$data['name'].'"');
 			
@@ -207,13 +205,10 @@ class Torrents extends CI_Controller {
 		$this->load->model('usermodel');
 		require(APPPATH.'/libraries/torrent.php');
 		
-		if(!is_numeric($id))
-			show_error('Torrent not found.', 404);
-		$file = APPPATH.'/torrents/'.$id.'.torrent';
-		if (!is_file($file) || !is_readable($file))
-			show_error('Torrent not found.', 404);
-		
-		$tor = new TORRENT(file_get_contents($file));
+		if(!is_numeric($id) || !($data = $this->torrentmodel->getData($id)))
+			show_error('Torrent not found.', 404); 
+
+		$tor = new TORRENT($data['data']->bin);
 		$tor->set_announce_url($this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce');
 		unset($tor->Val['announce-list']);
 		
