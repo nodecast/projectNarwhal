@@ -36,6 +36,22 @@ blockquote,q
   quotes:none;
 }
 
+.key_select
+{
+	min-width:300px;
+	width:20%;
+}
+
+.small
+{
+	width:0px;
+}
+
+.large
+{
+	width:100%;
+}
+
 blockquote:before,blockquote:after,q:before,q:after
 {
   content:none;
@@ -162,7 +178,7 @@ tr:nth-child(even)
 td
 {
   min-height:24px;
-  border-left:1px solid #efefef;
+  border-left:1px solid #ddd;
   max-width:528px;
   vertical-align:middle;
   padding:4px 6px;

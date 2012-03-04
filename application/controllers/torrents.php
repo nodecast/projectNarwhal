@@ -32,6 +32,8 @@ class Torrents extends CI_Controller {
 		$data['page'] = $page;
 		$data['off'] = $off;
 		$data['static_server'] = $this->config->item('static_server');
+		$data['cats'] = $this->config->item('categories');
+		$data['metadata'] = $this->config->item('metadata');
 		
 		$this->utility->page_title('Browse Torrents');
 		

@@ -36,4 +36,32 @@ class Ajax extends CI_Controller {
 		$this->load->library('textformat');
 		echo $this->textformat->parse($this->input->post('text'));
 	}
+	
+	public function search_field($name = '')
+	{
+		if($name == '')
+			return;
+		
+		$metadata = $this->config->item('metadata');
+		
+		if($name == 'title' || $name == 'tags' || $name == 'category') {
+			$type = 0;
+		} else {
+			$m = $metadata[$name];
+			$type = $m['type'];
+		}
+		
+		if($type == 0)
+			echo '<input type="text" size="60" name="data[]">';
+		if($type == 1) {
+			$str = '<select name="data[]">';
+			for($i = 0; $i < count($m['enum']); $i++) {
+				$str .= '<option value="'.$i.'">'.$m['enum'][$i].'</option>';
+			}
+			echo $str.'</select>';
+		}
+		if($type == 2) {
+			echo '<input type="checkbox" name="data[]">';
+		}
+	}
 }
