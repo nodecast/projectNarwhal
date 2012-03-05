@@ -108,4 +108,29 @@ class Kb extends CI_Controller {
       }
     }
   }
+
+  public function delete($id = -1) {
+    $this->utility->enforce_perm('site_kb_delete');
+
+    if (!$article = $this->kbmodel->getArticle($id)) {
+      $this->utility->page_title('Non-existant article');
+      $this->load->view('kb/view_dne');
+    } else {
+      $this->utility->page_title('Delete KB Article ('.$article['name'].')');
+
+      $this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+      $this->form_validation->set_rules('s1', 'sure', 'required');
+      $this->form_validation->set_rules('s2', 'really sure', 'required');
+      $this->form_validation->set_rules('s3', 'completely sure', 'required');
+
+      if ($this->form_validation->run() == FALSE) {
+        $data = array();
+        $data['article'] = $article;
+        $this->load->view('kb/delete', $data);
+      } else {
+        $this->kbmodel->deleteArticle($article['id']);
+        redirect('kb/browse');
+      }
+    }
+  }
 }

@@ -53,5 +53,11 @@ class KbModel extends CI_Model {
 
     return $data;
   }
+
+  function deleteArticle($id) {
+    $this->mcache->delete('kb_articles_'.$id);
+    $this->mcache->delete('kb_articles_list');
+    $this->mongo->db->kb->remove(array('id' => intval($id)));
+  }
 }
 ?>
