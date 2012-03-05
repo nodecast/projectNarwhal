@@ -8,7 +8,6 @@ class KbModel extends CI_Model {
     id         Integer    | Auto-incrementing integer
     name       String     | Title of the article
     bb_src     String     | BB Code source of the article
-    html_src   String     | Compiled HTML of the article
 
   */
 
@@ -43,12 +42,22 @@ class KbModel extends CI_Model {
     if (!$cache || ($data = $this->mcache->get($key)) === FALSE) {
       $data = $this->mongo->db->kb->findOne(array('id' => $id));
 
-      if ($cache) {
-        $this->mcache->set($key, $data, $this->config->item('kb_cache'));
+      if ($data) {
+        $data['html_src'] = $this->utility->render_bbcode($data['bb_src']);
+
+        if ($cache) {
+          $this->mcache->set($key, $data, $this->config->item('kb_cache'));
+        }
       }
     }
 
     return $data;
+  }
+
+  function deleteArticle($id) {
+    $this->mcache->delete('kb_articles_'.$id);
+    $this->mcache->delete('kb_articles_list');
+    $this->mongo->db->kb->remove(array('id' => intval($id)));
   }
 }
 ?>

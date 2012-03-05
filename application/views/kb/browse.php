@@ -4,7 +4,12 @@
 
 <table class="kb_table" id="kb_table">
   <tr class="colhead">
-    <td style="width:100%;"><span class="right"><a href="/kb/create">New KB Article</a></span>Name</td>
+    <td style="width:100%;">
+      <?php if ($can_create) { ?>
+        <span class="right"><a href="/kb/create">New KB Article</a></span>
+      <?php } ?>
+      Name
+    </td>
   </tr>
   <?php foreach($articles['data'] as $article) { ?>
   <tr class="article">

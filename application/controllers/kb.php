@@ -25,6 +25,7 @@ class Kb extends CI_Controller {
 
     $data = array();
     $data['articles'] = $articles;
+    $data['can_create'] = $this->utility->check_perm('site_kb_new');
     
     $this->load->view('kb/browse', $data);
   }
@@ -40,6 +41,7 @@ class Kb extends CI_Controller {
 
       $data = array();
       $data['article'] = $article;
+      $data['can_edit'] = $this->utility->check_perm('site_kb_edit');
       
       $this->load->view('kb/view', $data);
     }
@@ -66,7 +68,6 @@ class Kb extends CI_Controller {
       $data['id'] = $c['value']['c'];
       $data['name'] = $this->input->post('name');
       $data['bb_src'] = $this->input->post('bb_src');
-      $data['html_src'] = $this->utility->render_bbcode($data['bb_src']);
       $data['owner'] = $this->session->userdata('id');
 
       $this->mongo->db->kb->save($data);
@@ -100,11 +101,35 @@ class Kb extends CI_Controller {
       } else {
         $article['name'] = $this->input->post('name');
         $article['bb_src'] = $this->input->post('bb_src');
-        $article['html_src'] = $this->utility->render_bbcode($article['bb_src']);
 
         $this->mongo->db->kb->save($article);
 
         redirect('/kb/view/'.$article['id']);
+      }
+    }
+  }
+
+  public function delete($id = -1) {
+    $this->utility->enforce_perm('site_kb_delete');
+
+    if (!$article = $this->kbmodel->getArticle($id)) {
+      $this->utility->page_title('Non-existant article');
+      $this->load->view('kb/view_dne');
+    } else {
+      $this->utility->page_title('Delete KB Article ('.$article['name'].')');
+
+      $this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+      $this->form_validation->set_rules('s1', 'sure', 'required');
+      $this->form_validation->set_rules('s2', 'really sure', 'required');
+      $this->form_validation->set_rules('s3', 'completely sure', 'required');
+
+      if ($this->form_validation->run() == FALSE) {
+        $data = array();
+        $data['article'] = $article;
+        $this->load->view('kb/delete', $data);
+      } else {
+        $this->kbmodel->deleteArticle($article['id']);
+        redirect('kb/browse');
       }
     }
   }
