@@ -116,3 +116,8 @@ $config['metadata'] = array(
 	'genre_ebook' => array('display' => 'Genre(s)', 'type' => 1, 'multiple' => true, 'required' => true, 'enum' => array('Action/Adventure', 'Crime/Thriller', 'Food', 'History', 'Humor', 'Juvenile', 'Literary Classics', 'Math/Science/Tech', 'Political/Sociological/Religion', 'Romance', 'Science Fiction/Fantasy', 'Young Adult')),
 	'retail_ebook' => array('display' => 'Retail', 'type' => 2, 'required' => true)
  );
+
+// default user settings
+$config['default_user_settings'] = array(
+	'download_as_txt' => false
+);

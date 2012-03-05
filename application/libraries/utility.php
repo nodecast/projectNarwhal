@@ -26,6 +26,10 @@ class Utility {
 		return $this->CI->session->userdata('logged_in');
 	}
 
+	function user_setting($key) {
+		return $this->CI->session->userdata['settings'][$key];
+	}
+
 	function enforce_login() {
 		if(!$this->logged_in()) {
 			$this->CI->session->set_flashdata('login_redirect', $_SERVER['REQUEST_URI']);

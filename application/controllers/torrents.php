@@ -213,11 +213,14 @@ class Torrents extends CI_Controller {
 		$tor = new TORRENT($data['data']->bin);
 		$tor->set_announce_url($this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce');
 		unset($tor->Val['announce-list']);
-		
-		//TODO txt download
-		header('Content-Disposition: attachment; filename="'.$this->utility->torrent_name($id, false).'.torrent"');
-		header('Content-Type: application/x-bittorrent');
-		
+
+		if (!$this->utility->user_setting('download_as_txt')) {
+			header('Content-Disposition: attachment; filename="'.$this->utility->torrent_name($id, false).'.torrent"');
+			header('Content-Type: application/x-bittorrent');
+		} else {
+			header('Content-Disposition: attachment; filename="'.$this->utility->torrent_name($id, false).'.txt"');
+			header('Content-Type: text/plain');
+		}
 		echo $tor->enc();
 		$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') downloaded torrent '.$id);
 		exit();
