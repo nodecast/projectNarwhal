@@ -5,6 +5,7 @@ class KbModel extends CI_Model {
 
   narwhal.kb:
     _id        ObjectId   | MongoDB Unique Object Identifer
+    id         Integer    | Auto-incrementing integer
     name       String     | Title of the article
     bb_src     String     | BB Code source of the article
     html_src   String     | Compiled HTML of the article
@@ -26,7 +27,9 @@ class KbModel extends CI_Model {
       $result = iterator_to_array($result);
       $data = array('data' => $result, 'count' => $count);
 
-      $this->mcache->set($key, $data, $this->config->item('kb_cache'));
+      if ($cache) {
+        $this->mcache->set($key, $data, $this->config->item('kb_cache'));
+      }
     }
 
     return $data;
@@ -34,10 +37,11 @@ class KbModel extends CI_Model {
 
   function getArticle($id, $cache = true) {
     $key = 'kb_articles_'.$id;
+    $id = intval($id);
     $data = array();
 
     if (!$cache || ($data = $this->mcache->get($key)) === FALSE) {
-      $data = $this->mongo->db->kb->findOne(array('_id' => new MongoId($id)));
+      $data = $this->mongo->db->kb->findOne(array('id' => $id));
 
       if ($cache) {
         $this->mcache->set($key, $data, $this->config->item('kb_cache'));

@@ -1,10 +1,3 @@
-<?php if($articles['count'] == 0) { // Articles not found ?>
-<div class="box pad center">
-  <h2>No articles found.</h2>
-</div>
-<?php } else {  // Articles found ?>
-
-
 <div class="box center">
   <span><?= number_format($articles['count']); ?> articles(s) found</span>
 </div>
@@ -15,9 +8,13 @@
   </tr>
   <?php foreach($articles['data'] as $article) { ?>
   <tr class="article">
-    <td><a href="/kb/view/<?= $article['_id'] ?>" title="Read Article"><?= htmlspecialchars($article['name']) ?></a></td>
+    <td><a href="/kb/view/<?= $article['id'] ?>" title="Read Article"><?= htmlspecialchars($article['name']) ?></a></td>
   </tr>
   <?php } ?>
 </table>
 
-<?php } // Articles found/not found ?> 
+<?php if($articles['count'] == 0) { // Articles not found ?>
+<div class="box pad center">
+  <h2>No articles found.</h2>
+</div>
+<?php } ?>

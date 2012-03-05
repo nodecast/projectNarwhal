@@ -32,7 +32,7 @@ class Kb extends CI_Controller {
   public function view($id = -1) {
     $this->utility->enforce_perm('site_kb_view');
     
-    if (!$article = $this->kbmodel->getArticle($id, false)) {
+    if (!$article = $this->kbmodel->getArticle($id)) {
       $this->utility->page_title('Non-existant article');
       $this->load->view('kb/view_dne');
     } else {
@@ -57,7 +57,10 @@ class Kb extends CI_Controller {
     if ($this->form_validation->run() == FALSE) {
       $this->load->view('kb/new');
     } else {
+      $c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'kbarticleid'), 'update'=>array('$inc'=>array('c'=>1))));
+
       $data = array();
+      $data['id'] = $c['value']['c'];
       $data['name'] = $this->input->post('name');
       $data['bb_src'] = $this->input->post('bb_src');
       $data['html_src'] = $this->utility->render_bbcode($data['bb_src']);
@@ -67,7 +70,7 @@ class Kb extends CI_Controller {
 
       $this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has created KB Article '.$data['id'].' "'.$data['name'].'"');
 
-      redirect('/kb/view/'.$data['_id']);
+      redirect('/kb/view/'.$data['id']);
     }
   }
 }
