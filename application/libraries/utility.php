@@ -287,9 +287,6 @@ class Utility {
 		require(APPPATH.'/libraries/stringparser_bbcode.class.php');
 
 		$bbcode = new StringParser_BBCode();
-    $bbcode->addParser ('block', 'htmlspecialchars');
-    $bbcode->addParser ('block', 'nl2br');
-
    	$bbcode->addFilter (STRINGPARSER_FILTER_PRE, 'convertlinebreaks');
 
 		$bbcode->addParser (array ('block', 'inline', 'link', 'listitem'), 'htmlspecialchars');
