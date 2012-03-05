@@ -23,7 +23,7 @@
 	<div class="box">
 		<div class="head"><strong><?= $item['name'] ?></strong><span class="date">posted <?= $item['ago'] ?></span></div>
 		<div class="pad">
-			<?= $ci->textformat->parse($item['body']); ?>
+			<?= $item['html'] ?>
 		</div>
 	</div>
 	<?php endforeach; ?>

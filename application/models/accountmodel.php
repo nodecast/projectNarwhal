@@ -39,7 +39,7 @@ class AccountModel extends CI_Model {
 		$data['invites'] = 0;
 		$data['enabled'] = 1;
 		$data['torrent_pass'] = $this->utility->make_secret();
-		$data['irc_key'] = "";
+		$data['irc_key'] = $this->utility->make_secret(8);
 		$data['freeleeches'] = array();
 		$data['can_leech'] = 1;
 		$data['lastaccess'] = 0;
@@ -52,6 +52,7 @@ class AccountModel extends CI_Model {
 		$classes = $this->config->item('classes');
 		$data['class'] = $classes['USER'];
 		$data['profile'] = "";
+		$data['settings'] = $this->config->item('default_user_settings');
 		
 		$this->mongo->db->users->save($data);
 		

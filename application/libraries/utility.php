@@ -3,6 +3,7 @@
 class Utility {
 	public function __construct()
 	{
+		require_once(APPPATH.'/libraries/textformat.php');
 		$this->CI =& get_instance();
 	}
 
@@ -22,6 +23,15 @@ class Utility {
 
 	function logged_in() {
 		return $this->CI->session->userdata('logged_in');
+	}
+
+	function current_user() {
+		return $this->CI->session->userdata;
+	}
+
+	function user_setting($key) {
+		$ud = $this->current_user();
+		return $ud['settings'][$key];
 	}
 
 	function enforce_login() {
