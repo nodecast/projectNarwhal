@@ -54,6 +54,8 @@ $config['stats_cache'] = 86400; // 24 hours
 $config['config_cache'] = 900; // 15 min
 //Torrent data (browsing, etc.) cache time, in seconds
 $config['torrent_cache'] = 300; // 5 min
+//KB data cache time, in seconds
+$config['kb_cache'] = 86400; // 24 hours
 
 //PERPAGE
 $config['torrent_perpage'] = 50;

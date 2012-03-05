@@ -68,7 +68,6 @@ class Kb extends CI_Controller {
       $data['id'] = $c['value']['c'];
       $data['name'] = $this->input->post('name');
       $data['bb_src'] = $this->input->post('bb_src');
-      $data['html_src'] = $this->utility->render_bbcode($data['bb_src']);
       $data['owner'] = $this->session->userdata('id');
 
       $this->mongo->db->kb->save($data);
@@ -102,7 +101,6 @@ class Kb extends CI_Controller {
       } else {
         $article['name'] = $this->input->post('name');
         $article['bb_src'] = $this->input->post('bb_src');
-        $article['html_src'] = $this->utility->render_bbcode($article['bb_src']);
 
         $this->mongo->db->kb->save($article);
 
