@@ -40,10 +40,24 @@ function _bbcode_url($action, $attr, $content, $params, $node_obj) {
     $text = htmlspecialchars ($content);
   } else {
     $url = $attr['default'];
-    $text = $content;
+    $text = htmlspecialchars($content);
   }
 
   return '<a href="'.htmlspecialchars('http://www.dereferer.org/?'.$url).'">'.$text.'</a>';
+}
+
+function _bbcode_quote($action, $attr, $content, $params, $node_obj) {
+  if (!isset($attr['default'])) {
+    $author = '';
+    $text = $content;
+  } else {
+    $author = htmlspecialchars($attr['default']);
+    $text = $content;
+  }
+
+  $text = htmlspecialchars($text);
+
+  return '<em>'.$author.'</em><b> said</b><blockquote>'.$text.'</blockquote>';
 }
 
 class BBCode {
@@ -73,6 +87,8 @@ class BBCode {
                       'image', array ('listitem', 'block', 'inline', 'link'), array ());
     $bbcode->addCode ('bild', 'usecontent', '_bbcode_img', array (),
                       'image', array ('listitem', 'block', 'inline', 'link'), array ());
+    $bbcode->addCode ('quote', 'callback_replace', '_bbcode_quote', array ('usecontent_param' => 'default'),
+                      'quote', array ('listitem', 'block', 'inline', 'quote'), array ());
     $bbcode->setOccurrenceType ('img', 'image');
     $bbcode->setOccurrenceType ('bild', 'image');
     $bbcode->setMaxOccurrences ('image', 2);
