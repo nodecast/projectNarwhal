@@ -26,8 +26,13 @@ class Utility {
 		return $this->CI->session->userdata('logged_in');
 	}
 
+	function current_user() {
+		return $this->CI->session->userdata;
+	}
+
 	function user_setting($key) {
-		return $this->CI->session->userdata['settings'][$key];
+		$ud = $this->current_user();
+		return $ud['settings'][$key];
 	}
 
 	function enforce_login() {
