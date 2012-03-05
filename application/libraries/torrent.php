@@ -1,4 +1,4 @@
-<?
+<?php
 /*
 From: aegamesi <admin.aegamesi@gmail.com>
 To: Gazelle Developers
