@@ -5,7 +5,6 @@ class KbModel extends CI_Model {
 
   narwhal.kb:
     _id        ObjectId   | MongoDB Unique Object Identifer
-    id         Integer    | Unique ID
     name       String     | Title of the article
     bb_src     String     | BB Code source of the article
     html_src   String     | Compiled HTML of the article
