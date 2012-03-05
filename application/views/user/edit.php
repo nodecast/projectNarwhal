@@ -13,7 +13,14 @@
       </tr>
       <tr>
         <td class="label">IRC Key</td>
-        <td><input name="irc_key" size="60" value="<?= $user['irc_key'] ?>" /></td>
+        <td>
+          <input name="irc_key" size="60" value="<?= $user['irc_key'] ?>" /><br />
+          <span class="smallinfo">
+            This is your NickServ password on IRC. Your registered nickname is your <?= $this->config->item('site_name') ?> username (<?= $user['username'] ?>).
+            This password is stored in <b>plain text</b> and as such, you should not use any of your other passwords here.
+            Only letters and numbers are allowed.
+          </span>
+        </td>
       </tr>
       <tr>
         <td class="label">Paranoia</td>
