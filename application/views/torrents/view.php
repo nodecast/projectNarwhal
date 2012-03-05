@@ -149,11 +149,12 @@
 			</div>
 		<?php endif; ?>
 
-		<?php
-			foreach($comments as $c) {
-				echo $ci->utility->generate_post($c['owner'], $c['id'], $c['time'], $c['body']);
-			}
-		?>
+		<?php foreach($comments as $c) { ?>
+			<?php
+				$c['user'] = $user;
+			?>
+			<? $this->load->view("partials/post", $c); ?>
+		<?php } ?>
 		
 		<h3>Reply</h3>
 		<?= validation_errors(); ?>

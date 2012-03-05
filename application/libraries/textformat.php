@@ -105,6 +105,7 @@ DERP;
 	{
 		$this->CI =& get_instance();
 		require_once(APPPATH.'/libraries/stringparser_bbcode.class.php');
+		$this->CI->load->library('mcache');
 		
 		$this->bbcode = new StringParser_BBCode();
 		$this->bbcode->setGlobalCaseSensitive(false);
@@ -191,7 +192,15 @@ DERP;
 	}
 	
 	public function parse($str) {
-		return $this->bbcode->parse($str);
+		$ret = null;
+		$key = 'textformat_'.md5($str);
+
+		if (!($ret = $this->CI->mcache->get($key))) {
+			$ret = $this->bbcode->parse($str);
+			$this->CI->mcache->set($key, $ret);
+		}
+
+		return $ret;
 	}
 	
 	public function smileys($str) {
