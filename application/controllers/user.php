@@ -61,7 +61,9 @@ class User extends CI_Controller {
 	}
 
 	function edit($id = -1) {
-		// TODO: Permissions
+		$current_user = $this->utility->current_user();
+		if (!(intval($id) === intval($current_user['id'])))
+			$this->utility->enforce_perm('site_user_edit');
 
 		if (!$user = $this->usermodel->getData(intval($id), false)) {
 			$this->utility->page_title('User not found');
