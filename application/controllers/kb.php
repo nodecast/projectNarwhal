@@ -55,7 +55,10 @@ class Kb extends CI_Controller {
     $this->form_validation->set_rules('bb_src', 'Content', 'required');
 
     if ($this->form_validation->run() == FALSE) {
-      $this->load->view('kb/new');
+      $data = array();
+      $data['formurl'] = 'kb/edit';
+      $data['ucverb'] = 'Create';
+      $this->load->view('kb/form', $data);
     } else {
       $c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'kbarticleid'), 'update'=>array('$inc'=>array('c'=>1))));
 
@@ -71,6 +74,38 @@ class Kb extends CI_Controller {
       $this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has created KB Article '.$data['id'].' "'.$data['name'].'"');
 
       redirect('/kb/view/'.$data['id']);
+    }
+  }
+
+  public function edit($id = -1) {
+    $this->utility->enforce_perm('site_kb_edit');
+
+    if (!$article = $this->kbmodel->getArticle($id)) {
+      $this->utility->page_title('Non-existant article');
+      $this->load->view('kb/view_dne');
+    } else {
+      $this->utility->page_title('Edit KB Article ('.$article['name'].')');
+
+      $this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+      $this->form_validation->set_rules('name', 'Name', 'required');
+      $this->form_validation->set_rules('bb_src', 'Content', 'required');
+
+      if ($this->form_validation->run() == FALSE) {
+        $data = array();
+        $data['name'] = $article['name'];
+        $data['bb_src'] = $article['bb_src'];
+        $data['formurl'] = 'kb/edit/'.$article['id'];
+        $data['ucverb'] = 'Edit';
+        $this->load->view('kb/form', $data);
+      } else {
+        $article['name'] = $this->input->post('name');
+        $article['bb_src'] = $this->input->post('bb_src');
+        $article['html_src'] = $this->utility->render_bbcode($article['bb_src']);
+
+        $this->mongo->db->kb->save($article);
+
+        redirect('/kb/view/'.$article['id']);
+      }
     }
   }
 }
