@@ -76,6 +76,12 @@ class User extends CI_Controller {
 			if ($this->input->post('email'))
 				$user['email'] = $this->input->post('email');
 
+			if ($this->input->post('irc_key'))
+				$user['irc_key'] = $this->input->post('irc_key');
+
+			if ($this->input->post('paranoia'))
+				$user['paranoia'] = $this->input->post('paranoia');
+
 			if ($this->form_validation->run() == FALSE) {
 				$data = array();
 				$data['user'] = $user;

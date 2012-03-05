@@ -119,6 +119,5 @@ $config['metadata'] = array(
 
 // default user settings
 $config['default_user_settings'] = array(
-	'download_as_txt' => false,
-	'paranoia' => 0
+	'download_as_txt' => false
 );
