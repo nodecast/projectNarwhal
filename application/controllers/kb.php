@@ -44,4 +44,30 @@ class Kb extends CI_Controller {
       $this->load->view('kb/view', $data);
     }
   }
+
+  public function create() {
+    $this->utility->enforce_perm('site_kb_new');
+
+    $this->utility->page_title('New KB Article');
+
+    $this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+    $this->form_validation->set_rules('name', 'Name', 'required');
+    $this->form_validation->set_rules('bb_src', 'Content', 'required');
+
+    if ($this->form_validation->run() == FALSE) {
+      $this->load->view('kb/new');
+    } else {
+      $data = array();
+      $data['name'] = $this->input->post('name');
+      $data['bb_src'] = $this->input->post('bb_src');
+      $data['html_src'] = $this->utility->render_bbcode($data['bb_src']);
+      $data['owner'] = $this->session->userdata('id');
+
+      $this->mongo->db->kb->save($data);
+
+      $this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has created KB Article '.$data['id'].' "'.$data['name'].'"');
+
+      redirect('/kb/view/'.$data['_id']);
+    }
+  }
 }

@@ -11,11 +11,11 @@
 
 <table class="kb_table" id="kb_table">
   <tr class="colhead">
-    <td style="width:100%;"><a href="#">Name</a></td>
+    <td style="width:100%;"><span class="right"><a href="/kb/create">New KB Article</a></span>Name</td>
   </tr>
   <?php foreach($articles['data'] as $article) { ?>
   <tr class="article">
-    <td><a href="/kb/view/<?= $article['id'] ?>" title="Read Article"><?= $article['name'] ?></a></td>
+    <td><a href="/kb/view/<?= $article['_id'] ?>" title="Read Article"><?= $article['name'] ?></a></td>
   </tr>
   <?php } ?>
 </table>

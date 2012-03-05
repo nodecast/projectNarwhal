@@ -35,11 +35,10 @@ class KbModel extends CI_Model {
 
   function getArticle($id, $cache = true) {
     $key = 'kb_articles_'.$id;
-    $id = intval($id);
     $data = array();
 
     if (!$cache || ($data = $this->mcache->get($key)) === FALSE) {
-      $data = $this->mongo->db->kb->findOne(array('id' => $id));
+      $data = $this->mongo->db->kb->findOne(array('_id' => new MongoId($id)));
 
       if ($cache) {
         $this->mcache->set($key, $data, $this->config->item('kb_cache'));
