@@ -15,7 +15,7 @@
   </tr>
   <?php foreach($articles['data'] as $article) { ?>
   <tr class="article">
-    <td><a href="/kb/view/<?= $article['_id'] ?>" title="Read Article"><?= $article['name'] ?></a></td>
+    <td><a href="/kb/view/<?= $article['_id'] ?>" title="Read Article"><?= htmlspecialchars($article['name']) ?></a></td>
   </tr>
   <?php } ?>
 </table>
