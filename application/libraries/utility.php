@@ -3,9 +3,9 @@
 class Utility {
 	public function __construct()
 	{
-		require_once(APPPATH.'/libraries/bbcode.php');
+		require_once(APPPATH.'/libraries/textformat.php');
 		$this->CI =& get_instance();
-		$this->bbcode = new BBCode();
+		$this->bbcode = new TextFormat();
 	}
 
 	function make_secret($length = 32) {
@@ -236,7 +236,7 @@ class Utility {
 	}
 
 	function render_bbcode($raw) {
-    return $this->bbcode->render($raw);
+    return $this->bbcode->parse($raw);
 	}
 }
 
