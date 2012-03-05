@@ -56,7 +56,7 @@ class Kb extends CI_Controller {
 
     if ($this->form_validation->run() == FALSE) {
       $data = array();
-      $data['formurl'] = 'kb/edit';
+      $data['formurl'] = 'kb/create';
       $data['ucverb'] = 'Create';
       $this->load->view('kb/form', $data);
     } else {
