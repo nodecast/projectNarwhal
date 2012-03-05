@@ -39,7 +39,7 @@ class AccountModel extends CI_Model {
 		$data['invites'] = 0;
 		$data['enabled'] = 1;
 		$data['torrent_pass'] = $this->utility->make_secret();
-		$data['irc_key'] = $this->utility->make_secret();
+		$data['irc_key'] = $this->utility->make_secret(8);
 		$data['freeleeches'] = array();
 		$data['can_leech'] = 1;
 		$data['lastaccess'] = 0;
