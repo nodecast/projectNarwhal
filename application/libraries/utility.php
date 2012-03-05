@@ -205,36 +205,6 @@ class Utility {
 		return '<a href="/user/view/'.$data['id'].'">'.$data['username'].'</a>';
 	}
 	
-	function generate_post($owner, $id, $time, $content) {
-		$this->CI->load->model('usermodel');
-		$this->CI->load->library('textformat');
-		$data = $this->CI->usermodel->getData($owner);
-		$post = '<table class="forum_post box vertical_margin" id="post'.$id.'">
-			<tr class="colhead_dark">
-				<td colspan="2">
-					<span style="float:left;">
-						<a href="#post'.$id.'">#'.$id.'</a>
-						by <strong>'.$this->format_name($owner).'</strong>
-						'.((strlen($data['title'])) ? '('.$data['title'].')' : '').'
-			  			<span title="'.$this->format_datetime($time).'">'.$this->time_diff_string($time).'</span> - <a href="#quickpost" onclick="">[Quote]</a>
-					</span>
-					<span id="bar'.$id.'" style="float:right;"></span>
-				</td>
-			</tr>
-			<tr>
-				<td class="avatar" valign="top">
-					<img src="'.$data['avatar'].'" width="150" alt="'.$data['username'].'\'s avatar" />
-				</td>
-				<td class="body" valign="top">
-					<div id="content'.$id.'">
-					'.$this->CI->textformat->parse($content).'
-					</div>
-				</td>
-			</tr>
-		</table>';
-		return $post;
-	}
-	
 	// TODO this does nothing right now
 	/* codes:
 	0 - normal
