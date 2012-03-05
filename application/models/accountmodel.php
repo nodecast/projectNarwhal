@@ -52,7 +52,7 @@ class AccountModel extends CI_Model {
 		$classes = $this->config->item('classes');
 		$data['class'] = $classes['USER'];
 		$data['profile'] = "";
-		$data['settings'] = $this->config['default_user_settings'];
+		$data['settings'] = $this->config->item('default_user_settings');
 		
 		$this->mongo->db->users->save($data);
 		
