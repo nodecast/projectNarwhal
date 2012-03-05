@@ -2,7 +2,7 @@
 
 /*****************************************************************
 Because of the way these are called, they cannot be put into the
-Utility class. If somebody can figure out how to do it, feel free
+BBCode class. If somebody can figure out how to do it, feel free
 to move them into the class.
 ******************************************************************/
 function _bbcode_img($action, $attr, $content, $params, $node_obj) {
