@@ -6,6 +6,8 @@ class User extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('usermodel');
+		$this->load->helper('form');
+		$this->load->library('form_validation');
 		$this->utility->enforce_login();
 	}
 
@@ -56,5 +58,35 @@ class User extends CI_Controller {
 		$this->utility->page_title($data['user']['username']);
 
 		$this->load->view('user/view', $data);
+	}
+
+	function edit($id = -1) {
+		// TODO: Permissions
+
+		if (!$user = $this->usermodel->getData(intval($id), false)) {
+			$this->utility->page_title('User not found');
+			$this->load->view('user/view_dne');
+		} else {
+			$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+			$this->form_validation->set_rules('email', 'Email', 'required');
+
+			if ($this->input->post('download_as_txt'))
+				$user['settings']['download_as_txt'] = true;
+
+			if ($this->input->post('email'))
+				$user['email'] = $this->input->post('email');
+
+			if ($this->form_validation->run() == FALSE) {
+				$data = array();
+				$data['user'] = $user;
+				$this->load->view('user/edit', $data);
+			} else {
+				if (!$this->input->post('download_as_txt'))
+					$user['settings']['download_as_txt'] = false;
+
+				$this->mongo->db->users->save($user);
+				redirect('user/view/'.$user['id']);
+			}
+		}
 	}
 }
