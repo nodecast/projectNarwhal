@@ -5,7 +5,6 @@ class Utility {
 	{
 		require_once(APPPATH.'/libraries/textformat.php');
 		$this->CI =& get_instance();
-		$this->bbcode = new TextFormat();
 	}
 
 	function make_secret($length = 32) {
@@ -242,10 +241,6 @@ class Utility {
 	-10 - problem
 	*/
 	function log($str, $code = 0) {
-	}
-
-	function render_bbcode($raw) {
-    return $this->bbcode->parse($raw);
 	}
 }
 

@@ -14,6 +14,8 @@ class KbModel extends CI_Model {
   function __construct()
   { 
     parent::__construct();
+    $this->load->library('textformat');
+    $this->ci = get_instance();
   }
   
   function getArticles($cache = true) {
@@ -43,7 +45,7 @@ class KbModel extends CI_Model {
       $data = $this->mongo->db->kb->findOne(array('id' => $id));
 
       if ($data) {
-        $data['html_src'] = $this->utility->render_bbcode($data['bb_src']);
+        $data['html_src'] = $this->ci->textformat->parse($data['bb_src']);
 
         if ($cache) {
           $this->mcache->set($key, $data, $this->config->item('kb_cache'));
