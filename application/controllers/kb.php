@@ -25,6 +25,7 @@ class Kb extends CI_Controller {
 
     $data = array();
     $data['articles'] = $articles;
+    $data['can_create'] = $this->utility->check_perm('site_kb_new');
     
     $this->load->view('kb/browse', $data);
   }
@@ -40,6 +41,7 @@ class Kb extends CI_Controller {
 
       $data = array();
       $data['article'] = $article;
+      $data['can_edit'] = $this->utility->check_perm('site_kb_edit');
       
       $this->load->view('kb/view', $data);
     }
