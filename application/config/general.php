@@ -105,6 +105,7 @@ $config['categories'] = array(
 	
 //metadata
 //types: 0 - *, 1 - enum, 2 - true/false
+//search[types], only applies for type:0 ^^, 0- exact, 1- text, split by <space>, for each word check subject *word* 
 // TODO complete this, as well as put it in ^^ above
 $config['metadata'] = array(
 	// ebooks

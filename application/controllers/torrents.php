@@ -22,8 +22,12 @@ class Torrents extends CI_Controller {
 			$page = 1;
 		$off = ($page - 1) * $this->config->item('torrent_perpage');
 	
+		$query = array();
+		
+		
+		$query = (count($query)) ? array(($this->input->post('match_method') == 'or' ? '$or' : '$and') => $query) : array();
 		$data = array();
-		$t = $this->torrentmodel->getTorrents($this->config->item('torrent_perpage'), $off, null);
+		$t = $this->torrentmodel->getTorrents($this->config->item('torrent_perpage'), $off, $query);
 		$data['torrents'] = $t['data'];
 		$data['perpage'] = $this->config->item('torrent_perpage');
 		$data['results'] = $t['count'];
@@ -36,8 +40,9 @@ class Torrents extends CI_Controller {
 		$data['metadata'] = $this->config->item('metadata');
 		
 		$this->utility->page_title('Browse Torrents');
-		
 		$this->load->view('torrents/browse', $data);
+		
+		//new MongoRegex('/^'.preg_quote($name).'$/i')
 	}
 	
 	public function upload() {

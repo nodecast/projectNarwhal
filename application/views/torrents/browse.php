@@ -1,5 +1,6 @@
 <?= form_open('/torrents/browse/'); ?>
 	<div class="box pad">
+		<h2>Filter</h2>
 		<script type="text/javascript">
 			var num = -1;
 			function changeInputType(id) {
@@ -8,7 +9,7 @@
 			}
 			function addFilterField() {
 				num++;
-				return '<tr id="row_'+num+'"><td class="small"><a href="javascript:$(\'#row_'+num+'\').remove();void(0);">[x]</a><td class="key_select"><select name="key[]" id="key_'+num+'" class="large"><option value="title" selected onclick="changeInputType('+num+');">Title</option><option value="tags" onclick="changeInputType('+num+');">Tags</option><option value="category" onclick="changeInputType('+num+');">Category</option><?php foreach($cats as $cat): ?><optgroup label="<?= $cat['name']; ?>"><?php foreach($cat['metadata'] as $meta):$m = $metadata[$meta];?><option value="<?= $meta; ?>" onclick="changeInputType('+num+')"><?= $m['display'] ?></option><?php endforeach; ?></optgroup><?php endforeach; ?></select></td><td class="small"><select name="not[]"><option value="___" selected></option><option value="not">NOT</option></select></td><td id="input_'+num+'"><input type="text" name="data[]" size="60"></td></tr>';
+				return '<tr id="row_'+num+'"><td class="small"><a href="javascript:$(\'#row_'+num+'\').remove();num--;void(0);">[x]</a><td class="key_select"><select name="key[]" id="key_'+num+'" class="large"><option value="title" selected onclick="changeInputType('+num+');">Title</option><option value="tags" onclick="changeInputType('+num+');">Tags</option><option value="category" onclick="changeInputType('+num+');">Category</option><?php foreach($cats as $cat): ?><optgroup label="<?= $cat['name']; ?>"><?php foreach($cat['metadata'] as $meta):$m = $metadata[$meta];?><option value="<?= $meta; ?>" onclick="changeInputType('+num+')"><?= $m['display'] ?></option><?php endforeach; ?></optgroup><?php endforeach; ?></select></td><td class="small"><select name="not[]"><option value="___" selected></option><option value="not">NOT</option></select></td><td id="input_'+num+'"><input type="text" name="data[]" size="60"></td></tr>';
 			}
 		</script>
 		<table>
@@ -16,13 +17,12 @@
 			<tr id="filter_more"><td class="center" colspan="4"><a href="javascript:$('#filter_more').before(addFilterField);void(0);">Filter more</a></td></tr>
 		</table>
 		<div class="box pad submit center">
-			<select name="match">
+			<select name="match_method">
 				<option value="and" selected>Match ALL</option>
 				<option value="or">Match ANY</option>
 			</select>
 			<br>
 			<input type="submit" value="Filter">
-			<input type="button" value="Reset">
 		</div>
 	</div>
 </form>
