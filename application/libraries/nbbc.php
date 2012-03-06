@@ -517,7 +517,7 @@ var $default_tag_rules = Array(
 'class' => 'link',
 'allow_in' => Array('listitem', 'block', 'columns', 'inline'),
 'content' => BBCODE_REQUIRED,
-'plain_start' => "<a href=\"{\$link}\">",
+'plain_start' => "<a href=\"http://www.dereferer.org/?{\$link}\">",
 'plain_end' => "</a>",
 'plain_content' => Array('_content', '_default'),
 'plain_link' => Array('_default', '_content'),
@@ -715,7 +715,7 @@ else $target = "";
 if ($bbcode->url_target !== false)
 if (!($bbcode->url_targetable == 'override' && isset($params['target'])))
 $target = " target=\"" . htmlspecialchars($bbcode->url_target) . "\"";
-return '<a href="' . htmlspecialchars($url) . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
+return '<a href="http://www.dereferer.org/?' . htmlspecialchars($url) . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
 }
 else return htmlspecialchars($params['_tag']) . $content . htmlspecialchars($params['_endtag']);
 }
