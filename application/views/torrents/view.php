@@ -18,9 +18,9 @@
 			<ul class="stats nobullet" id="tags">
 <?php foreach($torrent['tags'] as $tag): ?>
 				<li id="tag_<?= $tag ?>">
-					<?= form_open('/torrents/tag', array('id' => 'tag_delete_'.$tag), array('action' => 'delete', 'id' => $torrent['id'], 'tag' => $tag)); ?>
+					<?= form_open('/torrents/tag', array('id' => 'tag_delete_'.str_replace('.', '__', $tag)), array('action' => 'delete', 'id' => $torrent['id'], 'tag' => $tag)); ?>
 					<a href="#"><?= str_replace('.', ' ', $tag) ?></a>
-					<?= ($can_delete_tags) ? '<a href="javascript:$(\'#tag_delete_<?= $tag ?>\').submit();">[X]</a>' : ''; ?>
+					<?= ($can_delete_tags) ? '<a href="javascript:$(\'#tag_delete_'.str_replace('.', '__', $tag).'\').submit();">[X]</a>' : ''; ?>
 					</form>
 				</li>
 <?php endforeach; ?>
