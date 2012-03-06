@@ -627,31 +627,6 @@ class BBCodeLibrary
                                                 'link'
                                           )
                                     ),
-                                    'spoiler' => Array(
-                                          'mode' => BBCODE_MODE_ENHANCED,
-                                          'template' => '<div class="bbcode_spoiler_box"><input type="button" class="bbcode_spoiler_btn" value="Show/Hide {$name}" /><br /><div class="bbcode_spoiler">{$_content}</div></div>',
-                                          'allow' => Array(
-                                                'name' => '/^[a-zA-Z0-9_]+$/i'
-                                          ),
-                                          'default' => Array(
-                                                'name' => 'Spoiler'
-                                          ),
-                                          'class' =>'block',
-                                          'allow_in' => Array(
-                                                'block',
-                                                'columns'
-                                          )
-                                    ),
-                                    'mediainfo' => Array(
-                                          'simple_start' => '<div class="bbcode_spoiler_box"><input type="button" class="bbcode_spoiler_btn" value="Mediainfo" /><br /><div class="bbcode_spoiler"><pre>',
-                                          'simple_end' => '</pre></div></div>',
-                                          'class' => 'code',
-                                          'content' => BBCODE_VERBATIM,
-                                          'allow_in' => Array(
-                                                'block',
-                                                'columns'
-                                          )
-                                    ),
                                     'acronym' => Array(
                                           'mode' => BBCODE_MODE_ENHANCED,
                                           'template' => '<span class="bbcode_acronym" title="{$_default/e}">{$_content/v}</span>',
