@@ -511,6 +511,7 @@ var $default_tag_rules = Array(
 'simple_start' => '<div class="bbcode_spoiler_box"><input type="button" class="bbcode_spoiler_btn" value="Mediainfo" /><br /><div class="bbcode_spoiler"><pre>',
 'simple_end' => '</pre></div></div>',
 'class' => 'code',
+'content' => BBCODE_VERBATIM,
 'allow_in' => Array('block', 'columns'),
 ),
 'acronym' => Array(

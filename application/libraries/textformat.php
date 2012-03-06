@@ -23,6 +23,7 @@ class TextFormat {
       'simple_start' => '<pre>',
       'simple_end' => '</pre>',
       'class' => 'block',
+      'content' => BBCODE_VERBATIM,
       'allow_in' => Array('listitem', 'block', 'columns', 'link'),
     ));
 
