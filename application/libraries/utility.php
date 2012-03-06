@@ -212,5 +212,17 @@ class Utility {
 	*/
 	function log($str, $code = 0) {
 	}
+
+	function get_seq_id($name) {
+		$c = $this->CI->mongo->db->command(
+			array(
+				'findandmodify' => 'counters',
+				'query'=> array('name'=>$name),
+				'update' => array('$inc'=>array('c'=>1))
+			)
+		);
+
+		return $c['value']['c'];
+	}
 }
 

@@ -85,10 +85,10 @@ class Torrents extends CI_Controller {
 			$this->load->view('torrents/upload', $data);
 		} else {
 			//continue processing on the torrent files
-			$c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'torrentid'), 'update'=>array('$inc'=>array('c'=>1))));
-			
+			$c = $this->utility->get_seq_id('torrentid');
+
 			$data = array();
-			$data['id'] = $c['value']['c'];
+			$data['id'] = $c;
 			$data['name'] = $this->input->post('title');
 			$data['owner'] = $this->session->userdata('id');
 			$data['description'] = $this->input->post('description');

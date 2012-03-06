@@ -72,13 +72,12 @@ class Kb extends CI_Controller {
         $data['preview'] = $this->textformat->Parse($this->input->post('bb_src'));
         $this->load->view('kb/form', $data);
     } else {
-      $c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'kbarticleid'), 'update'=>array('$inc'=>array('c'=>1))));
+      $c = $this->utility->get_seq_id('kbarticleid');
 
       $data = array();
-      $data['id'] = $c['value']['c'];
+      $data['id'] = $c;
       $data['name'] = $this->input->post('name');
       $data['bb_src'] = $this->input->post('bb_src');
-      $data['owner'] = $this->session->userdata('id');
 
       $this->mongo->db->kb->save($data);
 
