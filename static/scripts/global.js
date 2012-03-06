@@ -18,3 +18,12 @@ function unpreview() {
 	$('#curtain').hide();
 	$('#lightbox').html('');
 }
+
+$(function() {
+	$(".bbcode_spoiler_btn").each(function(idx, val) {
+		$(this).on('click', function(e) {
+			console.log($(this).siblings(".bbcode_spoiler").toggle());
+		});
+		$(this).siblings(".bbcode_spoiler").hide();
+	});
+});

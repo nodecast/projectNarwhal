@@ -500,10 +500,18 @@ var $default_tag_rules = Array(
 'allow_in' => Array('listitem', 'block', 'columns', 'inline', 'link'),
 ),
 'spoiler' => Array(
-'simple_start' => "<span class=\"bbcode_spoiler\">",
-'simple_end' => "</span>",
-'class' => 'inline',
-'allow_in' => Array('listitem', 'block', 'columns', 'inline', 'link'),
+'mode' => BBCODE_MODE_ENHANCED,
+'template' => '<div class="bbcode_spoiler_box"><input type="button" class="bbcode_spoiler_btn" value="Show/Hide {$name}" /><br /><div class="bbcode_spoiler">{$_content}</div></div>',
+'allow' => Array('name' => '/^[a-zA-Z0-9_]+$/i'),
+'default' => Array('name' => 'Spoiler'),
+'class' => 'block',
+'allow_in' => Array('block', 'columns'),
+),
+'mediainfo' => Array(
+'simple_start' => '<div class="bbcode_spoiler_box"><input type="button" class="bbcode_spoiler_btn" value="Mediainfo" /><br /><div class="bbcode_spoiler"><pre>',
+'simple_end' => '</pre></div></div>',
+'class' => 'code',
+'allow_in' => Array('block', 'columns'),
 ),
 'acronym' => Array(
 'mode' => BBCODE_MODE_ENHANCED,
@@ -533,7 +541,7 @@ var $default_tag_rules = Array(
 'plain_content' => Array('_content', '_default'),
 'plain_link' => Array('_default', '_content'),
 ),
-'wiki' => Array(
+/*'wiki' => Array(
 'mode' => BBCODE_MODE_LIBRARY,
 'method' => "DoWiki",
 'class' => 'link',
@@ -544,7 +552,7 @@ var $default_tag_rules = Array(
 'plain_end' => "]</b>",
 'plain_content' => Array('title', '_default'),
 'plain_link' => Array('_default', '_content'),
-),
+),*/
 'img' => Array(
 'mode' => BBCODE_MODE_LIBRARY,
 'method' => "DoImage",
@@ -715,7 +723,10 @@ else $target = "";
 if ($bbcode->url_target !== false)
 if (!($bbcode->url_targetable == 'override' && isset($params['target'])))
 $target = " target=\"" . htmlspecialchars($bbcode->url_target) . "\"";
-return '<a href="http://www.dereferer.org/?' . htmlspecialchars($url) . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
+$domain = parse_url($url, PHP_URL_HOST);
+$derefer = !($domain == get_instance()->config->item('http_siteurl')) && !($domain == get_instance()->config->item('https_siteurl'));
+$dereferer = $derefer? "http://www.dereferer.org/?" : "";
+return '<a href="'. $dereferer . htmlspecialchars($url) . '" class="bbcode_url"' . $target . '>' . $content . '</a>';
 }
 else return htmlspecialchars($params['_tag']) . $content . htmlspecialchars($params['_endtag']);
 }
