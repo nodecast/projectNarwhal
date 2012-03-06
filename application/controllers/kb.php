@@ -9,6 +9,7 @@ class Kb extends CI_Controller {
     $this->load->model('kbmodel');
     $this->load->helper('form');
     $this->load->library('form_validation');
+    $this->load->library('textformat');
   }
 
   public function index()
@@ -60,7 +61,16 @@ class Kb extends CI_Controller {
       $data = array();
       $data['formurl'] = 'kb/create';
       $data['ucverb'] = 'Create';
+      $data['preview'] = false;
       $this->load->view('kb/form', $data);
+    } else if ($this->input->post('preview')) {
+        $data = array();
+        $data['name'] = $this->input->post('name');
+        $data['bb_src'] = $this->input->post('bb_src');
+        $data['formurl'] = 'kb/create';
+        $data['ucverb'] = 'Create';
+        $data['preview'] = $this->textformat->Parse($this->input->post('bb_src'));
+        $this->load->view('kb/form', $data);
     } else {
       $c = $this->mongo->db->command(array('findandmodify'=>'counters', 'query'=>array('name'=>'kbarticleid'), 'update'=>array('$inc'=>array('c'=>1))));
 
@@ -97,6 +107,15 @@ class Kb extends CI_Controller {
         $data['bb_src'] = $article['bb_src'];
         $data['formurl'] = 'kb/edit/'.$article['id'];
         $data['ucverb'] = 'Edit';
+        $data['preview'] = false;
+        $this->load->view('kb/form', $data);
+      } else if ($this->input->post('preview')) {
+        $data = array();
+        $data['name'] = $this->input->post('name');
+        $data['bb_src'] = $this->input->post('bb_src');
+        $data['formurl'] = 'kb/edit/'.$article['id'];
+        $data['ucverb'] = 'Edit';
+        $data['preview'] = $this->textformat->Parse($this->input->post('bb_src'));
         $this->load->view('kb/form', $data);
       } else {
         $article['name'] = $this->input->post('name');

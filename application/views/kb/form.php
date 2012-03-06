@@ -2,6 +2,10 @@
 
 <?= validation_errors(); ?>
 <div class="upload center">
+  <?php if ($preview) { ?>
+    <div class="smallinfo"><a href="#preview">(Preview below)</a></div>
+  <?php } ?>
+
   <?= form_open($formurl) ?>
     <div id="upload_table">
     </div>
@@ -20,7 +24,16 @@
     <div class="center box pad">
         Before creating a KB article make sure that one does not exist on the topic, and that it is suitable for the KB.
         <br><br>
-        <input id="post" type="submit" value="<?= $ucverb ?> KB Article">
+        <input id="post" type="submit" value="Save KB Article">
+        <input name="preview" type="submit" value="Preview KB Article">
     </div>
   </form>
 </div>
+
+<?php if ($preview) { ?>
+  <h3>Preview</h3>
+
+  <div id="preview">
+    <?= $preview ?>
+  </div>
+<?php } ?>
