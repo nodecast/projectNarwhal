@@ -10,7 +10,7 @@ class TextFormat {
 
     preg_match($pattern, $content, $matches);
     $ytid = $matches[1];
-    return "<iframe width=\"640\" height=\"360\" src=\"https://www.youtube-nocookie.com/embed/$ytid\" frameborder=\"0\" allowfullscreen></iframe>";
+    return "<iframe width=\"640\" height=\"360\" src=\"http://www.youtube-nocookie.com/embed/$ytid\" frameborder=\"0\" allowfullscreen></iframe>";
   }
 
   public function __construct() {
