@@ -678,3 +678,35 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
   vertical-align: center;
   opacity: 0.75;
 }
+
+/* BBCode Specific */
+.bbcode_quote_head
+{
+  font-weight: bold;
+}
+
+.bbcode_quote_body
+{
+  border-left:4px solid #999;
+  background:#ccc;
+  padding:24px 24px 24px 20px;
+  margin-bottom: 10px;
+}
+
+.bbcode_code_body
+{
+  background: #CCC;
+  font-family: monospace;
+  padding: 5px;
+  white-space: pre;
+}
+
+.bbcode_align_left
+{
+  text-align: left;
+}
+
+.bbcode_align_right
+{
+  text-align: right;
+}
