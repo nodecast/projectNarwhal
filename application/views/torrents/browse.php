@@ -53,12 +53,12 @@
 		<td class="center"><a href="#"><img src="<?= $static_server; ?>/common/category/<?= $categories[$torrent['category']]['icon']; ?>" alt="<?= $categories[$torrent['category']]['name']; ?>" title="<?= $categories[$torrent['category']]['name']; ?>" width="24" height="24"></a></td>
 		<td>
 			<span class="right">[<a href="/torrents/download/<?= $torrent['id']; ?>" title="Download">DL</a> | <a href="#" title="Report">RP</a>] </span>
-			<a href="/torrents/view/<?= $torrent['id']; ?>" title="View Torrent"><?= $torrent['name']; ?></a>
+			<a href="/torrents/view/<?= $torrent['id']; ?>" title="View Torrent"><?= htmlspecialchars($torrent['name']); ?></a>
 			<?php if($torrent['freetorrent']) echo "[<strong>Freeleech!</strong>]"; ?>
 			<br>
 			<div class="tags">
 				<?php foreach($torrent['tags'] as $tag): ?>
-				<a href="/torrents/tag/<?= $tag ?>"><?= str_replace('.', ' ', $tag); ?></a>&nbsp;
+				<a href="/torrents/tag/<?= htmlspecialchars($tag) ?>"><?= htmlspecialchars($tag); ?></a>&nbsp;
 				<?php endforeach; ?>
 			</div>
 		</td>
