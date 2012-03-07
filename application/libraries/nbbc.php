@@ -694,7 +694,7 @@ class BBCodeLibrary
 'plain_content' => Array('title', '_default'),
 'plain_link' => Array('_default', '_content'),
 ),*/
-                                'img' => Array(
+                                    'img' => Array(
                                           'mode' => BBCODE_MODE_LIBRARY,
                                           'method' => "DoImage",
                                           'class' => 'image',
@@ -705,8 +705,8 @@ class BBCodeLibrary
                                                 'inline',
                                                 'link'
                                           ),
-                                          'end_tag' => BBCODE_REQUIRED,
-                                          'content' => BBCODE_REQUIRED,
+                                          'end_tag' => BBCODE_OPTIONAL,
+                                          'content' => BBCODE_OPTIONAL,
                                           'plain_start' =>"[image]",
                                           'plain_content' => Array()
                                     ),
@@ -1029,6 +1029,14 @@ class BBCodeLibrary
   {
     if ($action == BBCODE_CHECK)
       return true;
+
+    if ($params['_default']) {
+      $content = $params['_default'];
+      $noclose = true;
+    } else {
+      $noclose = false;
+    }
+
     $content = trim ($bbcode->UnHTMLEncode (strip_tags ($content)));
     if (preg_match ("/\\.(?:gif|jpeg|jpg|jpe|png)$/", $content))
       {
@@ -1047,7 +1055,7 @@ class BBCodeLibrary
                 htmlspecialchars (basename ($content))."\" width=\"".
                 htmlspecialchars ($info[0])."\" height=\"".
                 htmlspecialchars ($info[1]).
-                "\" class=\"bbcode_img\" />";
+                "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"");
             }
            }
        }
@@ -1055,7 +1063,7 @@ class BBCodeLibrary
        {
          return "<img src=\"".htmlspecialchars ($content)."\" alt=\"".
            htmlspecialchars (basename ($content)).
-           "\" class=\"bbcode_img\" />";
+           "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"");
        }
       }
     return htmlspecialchars ($params['_tag']).htmlspecialchars ($content).

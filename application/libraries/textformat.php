@@ -51,7 +51,7 @@ class TextFormat {
         'mode' => BBCODE_MODE_ENHANCED,
         'template' => '<div class="bbcode_align_{$_default}">{$_content}</div>',
         'allow' => Array(
-            '_default' => '/^left|right$/'
+            '_default' => '/^left|center|right$/'
         ),
         'class' => 'block',
         'allow_in' => Array('listitem', 'block', 'columns'),
