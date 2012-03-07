@@ -930,7 +930,13 @@ class BBCodeLibrary
        !($domain == get_instance ()->config->item ('http_siteurl'))
        && !($domain == get_instance ()->config->item ('https_siteurl'));
      $dereferer = $derefer ? "http://www.dereferer.org/?" : "";
-     return '<a href="'.$dereferer.htmlspecialchars ($url).
+
+     if ($derefer)
+      $url = urlencode($url);
+     else
+      $url = htmlspecialchars($url);
+
+     return '<a href="'.$dereferer.$url.
        '" class="bbcode_url"'.$target.'>'.$content.'</a>';
       }
     else
@@ -1893,7 +1899,7 @@ $/Dx", $string);
            $params = @parse_url ($url);
            if (!is_array ($params))
           $params = Array ();
-           $params['url'] = $url;
+           $params['url'] = 'http://www.dereferer.org/?'.urlencode($url);
            $params['link'] = $url;
            $params['text'] = $token;
            $output[$index] =
