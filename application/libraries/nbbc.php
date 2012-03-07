@@ -1033,9 +1033,11 @@ class BBCodeLibrary
     if ($params['_default']) {
       $cnt = $params['_default'];
       $noclose = true;
+      $extra = $content;
     } else {
       $cnt = trim ($bbcode->UnHTMLEncode (strip_tags ($content)));
       $noclose = false;
+      $extra = '';
     }
 
     if (preg_match ("/\\.(?:gif|jpeg|jpg|jpe|png)$/", $cnt))
@@ -1055,7 +1057,7 @@ class BBCodeLibrary
                 htmlspecialchars (basename ($cnt))."\" width=\"".
                 htmlspecialchars ($info[0])."\" height=\"".
                 htmlspecialchars ($info[1]).
-                "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"");
+                "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"").$extra;
             }
            }
        }
@@ -1064,14 +1066,14 @@ class BBCodeLibrary
        {
          return "<img src=\"".htmlspecialchars ($cnt)."\" alt=\"".
            htmlspecialchars (basename ($cnt)).
-           "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"");
+           "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"").$extra;
        }
       }
     if (!$noclose)
       return htmlspecialchars ($params['_tag']).htmlspecialchars ($content).
-            htmlspecialchars ($params['_endtag']).' - (Image host not whitelisted or invalid URL)<br /><br />';
+            htmlspecialchars ($params['_endtag']).' - (Image host not whitelisted or invalid URL)<br /><br />'.$extra;
     else
-      return htmlspecialchars ($params['_tag']).' - (Image host not whitelisted or invalid URL)<br /><br />';
+      return htmlspecialchars ($params['_tag']).' - (Image host not whitelisted or invalid URL)<br /><br />'.$extra;
   }
   function DoRule ($bbcode, $action, $name, $default, $params, $content)
   {
