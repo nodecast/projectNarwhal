@@ -1,5 +1,5 @@
 <div class="thin">
-	<h2><?= $torrent['name']; ?></h2>
+	<h2><?= htmlspecialchars($torrent['name']); ?></h2>
 	<div class="linkbox">
 		<a href="#">[Edit]</a>
 		<a href="#">[Bookmark]</a>
@@ -17,10 +17,10 @@
 			<div class="head"><strong>Tags</strong></div>
 			<ul class="stats nobullet" id="tags">
 <?php foreach($torrent['tags'] as $tag): ?>
-				<li id="tag_<?= $tag ?>">
-					<?= form_open('/torrents/tag', array('id' => 'tag_delete_'.str_replace('.', '__', $tag)), array('action' => 'delete', 'id' => $torrent['id'], 'tag' => $tag)); ?>
-					<a href="#"><?= str_replace('.', ' ', $tag) ?></a>
-					<?= ($can_delete_tags) ? '<a href="javascript:$(\'#tag_delete_'.str_replace('.', '__', $tag).'\').submit();">[X]</a>' : ''; ?>
+				<li id="tag_<?= md5($tag) ?>">
+					<?= form_open('/torrents/tag', array('id' => 'tag_delete_'.md5($tag)), array('action' => 'delete', 'id' => $torrent['id'], 'tag' => htmlspecialchars($tag))); ?>
+					<a href="#"><?= htmlspecialchars($tag) ?></a>
+					<?= ($can_delete_tags) ? '<a href="javascript:$(\'#tag_delete_'.md5($tag).'\').submit();">[X]</a>' : ''; ?>
 					</form>
 				</li>
 <?php endforeach; ?>
@@ -54,7 +54,7 @@
 				<td class="center"><a href="#"><img src="<?= $static_server; ?>/common/category/<?= $categories[$torrent['category']]['icon']; ?>" alt="<?= $categories[$torrent['category']]['name']; ?>" title="<?= $categories[$torrent['category']]['name']; ?>" width="24" height="24"></a></td>
 				<td>
 					<span>[<a href="/torrents/download/<?= $torrent['id']; ?>" title="Download">DL</a>&nbsp;|&nbsp;<a href="#" title="Report">RP</a>]</span>
-					<?= $torrent['name']; ?>
+					<?= htmlspecialchars($torrent['name']); ?>
 				</td>
 				<td><?= number_format(count($torrent['files'])); ?></td>
 				<td><?= $ci->utility->format_bytes($torrent['size']); ?></td>
