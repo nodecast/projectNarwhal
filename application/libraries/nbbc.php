@@ -503,8 +503,8 @@ class BBCodeLibrary
 
   var $default_tag_rules = Array(
                                     'b' => Array(
-                                          'simple_start' => "<b>",
-                                          'simple_end' => "</b>",
+                                          'simple_start' => "<strong>",
+                                          'simple_end' => "</strong>",
                                           'class' => 'inline',
                                           'allow_in' => Array (
                                                 'listitem',
@@ -513,12 +513,12 @@ class BBCodeLibrary
                                                 'inline',
                                                 'link'
                                           ),
-                                          'plain_start' => "<b>",
-                                          'plain_end' => "</b>"
+                                          'plain_start' => "<strong>",
+                                          'plain_end' => "</strong>"
                                     ),
                                     'i' => Array(
-                                          'simple_start' =>"<i>", 
-                                          'simple_end' =>"</i>",
+                                          'simple_start' =>"<em>", 
+                                          'simple_end' =>"</em>",
                                           'class' =>'inline',
                                           'allow_in' => Array (
                                                 'listitem',
@@ -527,8 +527,8 @@ class BBCodeLibrary
                                                 'inline',
                                                 'link'
                                           ),
-                                          'plain_start' =>"<i>",
-                                          'plain_end' =>"</i>"
+                                          'plain_start' =>"<em>",
+                                          'plain_end' =>"</em>"
                                     ),
                                     'u' => Array(
                                           'simple_start' => "<u>",
