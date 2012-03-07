@@ -1051,7 +1051,7 @@ class BBCodeLibrary
           if ($info[2] == IMAGETYPE_GIF || $info[2] == IMAGETYPE_JPEG
               || $info[2] == IMAGETYPE_PNG)
             {
-              return "<img src=\"".
+              return "<img onload=\"scale(this);\" onclick=\"scale(this);\" src=\"".
                 htmlspecialchars
                 ("{$bbcode->local_img_url}/{$cnt}")."\" alt=\"".
                 htmlspecialchars (basename ($cnt))."\" width=\"".
@@ -1064,7 +1064,7 @@ class BBCodeLibrary
      else if ($bbcode->IsValidURL ($cnt, false) &&
               get_instance()->utility->is_valid_image($cnt))
        {
-         return "<img src=\"".htmlspecialchars ($cnt)."\" alt=\"".
+         return "<img onload=\"scale(this);\" onclick=\"scale(this);\" src=\"".htmlspecialchars ($cnt)."\" alt=\"".
            htmlspecialchars (basename ($cnt)).
            "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"").$extra;
        }
