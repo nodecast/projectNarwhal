@@ -1034,10 +1034,10 @@ class BBCodeLibrary
       $content = $params['_default'];
       $noclose = true;
     } else {
+      $content = trim ($bbcode->UnHTMLEncode (strip_tags ($content)));
       $noclose = false;
     }
 
-    $content = trim ($bbcode->UnHTMLEncode (strip_tags ($content)));
     if (preg_match ("/\\.(?:gif|jpeg|jpg|jpe|png)$/", $content))
       {
      if (preg_match ("/^[a-zA-Z0-9_][^:]+$/", $content))
