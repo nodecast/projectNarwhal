@@ -37,6 +37,8 @@ class TextFormat {
     $this->CI =& get_instance();
     $this->bbcode = new BBCode;
 
+    $this->bbcode->SetDetectURLs(true);
+
     // [pre]$BODY[/pre]
     $this->bbcode->AddRule('pre', Array(
       'simple_start' => '<pre>',
