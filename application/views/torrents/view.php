@@ -149,12 +149,11 @@
 			</div>
 		<?php endif; ?>
 
-		<?php foreach($comments as $c) { ?>
-			<?php
-				$c['user'] = $user;
-			?>
-			<? $this->load->view("partials/post", $c); ?>
-		<?php } ?>
+		<?php foreach($comments as $c) {
+			$this->load->model('usermodel');
+			$c['owner_data'] = $this->usermodel->getData($c['owner']);
+			$this->load->view("partials/post", $c);
+		} ?>
 		
 		<h3>Reply</h3>
 		<?= validation_errors(); ?>
