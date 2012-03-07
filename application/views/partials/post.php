@@ -1,4 +1,4 @@
-<table class="forum_post box vertical_margin" id="post'.$id.'">
+<table class="forum_post box vertical_margin" id="post<?= $id ?>">
   <tr class="colhead_dark">
     <td colspan="2">
       <span style="float:left;">

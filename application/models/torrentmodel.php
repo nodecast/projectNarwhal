@@ -88,6 +88,7 @@ class TorrentModel extends CI_Model {
 		$c = $this->utility->get_seq_id('torrentcommentid');
 		$push = array('comments' => array('id' => $c, 'time' => time(), 'owner' => $owner, 'body' => $body));
 		$this->mongo->db->torrents->update(array('id' => intval($id)), array('$push' => $push));
+		return $c;
 	}
 }
 ?>

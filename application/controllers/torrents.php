@@ -180,14 +180,6 @@ class Torrents extends CI_Controller {
 			$this->utility->page_title('Non-existant torrent');
 			$this->load->view('torrents/view_dne');
 		} else {
-			if($this->input->post('action') == 'reply') {
-				$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
-				$this->form_validation->set_rules('text', 'text', 'required|max_length['.$this->config->item('max_bytes_per_post').']');
-				if($this->form_validation->run()) {
-					$this->torrentmodel->addComment($id, $this->session->userdata('id'), $this->input->post('text'));
-				}
-			}
-		
 			$data = array();
 			$data['torrent'] = $torrent;
 			$data['owner'] = $this->usermodel->getData($torrent['owner']);
@@ -202,6 +194,17 @@ class Torrents extends CI_Controller {
 			$data['comments'] = $data['comments']['data'];
 			$data['page'] = $page;
 			$data['static_server'] = $this->config->item('static_server');
+			
+			if($this->input->post('action') == 'reply') {
+				$this->utility->enforce_perm('site_torrents_comment');
+				$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+				$this->form_validation->set_rules('text', 'text', 'required|max_length['.$this->config->item('max_bytes_per_post').']');
+				if($this->form_validation->run()) {
+					$c = $this->torrentmodel->addComment($id, $this->session->userdata('id'), $this->input->post('text'));
+					redirect('/torrents/view/'.$id.'/'.ceil(($data['results']+1) / 10).'#post'.$c);
+				}
+			}
+			
 			$this->utility->page_title($data['torrent']['name']);
 			$this->load->view('torrents/view', $data);
 		}
