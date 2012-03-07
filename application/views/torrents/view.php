@@ -151,7 +151,7 @@
 
 		<?php foreach($comments as $c) { ?>
 			<?php
-				$c['user'] = $user;
+				$c['user'] = $owner;
 			?>
 			<? $this->load->view("partials/post", $c); ?>
 		<?php } ?>
