@@ -1031,43 +1031,47 @@ class BBCodeLibrary
       return true;
 
     if ($params['_default']) {
-      $content = $params['_default'];
+      $cnt = $params['_default'];
       $noclose = true;
     } else {
-      $content = trim ($bbcode->UnHTMLEncode (strip_tags ($content)));
+      $cnt = trim ($bbcode->UnHTMLEncode (strip_tags ($content)));
       $noclose = false;
     }
 
-    if (preg_match ("/\\.(?:gif|jpeg|jpg|jpe|png)$/", $content))
+    if (preg_match ("/\\.(?:gif|jpeg|jpg|jpe|png)$/", $cnt))
       {
-     if (preg_match ("/^[a-zA-Z0-9_][^:]+$/", $content))
+     if (preg_match ("/^[a-zA-Z0-9_][^:]+$/", $cnt))
        {
          if (!preg_match
-          ("/(?:\\/\\.\\.\\/)|(?:^\\.\\.\\/)|(?:^\\/)/", $content))
+          ("/(?:\\/\\.\\.\\/)|(?:^\\.\\.\\/)|(?:^\\/)/", $cnt))
            {
-          $info = @getimagesize ("{$bbcode->local_img_dir}/{$content}");
+          $info = @getimagesize ("{$bbcode->local_img_dir}/{$cnt}");
           if ($info[2] == IMAGETYPE_GIF || $info[2] == IMAGETYPE_JPEG
               || $info[2] == IMAGETYPE_PNG)
             {
               return "<img src=\"".
                 htmlspecialchars
-                ("{$bbcode->local_img_url}/{$content}")."\" alt=\"".
-                htmlspecialchars (basename ($content))."\" width=\"".
+                ("{$bbcode->local_img_url}/{$cnt}")."\" alt=\"".
+                htmlspecialchars (basename ($cnt))."\" width=\"".
                 htmlspecialchars ($info[0])."\" height=\"".
                 htmlspecialchars ($info[1]).
                 "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"");
             }
            }
        }
-     else if ($bbcode->IsValidURL ($content, false))
+     else if ($bbcode->IsValidURL ($cnt, false) &&
+              get_instance()->utility->is_valid_image($cnt))
        {
-         return "<img src=\"".htmlspecialchars ($content)."\" alt=\"".
-           htmlspecialchars (basename ($content)).
+         return "<img src=\"".htmlspecialchars ($cnt)."\" alt=\"".
+           htmlspecialchars (basename ($cnt)).
            "\" class=\"bbcode_img\" />".($noclose?"<br /><br />":"");
        }
       }
-    return htmlspecialchars ($params['_tag']).htmlspecialchars ($content).
-      htmlspecialchars ($params['_endtag']);
+    if (!$noclose)
+      return htmlspecialchars ($params['_tag']).htmlspecialchars ($content).
+            htmlspecialchars ($params['_endtag']).' - (Image host not whitelisted or invalid URL)<br /><br />';
+    else
+      return htmlspecialchars ($params['_tag']).' - (Image host not whitelisted or invalid URL)<br /><br />';
   }
   function DoRule ($bbcode, $action, $name, $default, $params, $content)
   {
@@ -1528,7 +1532,7 @@ class BBCode
   }
   function GetDefaultLocalImgDir ()
   {
-    return "img";
+    return "/static/common";
   }
   function SetLocalImgURL ($path)
   {
