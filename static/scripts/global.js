@@ -32,7 +32,7 @@ $(function() {
 		var id = $(this).attr('data-id');
 
 		$($(".post .quickpost")[idx]).on('click', function(e) {
-			$.get('http://localhost/ajax/getTorrentCommentBBCode/' + id.toString(), function(data) {
+			$.get('/ajax/getTorrentCommentBBCode/' + id.toString(), function(data) {
 				$("#quickpost").append('[quote='+username+']'+data+'[/quote]');
 			});
 		});
