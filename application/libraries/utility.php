@@ -3,7 +3,6 @@
 class Utility {
 	public function __construct()
 	{
-		require_once(APPPATH.'/libraries/textformat.php');
 		$this->CI =& get_instance();
 	}
 
