@@ -26,4 +26,12 @@ $(function() {
 		});
 		$(this).siblings(".bbcode_spoiler").hide();
 	});
+
+	$(".post").each(function(idx, val) {
+		var bbcode = $($(".post .body_src")[idx]).text();
+		var username = $($(".post .username")[idx]).text();
+		$($(".post .quickpost")[idx]).on('click', function(e) {
+			$("#quickpost").text('[quote='+username+']'+$.trim(bbcode)+'[/quote]');
+		});
+	});
 });

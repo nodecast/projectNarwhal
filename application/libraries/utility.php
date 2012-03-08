@@ -202,7 +202,7 @@ class Utility {
 		$this->CI->load->model('usermodel');
 		$data = $this->CI->usermodel->getData($id);
 		
-		return '<a href="/user/view/'.$data['id'].'">'.$data['username'].'</a>';
+		return '<a class="username" href="/user/view/'.$data['id'].'">'.$data['username'].'</a>';
 	}
 	
 	// TODO this does nothing right now
