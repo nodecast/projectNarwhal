@@ -42,6 +42,7 @@ class TorrentModel extends CI_Model {
 	/*
 	Gets a torrent comment
 	*/
+	//TODO redo this
 	function getComment($id, $cache = true) {
 		$key = 'torrent_comment_id_'.$id;
 		if (!$cache || $this->mcache->get($key) === FALSE) {
@@ -59,8 +60,11 @@ class TorrentModel extends CI_Model {
 
 				if ($ret && $cache) {
 					$this->mcache->set($key, $ret, $this->config->item('torrent_cache'));
+					break;
 				}
 			}
+		} else {
+			$ret = $this->mcache->get($key);
 		}
 		
 		return $ret;

@@ -4,7 +4,7 @@
       <span style="float:left;">
         <a href="#post<?= $id ?>">#<?= $id ?></a>
         by <strong><?= $this->utility->format_name($owner); ?></strong>
-          <span title="<?= $ci->utility->format_datetime($time) ?>"><?= $ci->utility->time_diff_string($time) ?></span> - <a href="#quickpost" class="quickpost" onclick="">[Quote]</a>
+          <span title="<?= $ci->utility->format_datetime($time) ?>"><?= $ci->utility->time_diff_string($time) ?></span> - <a href="#quickpost" class="quickpost">[Quote]</a>
       </span>
       <span id="bar<?= $id ?>" style="float:right;"></span>
     </td>

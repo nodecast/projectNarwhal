@@ -33,7 +33,7 @@ $(function() {
 
 		$($(".post .quickpost")[idx]).on('click', function(e) {
 			$.get('/ajax/getTorrentCommentBBCode/' + id.toString(), function(data) {
-				$("#quickpost").append('[quote='+username+']'+data+'[/quote]');
+				$("#quickpost").val($("#quickpost").val()+'[quote='+username+']'+data+'[/quote]');
 			});
 		});
 	});

@@ -225,7 +225,7 @@ class Utility {
 	}
 
 	function is_valid_image($img) {
-		return preg_match('/^\/static/', $img) || preg_match('/^(https?:\/\/'.get_instance()->config->item('allowed_imagehosts').'[^\s\'\"<>()]+(\.(jpg|jpeg|gif|png|tif|tiff|bmp)))$/is', $img);
+		return preg_match('/^\/static/', $img) || preg_match('/^(https?:\/\/'.$this->CI->config->item('allowed_imagehosts').'[^\s\'\"<>()]+(\.(jpg|jpeg|gif|png|tif|tiff|bmp)))$/is', $img);
 	}
 }
 
