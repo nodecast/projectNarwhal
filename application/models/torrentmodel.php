@@ -40,6 +40,33 @@ class TorrentModel extends CI_Model {
 	}
 
 	/*
+	Gets a torrent comment
+	*/
+	function getComment($id, $cache = true) {
+		$key = 'torrent_comment_id_'.$id;
+		if (!$cache || $this->mcache->get($key) === FALSE) {
+			$torrent = $this->mongo->db->torrents->find(array('comments.id' => intval($id)))->fields(array('comments' => true));
+			$torrent = iterator_to_array($torrent);
+			if (count($torrent) == 0)
+				return null;
+			$comments = $torrent[key($torrent)]['comments'];
+
+			$ret = null;
+
+			foreach ($comments as $idx => $comment) {
+				if (intval($comment['id']) === intval($id))
+					$ret = $comment;
+
+				if ($ret && $cache) {
+					$this->mcache->set($key, $ret, $this->config->item('torrent_cache'));
+				}
+			}
+		}
+		
+		return $ret;
+	}
+
+	/*
 	Gets the data for a given torrent
 	*/
 	function getData($id, $cache = true) {

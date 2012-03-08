@@ -64,4 +64,16 @@ class Ajax extends CI_Controller {
 			echo '<input type="checkbox" name="data[]">';
 		}
 	}
+
+	public function getTorrentCommentBBCode($id = -1) {
+		$this->utility->enforce_perm('site_torrents_comment');
+		$this->load->model('torrentmodel');
+
+		$comment = $this->torrentmodel->getComment($id);
+
+		if (!$comment)
+			echo '[error fetching comment body]';
+		else
+			echo $comment['body'];
+	}
 }

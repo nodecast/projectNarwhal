@@ -1,4 +1,4 @@
-<table class="post box vertical_margin" id="post<?= $id ?>">
+<table class="post box vertical_margin" id="post<?= $id ?>" data-id="<?= $id ?>">
   <tr class="colhead_dark">
     <td colspan="2">
       <span style="float:left;">
@@ -14,9 +14,6 @@
       <img src="<?= $owner_data['avatar'] ?>" width="150" alt="<?= $owner_data['username'] ?>'s avatar" />
     </td>
     <td class="body" valign="top">
-      <div class="body_src" id="body_src<?= $id ?>" style="display:none;">
-        <?= htmlspecialchars($body) ?>
-      </div>
       <div id="content<?= $id ?>">
         <?= $ci->textformat->parse($body, $this->config->item('torrent_cache')) ?>
       </div>

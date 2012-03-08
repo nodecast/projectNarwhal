@@ -28,10 +28,13 @@ $(function() {
 	});
 
 	$(".post").each(function(idx, val) {
-		var bbcode = $($(".post .body_src")[idx]).text();
 		var username = $($(".post .username")[idx]).text();
+		var id = $(this).attr('data-id');
+
 		$($(".post .quickpost")[idx]).on('click', function(e) {
-			$("#quickpost").append('[quote='+username+']'+$.trim(bbcode)+'[/quote]');
+			$.get('http://localhost/ajax/getTorrentCommentBBCode/' + id.toString(), function(data) {
+				$("#quickpost").append('[quote='+username+']'+data+'[/quote]');
+			});
 		});
 	});
 });
