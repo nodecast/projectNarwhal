@@ -4,6 +4,7 @@ class TorrentModel extends CI_Model {
 	function __construct()
 	{	
 		parent::__construct();
+		$this->load->model('usermodel');
 	}
 	
 	function getTorrents($limit = 50, $skip = 0, $query = null, $order = 'time', $way = -1) {
@@ -28,6 +29,11 @@ class TorrentModel extends CI_Model {
 	function getComments($id, $limit = 10, $skip = 0, $cache = true) {
 		$data = $this->getData($id, $cache);
 		$data = $data['comments'];
+
+		foreach ($data as &$comment) {
+			$comment['owner_data'] = $this->usermodel->getData($comment['owner']);
+		}
+
 		$l = count($data);
 		$data = array_slice($data, $skip, $limit);
 		return array('data' => $data, 'length' => $l);

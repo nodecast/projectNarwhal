@@ -150,8 +150,6 @@
 		<?php endif; ?>
 
 		<?php foreach($comments as $c) {
-			$this->load->model('usermodel');
-			$c['owner_data'] = $this->usermodel->getData($c['owner']);
 			$this->load->view("partials/post", $c);
 		} ?>
 		
