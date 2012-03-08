@@ -31,7 +31,7 @@ $(function() {
 		var bbcode = $($(".post .body_src")[idx]).text();
 		var username = $($(".post .username")[idx]).text();
 		$($(".post .quickpost")[idx]).on('click', function(e) {
-			$("#quickpost").text('[quote='+username+']'+$.trim(bbcode)+'[/quote]');
+			$("#quickpost").append('[quote='+username+']'+$.trim(bbcode)+'[/quote]');
 		});
 	});
 });
