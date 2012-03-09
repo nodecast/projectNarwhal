@@ -18,7 +18,7 @@ class User extends CI_Controller {
 
 	public function view($id = -1) {
 		$this->usermodel->buildpercentile(0);
-		if($id <= 0 || !is_numeric($id))
+		if($id <= 0)
 			$id = $this->session->userdata('_id'); 
 
 		$data['user'] = $this->usermodel->getData($id, false); //don't cache user view
