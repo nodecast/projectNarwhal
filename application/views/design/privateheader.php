@@ -59,7 +59,7 @@
 			<li><form action="#"><input type="text" name="search" placeholder="Torrents"><input value="Search" type="submit" class="hidden"></form></li>
 			<li><form action="#"><input type="text" name="search" placeholder="Requests"><input value="Search" type="submit" class="hidden"></form></li>
 			<li><form action="#"><input type="text" name="search" placeholder="Forums"><input value="Search" type="submit" class="hidden"></form></li>
-			<li><form action="#"><input type="text" name="search" placeholder="Users"><input value="Search" type="submit" class="hidden"></form></li>
+			<li><form action="/search/users"><input type="text" name="username" placeholder="Users"><input value="Search" type="submit" class="hidden"></form></li>
 		</ul>
 	</div>
 </div>
