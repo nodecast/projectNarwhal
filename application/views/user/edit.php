@@ -12,6 +12,15 @@
         <td><input name="email" size="60" value="<?= $user['email'] ?>" /></td>
       </tr>
       <tr>
+        <td class="label">Avatar</td>
+        <td>
+          <input name="avatar" size="60" value="<?= $user['avatar'] ?>" /><br />
+          <span class="smallinfo">
+            Avatars <em>must</em> be <strong>safe for work</strong>!
+          </span>
+        </td>
+      </tr>
+      <tr>
         <td class="label">IRC Key</td>
         <td>
           <input name="irc_key" size="60" value="<?= $user['irc_key'] ?>" /><br />

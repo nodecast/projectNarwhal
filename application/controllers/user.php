@@ -71,6 +71,7 @@ class User extends CI_Controller {
 		} else {
 			$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 			$this->form_validation->set_rules('email', 'Email', 'required');
+			$this->form_validation->set_rules('avatar', 'Avatar', 'callback__avatar_check');
 
 			if ($this->input->post('download_as_txt'))
 				$user['settings']['download_as_txt'] = true;
@@ -84,6 +85,9 @@ class User extends CI_Controller {
 			if ($this->input->post('paranoia'))
 				$user['paranoia'] = $this->input->post('paranoia');
 
+			if ($this->input->post('avatar'))
+				$user['avatar'] = $this->input->post('avatar');
+
 			if ($this->form_validation->run() == FALSE) {
 				$data = array();
 				$data['user'] = $user;
@@ -95,6 +99,15 @@ class User extends CI_Controller {
 				$this->mongo->db->users->save($user);
 				redirect('user/view/'.$user['_id']);
 			}
+		}
+	}
+
+	function _avatar_check($avatar) {
+		if ($this->utility->is_valid_image($avatar)) {
+			return true;
+		} else {
+			$this->form_validation->set_message('_avatar_check', 'The %s field must contain a valid URL to a whitelisted image host.');
+			return false;
 		}
 	}
 }
