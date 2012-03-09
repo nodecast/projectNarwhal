@@ -105,7 +105,7 @@ class Utility {
 	
 	function update_user_data() {
 		$this->CI->load->model('usermodel');
-		$res = $this->CI->usermodel->getData($this->CI->session->userdata('id'), true);
+		$res = $this->CI->usermodel->getData($this->CI->session->userdata('_id'), true);
 		$this->CI->session->set_userdata($res);
 	}
 
@@ -116,7 +116,7 @@ class Utility {
 	
 	function check_perm($perm, $id = -1) {
 		if($id == -1)
-			$id = $this->CI->session->userdata('id');
+			$id = $this->CI->session->userdata('_id');
 		$this->CI->load->model('usermodel');
 		
 		$p = $this->CI->usermodel->getPermissions($id);
@@ -201,7 +201,7 @@ class Utility {
 		$this->CI->load->model('usermodel');
 		$data = $this->CI->usermodel->getData($id);
 		
-		return '<a class="username" href="/user/view/'.$data['id'].'">'.$data['username'].'</a>';
+		return '<a class="username" href="/user/view/'.$data['_id'].'">'.$data['username'].'</a>';
 	}
 	
 	// TODO this does nothing right now

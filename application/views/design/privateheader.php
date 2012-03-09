@@ -12,8 +12,8 @@
 		<a href="/"><div id="logo"></div></a>
 		<div id="userinfo">
 		<ul id="userinfo_username">
-			<li><a href="/user/view/<?= $user['id'] ?>" class="username"><?= $user['username']; ?></a></li>
-			<li class="brackets"><a href="/user/edit/<?= $user['id'] ?>">Edit</a></li>
+			<li><a href="/user/view/<?= $user['_id'] ?>" class="username"><?= $user['username']; ?></a></li>
+			<li class="brackets"><a href="/user/edit/<?= $user['_id'] ?>">Edit</a></li>
 			<li class="brackets"><a href="/logout">Logout</a></li>
 		</ul>
 		<ul id="userinfo_major">

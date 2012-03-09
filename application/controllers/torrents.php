@@ -90,7 +90,7 @@ class Torrents extends CI_Controller {
 			$data = array();
 			$data['id'] = $c;
 			$data['name'] = $this->input->post('title');
-			$data['owner'] = $this->session->userdata('id');
+			$data['owner'] = $this->session->userdata('_id');
 			$data['description'] = $this->input->post('description');
 			$data['category'] = $this->input->post('type');
 			$data['seeders'] = 0;
@@ -120,7 +120,7 @@ class Torrents extends CI_Controller {
 			$this->mongo->db->torrents->save($data);
 
 			// log
-			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has uploaded torrent '.$data['id'].' "'.$data['name'].'"');
+			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') has uploaded torrent '.$data['id'].' "'.$data['name'].'"');
 			
 			// TODO irc announce
 			
@@ -200,7 +200,7 @@ class Torrents extends CI_Controller {
 				$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 				$this->form_validation->set_rules('text', 'text', 'required|max_length['.$this->config->item('max_bytes_per_post').']');
 				if($this->form_validation->run()) {
-					$c = $this->torrentmodel->addComment($id, $this->session->userdata('id'), $this->input->post('text'));
+					$c = $this->torrentmodel->addComment($id, $this->session->userdata('_id'), $this->input->post('text'));
 					redirect('/torrents/view/'.$id.'/'.ceil(($data['results']+1) / 10).'#post'.$c);
 				}
 			}
@@ -215,7 +215,7 @@ class Torrents extends CI_Controller {
 		$this->load->model('usermodel');
 		require(APPPATH.'/libraries/torrent.php');
 		
-		if(!is_numeric($id) || !($data = $this->torrentmodel->getData($id)))
+		if(!($data = $this->torrentmodel->getData($id)))
 			show_error('Torrent not found.', 404); 
 
 		$tor = new TORRENT($data['data']->bin);
@@ -230,7 +230,7 @@ class Torrents extends CI_Controller {
 			header('Content-Type: text/plain');
 		}
 		echo $tor->enc();
-		$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') downloaded torrent '.$id);
+		$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') downloaded torrent '.$id);
 		exit();
 	}
 	
@@ -246,11 +246,11 @@ class Torrents extends CI_Controller {
 		}
 		if($action == 'add') {
 			$this->utility->enforce_perm('site_torrents_tags_add');
-			$this->torrentmodel->addTag(intval($id), $tag);
+			$this->torrentmodel->addTag($id, $tag);
 			redirect('/torrents/view/'.$id);
 		} else if($action == 'delete') {
 			$this->utility->enforce_perm('site_torrents_tags_delete');
-			$this->torrentmodel->removeTag(intval($id), $tag);
+			$this->torrentmodel->removeTag($id, $tag);
 			redirect('/torrents/view/'.$id);
 		} else {
 			show_error('The page you have requested could not be found.', 404);

@@ -18,7 +18,7 @@
 			<ul class="stats nobullet" id="tags">
 <?php foreach($torrent['tags'] as $tag): ?>
 				<li id="tag_<?= md5($tag) ?>">
-					<?= form_open('/torrents/tag', array('id' => 'tag_delete_'.md5($tag)), array('action' => 'delete', 'id' => $torrent['id'], 'tag' => htmlspecialchars($tag))); ?>
+					<?= form_open('/torrents/tag', array('id' => 'tag_delete_'.md5($tag)), array('action' => 'delete', 'id' => $torrent['_id'], 'tag' => htmlspecialchars($tag))); ?>
 					<a href="#"><?= htmlspecialchars($tag) ?></a>
 					<?= ($can_delete_tags) ? '<a href="javascript:$(\'#tag_delete_'.md5($tag).'\').submit();">[X]</a>' : ''; ?>
 					</form>
@@ -30,7 +30,7 @@
 		<div class="box">
 			<div class="head"><strong>Add tag</strong></div>
 			<div class="body center">
-				<?= form_open('/torrents/tag', '', array('action' => 'add', 'id' => $torrent['id'])); ?>
+				<?= form_open('/torrents/tag', '', array('action' => 'add', 'id' => $torrent['_id'])); ?>
 					<input type="text" name="tag"><br>
 					<input type="submit" name="submit" value="+">
 				</form>
@@ -53,7 +53,7 @@
 			<tr class="group_torrent">
 				<td class="center"><a href="#"><img src="<?= $static_server; ?>/common/category/<?= $categories[$torrent['category']]['icon']; ?>" alt="<?= $categories[$torrent['category']]['name']; ?>" title="<?= $categories[$torrent['category']]['name']; ?>" width="24" height="24"></a></td>
 				<td>
-					<span>[<a href="/torrents/download/<?= $torrent['id']; ?>" title="Download">DL</a>&nbsp;|&nbsp;<a href="#" title="Report">RP</a>]</span>
+					<span>[<a href="/torrents/download/<?= $torrent['_id']; ?>" title="Download">DL</a>&nbsp;|&nbsp;<a href="#" title="Report">RP</a>]</span>
 					<?= htmlspecialchars($torrent['name']); ?>
 				</td>
 				<td><?= number_format(count($torrent['files'])); ?></td>
@@ -101,7 +101,7 @@
 				<td colspan="7">
 					<blockquote>
 						Ratio after download: <?= $ci->utility->ratio($user['upload'], $user['download'] + $torrent['size']); ?><br>
-						Uploaded by <a href="/user/view/<?= $owner['id']; ?>"><?= $owner['username']; ?></a> on <span title="<?= $ci->utility->time_diff_string($torrent['time']); ?>"><?= $ci->utility->format_datetime($torrent['time']); ?></span>
+						Uploaded by <a href="/user/view/<?= $owner['_id']; ?>"><?= $owner['username']; ?></a> on <span title="<?= $ci->utility->time_diff_string($torrent['time']); ?>"><?= $ci->utility->format_datetime($torrent['time']); ?></span>
 					</blockquote>
 					<div class="center">
 						<a href="javascript:;" onclick="$('#filelist').fadeToggle('fast', 'swing');">Show/Hide Filelist</a>
@@ -121,7 +121,7 @@
 							var peerlistLoaded = false;
 							function loadPeerlist() {
 								if(!peerlistLoaded) {
-									$.get('/ajax/peerlist/<?= $torrent['id'] ?>', function(data) {
+									$.get('/ajax/peerlist/<?= $torrent['_id'] ?>', function(data) {
 										$('#peerlist').html(data);
 									});
 									peerlistLoaded = true;
@@ -145,7 +145,7 @@
 		
 		<?php if($results > $per_page): ?>
 			<div class="linkbox">
-				<?= $ci->utility->get_page_nav('/torrents/view/'.$torrent['id'].'/', $page,  $results, $per_page); ?>
+				<?= $ci->utility->get_page_nav('/torrents/view/'.$torrent['_id'].'/', $page,  $results, $per_page); ?>
 			</div>
 		<?php endif; ?>
 
@@ -156,7 +156,7 @@
 		<h3>Reply</h3>
 		<?= validation_errors(); ?>
 		<div class="box pad" style="padding:20px 10px 10px 10px;display: block; text-align: center;">
-			<?= form_open('/torrents/view/'.$torrent['id']); ?>
+			<?= form_open('/torrents/view/'.$torrent['_id']); ?>
 				<div id="quickreplytext" class="center">
 					<input type="hidden" name="action" value="reply">
 					<textarea id="quickpost" name="text" style="width:90%" rows="8"></textarea><br>

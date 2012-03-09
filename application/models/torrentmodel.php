@@ -74,15 +74,14 @@ class TorrentModel extends CI_Model {
 	Gets the data for a given torrent
 	*/
 	function getData($id, $cache = true) {
-		$id = intval($id);
 		if($cache) {
 			if(($data = $this->mcache->get('torrent_'.$id.'_data')) === FALSE) {
-				$data = $this->mongo->db->torrents->findOne(array('id'=>$id));
+				$data = $this->mongo->db->torrents->findOne(array('_id'=> new MongoId($id)));
 				$this->mcache->set('torrent_'.$id.'_data', $data, $this->config->item('torrent_cache'));
 			}
 			return $data;
 		} else {
-			return $this->mongo->db->torrents->findOne(array('id' => $id));
+			return $this->mongo->db->torrents->findOne(array('_id' => new MongoId($id)));
 		}
 	}
 	
@@ -101,7 +100,7 @@ class TorrentModel extends CI_Model {
 		$data = $data['tags'];
 		$data[] = $tag;
 		$data = array_unique($data);
-		$this->mongo->db->torrents->update(array('id' => $id), array('$set' => array('tags' => $data)));
+		$this->mongo->db->torrents->update(array('_id' => new MongoId($id)), array('$set' => array('tags' => $data)));
 	}
 	
 	/*
@@ -115,16 +114,15 @@ class TorrentModel extends CI_Model {
 				unset($data[$key]);
 		}
 		$data = array_values($data);
-		$this->mongo->db->torrents->update(array('id' => $id), array('$set' => array('tags' => $data)));
+		$this->mongo->db->torrents->update(array('_id' => new MongoId($id)), array('$set' => array('tags' => $data)));
 	}
 	
 	/*
 	Adds a comment to a torrent
 	*/
 	function addComment($id, $owner, $body) {
-		$c = $this->utility->get_seq_id('torrentcommentid');
-		$push = array('comments' => array('id' => $c, 'time' => time(), 'owner' => $owner, 'body' => $body));
-		$this->mongo->db->torrents->update(array('id' => intval($id)), array('$push' => $push));
+		$push = array('comments' => array('_id' => new MongoId(), 'time' => time(), 'owner' => $owner, 'body' => $body));
+		$this->mongo->db->torrents->update(array('_id' => new MongoId($id)), array('$push' => $push));
 		return $c;
 	}
 }

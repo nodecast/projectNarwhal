@@ -1,8 +1,8 @@
-<h3>Edit <a href="/users/view/<?= $user['id'] ?>"><?= $user['username'] ?></a>'s profile</h3>
+<h3>Edit <a href="/users/view/<?= $user['_id'] ?>"><?= $user['username'] ?></a>'s profile</h3>
 
 <?= validation_errors(); ?>
 <div class="upload center">
-  <?= form_open('user/edit/'.$user['id']) ?>
+  <?= form_open('user/edit/'.$user['_id']) ?>
     <div id="upload_table">
     </div>
 

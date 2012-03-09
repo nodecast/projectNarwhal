@@ -78,7 +78,7 @@ class Kb extends CI_Controller {
 
       $this->mongo->db->kb->save($data);
 
-      $this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has created KB Article '.$data['_id'].' "'.$data['name'].'"');
+      $this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') has created KB Article '.$data['_id'].' "'.$data['name'].'"');
 
       redirect('/kb/view/'.$data['_id']);
     }

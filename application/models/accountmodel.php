@@ -23,11 +23,8 @@ class AccountModel extends CI_Model {
 	Registers a user
 	*/
 	function register($username, $password, $email, $invitedby) {
-		//autoincrement, also, (now less) ewww
-		$c = $this->utility->get_seq_id('userid');
 		//TODO finish
 		$data = array();
-		$data['id'] = $c;
 		$data['username'] = $username;
 		$data['salt'] = $this->utility->make_secret();
 		$data['password'] = $this->utility->make_hash($password, $data['salt']);
@@ -56,7 +53,7 @@ class AccountModel extends CI_Model {
 		
 		$this->mongo->db->users->save($data);
 		
-		return $data['id'];
+		return $data['_id'];
 	}
 
 	/*

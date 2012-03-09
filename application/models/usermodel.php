@@ -10,18 +10,18 @@ class UserModel extends CI_Model {
 	Gets the data for a given username.
 	*/
 	function getData($id, $cache = true) {
-		if($id == 0) { //system
-			return array('id' => 0, 'username' => 'System', 'title' => 'Totally Not Self-Aware', 'avatar' => $this->config->item('system_avatar'));
+		if(new MongoId($id) === new MongoId(0)) { //system
+			return array('_id' => new MongoId(0), 'username' => 'System', 'title' => 'Totally Not Self-Aware', 'avatar' => $this->config->item('system_avatar'));
 		}
 		
 		if($cache) {
 			if(!($data = $this->mcache->get('user_'.$id.'_data'))) {
-				$data = $this->mongo->db->users->findOne(array('id'=>$id));
+				$data = $this->mongo->db->users->findOne(array('_id' => new MongoId($id)));
 				$this->mcache->set('user_'.$id.'_data', $data, $this->config->item('userdata_cache'));
 			}
 			return $data;
 		} else {
-			return $this->mongo->db->users->findOne(array('id'=>$id));
+			return $this->mongo->db->users->findOne(array('_id' => new MongoId($id)));
 		}
 	}
 	
@@ -116,11 +116,11 @@ class UserModel extends CI_Model {
 	}
 	
 	function numUploads($id) {
-		return $this->mongo->db->torrents->find(array('owner' => $id))->count();
+		return $this->mongo->db->torrents->find(array('owner' => new MongoId($id)))->count();
 	}
 	
 	function numRequests($id) {
-		return $this->mongo->db->requests->find(array('owner' => $id))->count();
+		return $this->mongo->db->requests->find(array('owner' => new MongoId($id)))->count();
 	}
 	
 	function numPosts($id) {

@@ -19,19 +19,19 @@ class User extends CI_Controller {
 	public function view($id = -1) {
 		$this->usermodel->buildpercentile(0);
 		if($id <= 0 || !is_numeric($id))
-			$id = $this->session->userdata('id'); 
-		$id = floor($id);
+			$id = $this->session->userdata('_id'); 
 
-		$data['user'] = $this->usermodel->getData(intval($id), false); //don't cache user view
+		$data['user'] = $this->usermodel->getData($id, false); //don't cache user view
+
 		if(!$data['user']) {
 			$this->load->view('user/view_dne');
 			return;
 		}
 		
 		$data['view'] = $data['user']['paranoia'];
-		if($id == $this->session->userdata('id'))
+		if($id == $this->session->userdata('_id'))
 			$data['view'] = -1;
-		if($this->usermodel->isStaff($this->session->userdata('id')))
+		if($this->usermodel->isStaff($this->session->userdata('_id')))
 			$data['view'] = -2;
 		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);
 		$data['display']['download'] = $this->utility->format_bytes($data['user']['download']);
@@ -62,10 +62,10 @@ class User extends CI_Controller {
 
 	function edit($id = -1) {
 		$current_user = $this->utility->current_user();
-		if (!(intval($id) === intval($current_user['id'])))
+		if (!(new MongoId($id) === $current_user['_id']))
 			$this->utility->enforce_perm('site_user_edit');
 
-		if (!$user = $this->usermodel->getData(intval($id), false)) {
+		if (!$user = $this->usermodel->getData($id, false)) {
 			$this->utility->page_title('User not found');
 			$this->load->view('user/view_dne');
 		} else {
@@ -93,7 +93,7 @@ class User extends CI_Controller {
 					$user['settings']['download_as_txt'] = false;
 
 				$this->mongo->db->users->save($user);
-				redirect('user/view/'.$user['id']);
+				redirect('user/view/'.$user['_id']);
 			}
 		}
 	}
