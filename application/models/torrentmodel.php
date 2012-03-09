@@ -46,7 +46,7 @@ class TorrentModel extends CI_Model {
 	function getComment($id, $cache = true) {
 		$key = 'torrent_comment_id_'.$id;
 		if (!$cache || $this->mcache->get($key) === FALSE) {
-			$torrent = $this->mongo->db->torrents->find(array('comments.id' => intval($id)))->fields(array('comments' => true));
+			$torrent = $this->mongo->db->torrents->find(array('comments._id' => new MongoId($id)))->fields(array('comments' => true));
 			$torrent = iterator_to_array($torrent);
 			if (count($torrent) == 0)
 				return null;
@@ -55,7 +55,7 @@ class TorrentModel extends CI_Model {
 			$ret = null;
 
 			foreach ($comments as $idx => $comment) {
-				if (intval($comment['id']) === intval($id))
+				if ($comment['_id'] == new MongoId($id))
 					$ret = $comment;
 
 				if ($ret && $cache) {

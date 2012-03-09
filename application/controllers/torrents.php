@@ -85,10 +85,7 @@ class Torrents extends CI_Controller {
 			$this->load->view('torrents/upload', $data);
 		} else {
 			//continue processing on the torrent files
-			$c = $this->utility->get_seq_id('torrentid');
-
 			$data = array();
-			$data['id'] = $c;
 			$data['name'] = $this->input->post('title');
 			$data['owner'] = $this->session->userdata('_id');
 			$data['description'] = $this->input->post('description');
@@ -124,7 +121,7 @@ class Torrents extends CI_Controller {
 			
 			// TODO irc announce
 			
-			redirect('/torrents/view/'.$data['id']);
+			redirect('/torrents/view/'.$data['_id']);
 		}
 	}
 	
