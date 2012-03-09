@@ -121,7 +121,8 @@ class TorrentModel extends CI_Model {
 	Adds a comment to a torrent
 	*/
 	function addComment($id, $owner, $body) {
-		$push = array('comments' => array('_id' => new MongoId(), 'time' => time(), 'owner' => $owner, 'body' => $body));
+		$c = new MongoId();
+		$push = array('comments' => array('_id' => $c, 'time' => time(), 'owner' => $owner, 'body' => $body));
 		$this->mongo->db->torrents->update(array('_id' => new MongoId($id)), array('$push' => $push));
 		return $c;
 	}

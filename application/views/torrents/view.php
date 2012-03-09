@@ -145,13 +145,19 @@
 		
 		<?php if($results > $per_page): ?>
 			<div class="linkbox">
-				<?= $ci->utility->get_page_nav('/torrents/view/'.$torrent['_id'].'/', $page,  $results, $per_page); ?>
+				<?= $nav = $ci->utility->get_page_nav('/torrents/view/'.$torrent['_id'].'/', $page,  $results, $per_page); ?>
 			</div>
 		<?php endif; ?>
 
 		<?php foreach($comments as $c) {
 			$this->load->view("partials/post", $c);
 		} ?>
+
+		<?php if($results > $per_page): ?>
+			<div class="linkbox">
+				<?= $nav ?>
+			</div>
+		<?php endif; ?>
 		
 		<h3>Reply</h3>
 		<?= validation_errors(); ?>
