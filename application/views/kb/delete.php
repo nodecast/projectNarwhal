@@ -2,7 +2,7 @@
 
 <?= validation_errors(); ?>
 <div class="upload center">
-  <?= form_open('kb/delete/'.$article['id']) ?>
+  <?= form_open('kb/delete/'.$article['_id']) ?>
     <div id="upload_table">
     </div>
 

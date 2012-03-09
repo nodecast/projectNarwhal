@@ -38,11 +38,10 @@ class KbModel extends CI_Model {
 
   function getArticle($id, $cache = true) {
     $key = 'kb_articles_'.$id;
-    $id = intval($id);
     $data = array();
 
     if (!$cache || ($data = $this->mcache->get($key)) === FALSE) {
-      $data = $this->mongo->db->kb->findOne(array('id' => $id));
+      $data = $this->mongo->db->kb->findOne(array('_id' => new MongoId($id)));
 
       if ($data) {
         $data['html_src'] = $this->ci->textformat->parse($data['bb_src']);
@@ -59,7 +58,7 @@ class KbModel extends CI_Model {
   function deleteArticle($id) {
     $this->mcache->delete('kb_articles_'.$id);
     $this->mcache->delete('kb_articles_list');
-    $this->mongo->db->kb->remove(array('id' => intval($id)));
+    $this->mongo->db->kb->remove(array('_id' => new MongoId($id)));
   }
 }
 ?>

@@ -33,7 +33,11 @@
 <?php if ($preview) { ?>
   <h3>Preview</h3>
 
-  <div id="preview">
-    <?= $preview ?>
+  <div class="box">
+    <div class="head"><?= htmlspecialchars($name) ?></div>
+    <div class="pad">
+      <?= $preview ?>
+    </div>
   </div>
+
 <?php } ?>

@@ -72,18 +72,15 @@ class Kb extends CI_Controller {
         $data['preview'] = $this->textformat->Parse($this->input->post('bb_src'));
         $this->load->view('kb/form', $data);
     } else {
-      $c = $this->utility->get_seq_id('kbarticleid');
-
       $data = array();
-      $data['id'] = $c;
       $data['name'] = $this->input->post('name');
       $data['bb_src'] = $this->input->post('bb_src');
 
       $this->mongo->db->kb->save($data);
 
-      $this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has created KB Article '.$data['id'].' "'.$data['name'].'"');
+      $this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('id').') has created KB Article '.$data['_id'].' "'.$data['name'].'"');
 
-      redirect('/kb/view/'.$data['id']);
+      redirect('/kb/view/'.$data['_id']);
     }
   }
 
@@ -104,7 +101,7 @@ class Kb extends CI_Controller {
         $data = array();
         $data['name'] = $article['name'];
         $data['bb_src'] = $article['bb_src'];
-        $data['formurl'] = 'kb/edit/'.$article['id'];
+        $data['formurl'] = 'kb/edit/'.$article['_id'];
         $data['ucverb'] = 'Edit';
         $data['preview'] = false;
         $this->load->view('kb/form', $data);
@@ -112,7 +109,7 @@ class Kb extends CI_Controller {
         $data = array();
         $data['name'] = $this->input->post('name');
         $data['bb_src'] = $this->input->post('bb_src');
-        $data['formurl'] = 'kb/edit/'.$article['id'];
+        $data['formurl'] = 'kb/edit/'.$article['_id'];
         $data['ucverb'] = 'Edit';
         $data['preview'] = $this->textformat->Parse($this->input->post('bb_src'));
         $this->load->view('kb/form', $data);
@@ -122,7 +119,7 @@ class Kb extends CI_Controller {
 
         $this->mongo->db->kb->save($article);
 
-        redirect('/kb/view/'.$article['id']);
+        redirect('/kb/view/'.$article['_id']);
       }
     }
   }
@@ -146,7 +143,7 @@ class Kb extends CI_Controller {
         $data['article'] = $article;
         $this->load->view('kb/delete', $data);
       } else {
-        $this->kbmodel->deleteArticle($article['id']);
+        $this->kbmodel->deleteArticle($article['_id']);
         redirect('kb/browse');
       }
     }
