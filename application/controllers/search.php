@@ -11,8 +11,8 @@ class Search extends CI_Controller {
   public function index() {
   }
 
-  public function users($id = "@") {
-    $id = $this->input->get('username');
+  public function users() {
+    $id = $this->solr->escapeValue($this->input->get('q'));
 
     $start = $this->input->get('start');
     if ($start < 0)
@@ -23,7 +23,7 @@ class Search extends CI_Controller {
       $rows = 10;
 
     if ($id) {
-      $res = $this->solr->query('ns:narwhal.users AND username:'.$id, intval($start), intval($rows));
+      $res = $this->solr->query('ns:narwhal.users AND username:*'.$id.'*', intval($start), intval($rows));
     } else {
       $res = array('response' => array('numFound' => 0));
     }
@@ -31,5 +31,27 @@ class Search extends CI_Controller {
     $data['resp'] = $res['response'];
 
     $this->load->view('search/users', $data);
+  }
+
+  public function torrents() {
+    $id = $this->solr->escapeValue($this->input->get('q'));
+
+    $start = $this->input->get('start');
+    if ($start < 0)
+      $start = 0;
+
+    $rows = $this->input->get('rows');
+    if ($rows <= 0 || $rows >= 50)
+      $rows = 10;
+
+    if ($id) {
+      $res = $this->solr->query('ns:narwhal.torrents AND (name:*'.$id.'* OR description:*'.$id.'*)', intval($start), intval($rows));
+    } else {
+      $res = array('response' => array('numFound' => 0));
+    }
+
+    $data['resp'] = $res['response'];
+
+    $this->load->view('search/torrents', $data);
   }
 }
