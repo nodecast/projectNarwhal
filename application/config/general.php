@@ -64,9 +64,9 @@ $config['torrent_perpage'] = 50;
 $config['torrent_comments_perpage'] = 10;
 
 //site urls
-$config['https_siteurl'] = '192.168.1.11';
-$config['http_siteurl'] = '192.168.1.11';
-$config['announce_url'] = 'http://192.168.1.11:9999';
+$config['https_siteurl'] = '192.168.1.125';
+$config['http_siteurl'] = '192.168.1.125';
+$config['announce_url'] = 'http://192.168.1.125:9999';
 
 //allowed image hosts
 $config['allowed_imagehosts'] = '('
