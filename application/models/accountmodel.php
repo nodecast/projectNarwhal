@@ -50,6 +50,7 @@ class AccountModel extends CI_Model {
 		$data['class'] = $classes['USER'];
 		$data['profile'] = "";
 		$data['settings'] = $this->config->item('default_user_settings');
+		$data['ratiohistory'] = array();
 		
 		$this->mongo->db->users->save($data);
 		
