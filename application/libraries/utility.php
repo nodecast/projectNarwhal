@@ -51,14 +51,7 @@ class Utility {
 	}
 
 	function format_ratio_history($h) {
-		$ret = "[[";
-		$pairs = array();
-		$h = array_splice($h, -21, -1);
-		foreach ($h as $p) {
-			array_push($pairs, join(',', $p));
-		}
-		$ret .= join('],[', $pairs) . ']]';
-		return $ret;
+		return json_encode($h);
 	}
 
 	function get_ratio_color($ratio) {
