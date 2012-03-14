@@ -101,8 +101,8 @@ class Torrents extends CI_Controller {
 			$data['time'] = time();
 			$img = $this->input->post('image');
 			$data['image'] = ($this->utility->is_valid_image($img)) ? $img : '';
-			$data['comments'] = array();
-			$data['info_hash'] = new MongoBinData($this->infohash);
+                        $data['comments'] = array();
+			$data['info_hash'] = bin2hex($this->infohash);
 			$data['freetorrent'] = ($data['size'] < $this->config->item('freeleech_size')) ? 0 : 1;
 			$data['tags'] = $this->input->post('tags');
 			$data['metadata'] = array();
