@@ -17,7 +17,11 @@
 				<li>Ratio: <?= $display['ratio']; ?></li>
 				<li>Required Ratio: --</li>
 				<li>Bonus Points: <a href="/exchange/"><?= number_format($user['points']); ?></a></li>
-				<!-- TODO graph -->
+				<li>
+					Ratio Evolution: <br />
+					<div id="ratiohistory"><?= $this->utility->format_ratio_history($display['ratiohistory']) ?></div>
+					<div id="ratiograph"></div>
+				</li>
 				<?php } ?>
 			</ul>
 		</div>

@@ -6,6 +6,9 @@
 	<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/jquery.min.js"></script>
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/global.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/raphael-min.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/g.raphael-min.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/g.line-min.js"></script>
 </head>
 <body>
 	<div id="header">

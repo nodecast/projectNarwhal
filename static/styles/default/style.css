@@ -679,6 +679,14 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
   opacity: 0.75;
 }
 
+#ratiograph {
+  min-height: 180px;
+}
+
+#ratiohistory {
+  display: none;
+}
+
 /* BBCode Specific */
 .bbcode_quote_head
 {

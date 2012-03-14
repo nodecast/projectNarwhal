@@ -50,6 +50,17 @@ class Utility {
 		return number_format($bytes, 2).$suffix[$step];
 	}
 
+	function format_ratio_history($h) {
+		$ret = "[[";
+		$pairs = array();
+		$h = array_splice($h, -21, -1);
+		foreach ($h as $p) {
+			array_push($pairs, join(',', $p));
+		}
+		$ret .= join('],[', $pairs) . ']]';
+		return $ret;
+	}
+
 	function get_ratio_color($ratio) {
 		if ($ratio < 0.1) return 'r00';
 		if ($ratio < 0.2) return 'r01';

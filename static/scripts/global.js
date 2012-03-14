@@ -37,4 +37,18 @@ $(function() {
 			});
 		});
 	});
+
+	if ($('#ratiograph').length != 0) {
+		var r = Raphael("ratiograph");
+
+		var history = eval($("#ratiohistory").text());
+		var ratiovals = [];
+		var reqratiovals = [];
+		for (var i = history.length - 1; i >= 0; i--) {
+			ratiovals.push(history[i][0]);
+			reqratiovals.push(history[i][1]);
+		}
+
+		r.linechart(30,10,150,155,[[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]],[ratiovals, reqratiovals], {axis:"0 0 1 1", smooth: true, miny: 0, shade: false});
+	}
 });
