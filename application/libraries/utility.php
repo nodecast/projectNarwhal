@@ -51,7 +51,7 @@ class Utility {
 	}
 
 	function format_ratio_history($h) {
-		return json_encode(array_slice($h, -31, -1));
+		return json_encode(array_slice($h, -31, 30));
 	}
 
 	function get_ratio_color($ratio) {
