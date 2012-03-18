@@ -56,6 +56,11 @@
 		</ul>
 	</div>
 	<div id="alerts">
+		<?php foreach($alerts as $alert): ?>
+		<div class="alertbar blend">
+			<?= $alert['body'] ?>
+		</div>
+		<?php endforeach; ?>
 	</div>
 	<div id="searchbars">
 		<ul>

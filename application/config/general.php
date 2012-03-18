@@ -58,6 +58,8 @@ $config['torrent_cache'] = 300; // 5 min
 $config['kb_cache'] = 86400; // 24 hours
 //News data cache time, in seconds
 $config['news_cache'] = 1800; // 30 minutes
+//Alert cache time, in seconds -- Q: "Why is this so high?" A: "Because the cache value is deleted after sending a new alert"
+$config['alert_cache'] = 300; // 5 min
 
 //PERPAGE
 $config['torrent_perpage'] = 50;
