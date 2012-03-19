@@ -23,7 +23,7 @@ class Messages extends CI_Controller {
 			$page = 1;
 		$off = ($page - 1) * $this->config->item('messages_perpage');
 		
-		$messages = $this->messagesmodel->getMessages($this->session->userdata('_id'), $this->config->item('messages_perpage'), $off);
+		$messages = $this->messagesmodel->getMessages($this->session->userdata('_id'), $inbox, $this->config->item('messages_perpage'), $off);
 
 		$data = array();
 		$data['results'] = $messages['count'];

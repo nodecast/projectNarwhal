@@ -30,7 +30,7 @@ class MessagesModel extends CI_Model {
 	}
 	
 	function getMessages($user, $inbox = true, $limit = 25, $skip = 0) {
-		$key = 'messages_'.$user.'_'.$limit.'_'.$skip;
+		$key = 'messages_'.$user.'_'.$limit.'_'.$skip.'_'.$inbox;
 		
 		if(($data = $this->mcache->get($key)) === FALSE) {
 			if($inbox) {
