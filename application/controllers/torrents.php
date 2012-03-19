@@ -24,9 +24,6 @@ class Torrents extends CI_Controller {
 	
 		$query = array();
 		
-		$this->load->model('alertmodel');
-		$this->alertmodel->createAlert('4f65e6f3320fdc2c0e000044', 'blah, blah, alert', 2);
-		
 		$query = (count($query)) ? array(($this->input->post('match_method') == 'or' ? '$or' : '$and') => $query) : array();
 		$data = array();
 		$t = $this->torrentmodel->getTorrents($this->config->item('torrent_perpage'), $off, $query);

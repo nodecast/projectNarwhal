@@ -60,10 +60,13 @@ $config['kb_cache'] = 86400; // 24 hours
 $config['news_cache'] = 1800; // 30 minutes
 //Alert cache time, in seconds -- Q: "Why is this so high?" A: "Because the cache value is deleted after sending a new alert"
 $config['alert_cache'] = 300; // 5 min
+//Message cache time, in seconds, alright, seriously? why am I still writing this out; it's self explanatory.
+$config['message_cache'] = 30; // 30 seconds
 
 //PERPAGE
 $config['torrent_perpage'] = 50;
 $config['torrent_comments_perpage'] = 10;
+$config['messages_perpage'] = 25;
 
 //site urls
 $config['https_siteurl'] = '192.168.1.11';
