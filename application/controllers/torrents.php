@@ -24,6 +24,8 @@ class Torrents extends CI_Controller {
 	
 		$query = array();
 		
+		$this->load->model('alertmodel');
+		$this->alertmodel->createAlert('4f65e6f3320fdc2c0e000044', 'blah, blah, alert', 2);
 		
 		$query = (count($query)) ? array(($this->input->post('match_method') == 'or' ? '$or' : '$and') => $query) : array();
 		$data = array();
@@ -213,7 +215,7 @@ class Torrents extends CI_Controller {
 		require(APPPATH.'/libraries/torrent.php');
 		
 		if(!($data = $this->torrentmodel->getData($id)))
-			show_error('Torrent not found.', 404); 
+			show_404();
 
 		$tor = new TORRENT($data['data']->bin);
 		//$tor->set_announce_url($this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce');
@@ -235,7 +237,7 @@ class Torrents extends CI_Controller {
 		$id = $this->input->post('id');
 		$tag = $this->input->post('tag');
 		if(!$this->torrentmodel->getData($id)) {
-			show_error('The page you have requested could not be found.', 404);
+			show_404();
 		}
 		if(!$tag) {
 			redirect('/torrents/view/'.$id);
@@ -249,7 +251,7 @@ class Torrents extends CI_Controller {
 			$this->torrentmodel->removeTag($id, $tag);
 			redirect('/torrents/view/'.$id);
 		} else {
-			show_error('The page you have requested could not be found.', 404);
+			show_404();
 		}
 	}
 }

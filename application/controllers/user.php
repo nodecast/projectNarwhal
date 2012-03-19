@@ -24,8 +24,7 @@ class User extends CI_Controller {
 		$data['user'] = $this->usermodel->getData($id, false); //don't cache user view
 
 		if(!$data['user']) {
-			$this->load->view('user/view_dne');
-			return;
+			show_404();
 		}
 		
 		$data['view'] = $data['user']['paranoia'];

@@ -673,6 +673,12 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
   float:right;
 }
 
+.close
+{
+	float:right;
+	font-size: 12pt;
+}
+
 .smallinfo {
   font-size: 8pt;
   vertical-align: center;

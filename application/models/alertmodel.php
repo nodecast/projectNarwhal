@@ -15,7 +15,7 @@ class AlertModel extends CI_Model {
 		(Useful so you don't have 300000 pm messages)
 		
 	Reserved Types:
-		1 - PM alert
+		5 - PM alert
 	*/
 	function createAlert($id, $body, $type = 0) {
 		if($type != 0) {
@@ -47,6 +47,14 @@ class AlertModel extends CI_Model {
 			$data = $this->mongo->db->users->findOne(array('_id' => new MongoId($id)));
 			return $data['alerts'];
 		}
+	}
+	
+	/*
+	Deletes an alert for user $id, with the alert id $alert
+	*/
+	function deleteAlert($id, $alert) {
+		$this->mongo->db->users->update(array('_id' => new MongoId($id)), array('$pull' => array('alerts' => array('_id' => new MongoId($alert)))));
+		$this->mcache->delete('user_'.$id.'_alerts');
 	}
 }
 ?>
