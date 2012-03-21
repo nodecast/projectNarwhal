@@ -39,8 +39,10 @@ class Design extends CI_Controller {
 
 		$this->load->model('statsmodel');
 		$this->statsmodel->lastAccess($id);
-
+		$this->load->model('alertmodel');
+		
 		$data['user'] = $this->session->all_userdata();
+		$data['alerts'] = $this->alertmodel->getAlerts($data['user']['_id']);
 		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);
 		$data['display']['download'] = $this->utility->format_bytes($data['user']['download']);
 		$data['display']['ratio'] = $this->utility->ratio($data['user']['upload'], $data['user']['download']);

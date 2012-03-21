@@ -58,15 +58,20 @@ $config['torrent_cache'] = 300; // 5 min
 $config['kb_cache'] = 86400; // 24 hours
 //News data cache time, in seconds
 $config['news_cache'] = 1800; // 30 minutes
+//Alert cache time, in seconds -- Q: "Why is this so high?" A: "Because the cache value is deleted after sending a new alert"
+$config['alert_cache'] = 300; // 5 min
+//Message cache time, in seconds, alright, seriously? why am I still writing this out; it's self explanatory.
+$config['message_cache'] = 30; // 30 seconds
 
 //PERPAGE
 $config['torrent_perpage'] = 50;
 $config['torrent_comments_perpage'] = 10;
+$config['messages_perpage'] = 25;
 
 //site urls
-$config['https_siteurl'] = '192.168.1.11';
-$config['http_siteurl'] = '192.168.1.11';
-$config['announce_url'] = 'http://192.168.1.11:9999';
+$config['https_siteurl'] = 'dev.projectnarwhal.org';
+$config['http_siteurl'] = 'dev.projectnarwhal.org';
+$config['announce_url'] = 'http://dev.projectnarwhal.org:9999';
 
 //allowed image hosts
 $config['allowed_imagehosts'] = '('

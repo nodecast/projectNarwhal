@@ -6,6 +6,9 @@
 	<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/jquery.min.js"></script>
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/global.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/raphael-min.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/g.raphael-min.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/g.line-min.js"></script>
 </head>
 <body>
 	<div id="header">
@@ -30,7 +33,7 @@
 			<li>Points: <span class="stat"><a href="exchange.php"><?= number_format($user['points']) ?></a></span></li>
 		</ul>
 		<ul id="userinfo_minor">
-			<li><a href="/inbox">Inbox</a></li>
+			<li><a href="/messages/">Messages</a></li>
 			<li><a href="#">Uploads</a></li>
 			<li><a href="/bookmarks">Bookmarks</a></li>
 			<li><a href="/user/notify">Notifications</a></li>
@@ -45,14 +48,18 @@
 			<li id="nav_requests"><a href="/requests/browse">Requests</a></li>
 			<li id="nav_forums"><a href="/forums">Forums</a></li>
 			<li id="nav_top10"><a href="/top10">Top&nbsp;10</a></li>
-			<li id="nav_rules"><a href="#">Rules</a></li>
 			<li id="nav_kb"><a href="/kb">Knowledge&nbsp;Base</a></li>
 			<li id="nav_staff"><a href="/staff">Staff</a></li>
-			<li id="nav_tickets"><a href="/tickets">Tickets</a></li>
 			<li id="nav_chat"><a href="/chat">Chat</a></li>
 		</ul>
 	</div>
 	<div id="alerts">
+		<?php foreach($alerts as $alert): ?>
+		<div class="alertbar blend">
+			<?= $alert['body'] ?>
+			<span class="close"><a href="/alerts/delete/<?= $alert['_id']; ?>">[x]</a></span>
+		</div>
+		<?php endforeach; ?>
 	</div>
 	<div id="searchbars">
 		<ul>

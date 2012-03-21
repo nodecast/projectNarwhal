@@ -50,6 +50,10 @@ class Utility {
 		return number_format($bytes, 2).$suffix[$step];
 	}
 
+	function format_ratio_history($h) {
+		return json_encode(array_slice($h, -31, 30));
+	}
+
 	function get_ratio_color($ratio) {
 		if ($ratio < 0.1) return 'r00';
 		if ($ratio < 0.2) return 'r01';

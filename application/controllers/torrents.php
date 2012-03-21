@@ -24,7 +24,6 @@ class Torrents extends CI_Controller {
 	
 		$query = array();
 		
-		
 		$query = (count($query)) ? array(($this->input->post('match_method') == 'or' ? '$or' : '$and') => $query) : array();
 		$data = array();
 		$t = $this->torrentmodel->getTorrents($this->config->item('torrent_perpage'), $off, $query);
@@ -101,23 +100,28 @@ class Torrents extends CI_Controller {
 			$data['time'] = time();
 			$img = $this->input->post('image');
 			$data['image'] = ($this->utility->is_valid_image($img)) ? $img : '';
-			$data['comments'] = array();
-			$data['info_hash'] = new MongoBinData($this->infohash);
+            $data['comments'] = array();
+			$data['info_hash'] = bin2hex($this->infohash);
 			$data['freetorrent'] = ($data['size'] < $this->config->item('freeleech_size')) ? 0 : 1;
-			$data['tags'] = $this->input->post('tags');
+			$data['tags'] = array_filter(explode(',', $this->input->post('tags')), 'trim');
 			$data['metadata'] = array();
 			$data['data'] = new MongoBinData($this->torrent->enc());
 			$cat = $this->config->item('categories');
+			$meta_schema = $this->config->item('metadata');
 			$cat = $cat[$data['category']];
 			foreach($cat['metadata'] as $m) {
+				$schema = $meta_schema[$m];
 				$val = $this->input->post('metadata-'.$m);
+				if($schema['type'] === 0 && $schema['multiple']) {
+					$val = array_filter(explode(',', $val), 'trim');
+				}
 				$val = (is_array($val)) ? $val : array($val);
 				$data['metadata'][$m] = $val;
 			}
 			$this->mongo->db->torrents->save($data);
 
 			// log
-			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') has uploaded torrent '.$data['id'].' "'.$data['name'].'"');
+			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') has uploaded torrent '.$data['_id'].' "'.$data['name'].'"');
 			
 			// TODO irc announce
 			
@@ -213,11 +217,10 @@ class Torrents extends CI_Controller {
 		require(APPPATH.'/libraries/torrent.php');
 		
 		if(!($data = $this->torrentmodel->getData($id)))
-			show_error('Torrent not found.', 404); 
+			show_404();
 
 		$tor = new TORRENT($data['data']->bin);
-		$tor->set_announce_url($this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce');
-		unset($tor->Val['announce-list']);
+		//$tor->set_announce_url($this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce');
 
 		if (!$this->utility->user_setting('download_as_txt')) {
 			header('Content-Disposition: attachment; filename="'.$this->utility->torrent_name($id, false).'.torrent"');
@@ -236,7 +239,7 @@ class Torrents extends CI_Controller {
 		$id = $this->input->post('id');
 		$tag = $this->input->post('tag');
 		if(!$this->torrentmodel->getData($id)) {
-			show_error('The page you have requested could not be found.', 404);
+			show_404();
 		}
 		if(!$tag) {
 			redirect('/torrents/view/'.$id);
@@ -250,7 +253,7 @@ class Torrents extends CI_Controller {
 			$this->torrentmodel->removeTag($id, $tag);
 			redirect('/torrents/view/'.$id);
 		} else {
-			show_error('The page you have requested could not be found.', 404);
+			show_404();
 		}
 	}
 }

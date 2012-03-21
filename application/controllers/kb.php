@@ -35,8 +35,7 @@ class Kb extends CI_Controller {
     $this->utility->enforce_perm('site_kb_view');
     
     if (!$article = $this->kbmodel->getArticle($id)) {
-      $this->utility->page_title('Non-existant article');
-      $this->load->view('kb/view_dne');
+      show_404();
     } else {
       $this->utility->page_title('KB Article ('.$article['name'].')');
 

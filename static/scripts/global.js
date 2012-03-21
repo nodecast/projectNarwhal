@@ -37,4 +37,22 @@ $(function() {
 			});
 		});
 	});
+
+	if ($('#ratiograph').length != 0) {
+		var history = JSON.parse($("#ratiohistory").text());
+
+		var r = Raphael("ratiograph");
+
+		var timevals = [];
+		var ratiovals = [];
+		var reqvals = [];
+
+		for (var i = history.length - 1; i >= 0; i--) {
+			timevals.push((history[i].time - history[0].time) / (60*60*24));
+			ratiovals.push(history[i].ratio);
+			reqvals.push(history[i].required);
+		};
+
+		r.linechart(30, 10, 150, 155, [timevals, timevals], [ratiovals, reqvals], {axis:"0 0 1 1", miny: 0});
+	}
 });

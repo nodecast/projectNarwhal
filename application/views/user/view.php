@@ -17,7 +17,11 @@
 				<li>Ratio: <?= $display['ratio']; ?></li>
 				<li>Required Ratio: --</li>
 				<li>Bonus Points: <a href="/exchange/"><?= number_format($user['points']); ?></a></li>
-				<!-- TODO graph -->
+				<li>
+					Ratio Evolution: <br />
+					<div id="ratiohistory"><?= $this->utility->format_ratio_history($display['ratiohistory']) ?></div>
+					<div id="ratiograph"></div>
+				</li>
 				<?php } ?>
 			</ul>
 		</div>
@@ -62,26 +66,4 @@
 				<?= (strlen($user['profile']) > 0) ? $user['profile'] : "This profile is currently empty." ?>
 			</div>
 		</div>
-	<table cellpadding="6" cellspacing="1" border="0" class="border" width="100%">
-	<tbody><tr class="colhead_dark">
-		<td class="small"></td>
-		<td style="width:48%;">
-			<a href="requests.php?order=name&amp;sort=asc&amp;search=&amp;tag=&amp;tags="><strong>Request Name</strong></a>
-		</td>
-		<td class="nobr"><strong>
-Vote 
-		</strong></td>
-		<td>
-			<a href="requests.php?order=bounty&amp;sort=desc&amp;search=&amp;tag=&amp;tags="><strong>Bounty</strong></a>
-		</td>
-		<td>
-			<a href="requests.php?order=id&amp;sort=desc&amp;search=&amp;tag=&amp;tags="><strong>Requested on</strong></a>
-		</td>
-		<td>
-			<strong>Comments</strong>
-		</td>
-	</tr>
-
-<tr class="datatable_rowb nobr"><td colspan="8">Nothing found!</td></tr>	</tbody></table>
-
 	</div>
