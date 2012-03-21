@@ -38,7 +38,7 @@
 							case 0: // *
 								echo '<input type="text" id="metadata-'.$key.'" size="60" name="metadata-'.$key.'">';
 								if($data['multiple']) {
-									echo '<em>Please seperate multiple values by comma.</em>';
+									echo '<br><em>Please seperate multiple values by comma.</em>';
 								}
 								break;
 							case 1: // enum

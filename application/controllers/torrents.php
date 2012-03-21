@@ -104,15 +104,19 @@ class Torrents extends CI_Controller {
 			$data['info_hash'] = bin2hex($this->infohash);
 			$data['freetorrent'] = ($data['size'] < $this->config->item('freeleech_size')) ? 0 : 1;
 			$data['tags'] = explode(',', $this->input->post('tags'));
-			if(!is_array($data['tags']))
-				$data['tags'] = array($data['tags']);
 			$this->utility->array_trim($data['tags']);
 			$data['metadata'] = array();
 			$data['data'] = new MongoBinData($this->torrent->enc());
 			$cat = $this->config->item('categories');
+			$meta_schema = $this->config->item('metadata');
 			$cat = $cat[$data['category']];
 			foreach($cat['metadata'] as $m) {
+				$schema = $meta_schema[$m];
 				$val = $this->input->post('metadata-'.$m);
+				if($schema['type'] === 0 && $schema['multiple']) {
+					$val = explode(',', $val);
+					$this->utility->array_trim($val);
+				}
 				$val = (is_array($val)) ? $val : array($val);
 				$data['metadata'][$m] = $val;
 			}
