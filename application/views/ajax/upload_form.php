@@ -21,9 +21,9 @@
 				<td class="label">Tags</td>
 				<td>
 					<div id="tags_div">
-						<input type="text" id="tags" name="tags[]" size="60">
+						<input type="text" id="tags" name="tags" size="60">
 					</div>
-					<a href="javascript:;" onclick="$('#tags_div').append('<input type=\'text\' size=\'60\' name=\'tags[]\'><br>')">Add another</a>
+					<em>Please seperate multiple values by comma.</em>
 				</td>
 			</tr>
 			<?php
@@ -36,10 +36,9 @@
 					<?php
 						switch($data['type']) {
 							case 0: // *
-								$field = '<input type="text" id="metadata-'.$key.'" size="60" name="metadata-'.$key.($data['multiple'] ? '[]' : '').'">';
-								echo "<div id=\"metadata-$key\">\n".$field."</div>\n";
+								echo '<input type="text" id="metadata-'.$key.'" size="60" name="metadata-'.$key.'">';
 								if($data['multiple']) {
-									echo '<a href=\'javascript:;\' onclick=\'$("#metadata-'.$key.'").append("<input type=\"text\" size=\"60\" name=\"metadata-'.$key.($data['multiple'] ? '[]' : '').'\"><br>")\'>Add another</a>';
+									echo '<em>Please seperate multiple values by comma.</em>';
 								}
 								break;
 							case 1: // enum

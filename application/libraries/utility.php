@@ -231,5 +231,13 @@ class Utility {
 	function is_valid_image($img) {
 		return preg_match('/^\/static/', $img) || preg_match('/^(https?:\/\/'.$this->CI->config->item('allowed_imagehosts').'[^\s\'\"<>()]+(\.(jpg|jpeg|gif|png|tif|tiff|bmp)))$/is', $img);
 	}
+	
+	function array_trim(&$ar){
+		foreach($ar as $key => $value) {
+			$ar[$key] = trim($value);
+			if(empty($ar[$key]))
+				unset($ar[$key]);
+		}
+	}
 }
 

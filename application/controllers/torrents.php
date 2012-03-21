@@ -103,7 +103,10 @@ class Torrents extends CI_Controller {
                         $data['comments'] = array();
 			$data['info_hash'] = bin2hex($this->infohash);
 			$data['freetorrent'] = ($data['size'] < $this->config->item('freeleech_size')) ? 0 : 1;
-			$data['tags'] = $this->input->post('tags');
+			$data['tags'] = explode(',', $this->input->post('tags'));
+			if(!is_array($data['tags']))
+				$data['tags'] = array($data['tags']);
+			$this->utility->array_trim($data['tags']);
 			$data['metadata'] = array();
 			$data['data'] = new MongoBinData($this->torrent->enc());
 			$cat = $this->config->item('categories');
@@ -116,7 +119,7 @@ class Torrents extends CI_Controller {
 			$this->mongo->db->torrents->save($data);
 
 			// log
-			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') has uploaded torrent '.$data['id'].' "'.$data['name'].'"');
+			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') has uploaded torrent '.$data['_id'].' "'.$data['name'].'"');
 			
 			// TODO irc announce
 			
