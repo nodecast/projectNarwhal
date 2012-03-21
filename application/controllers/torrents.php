@@ -100,11 +100,10 @@ class Torrents extends CI_Controller {
 			$data['time'] = time();
 			$img = $this->input->post('image');
 			$data['image'] = ($this->utility->is_valid_image($img)) ? $img : '';
-                        $data['comments'] = array();
+            $data['comments'] = array();
 			$data['info_hash'] = bin2hex($this->infohash);
 			$data['freetorrent'] = ($data['size'] < $this->config->item('freeleech_size')) ? 0 : 1;
-			$data['tags'] = explode(',', $this->input->post('tags'));
-			$this->utility->array_trim($data['tags']);
+			$data['tags'] = array_filter(explode(',', $this->input->post('tags')), 'trim');
 			$data['metadata'] = array();
 			$data['data'] = new MongoBinData($this->torrent->enc());
 			$cat = $this->config->item('categories');
@@ -114,8 +113,7 @@ class Torrents extends CI_Controller {
 				$schema = $meta_schema[$m];
 				$val = $this->input->post('metadata-'.$m);
 				if($schema['type'] === 0 && $schema['multiple']) {
-					$val = explode(',', $val);
-					$this->utility->array_trim($val);
+					$val = array_filter(explode(',', $val), 'trim');
 				}
 				$val = (is_array($val)) ? $val : array($val);
 				$data['metadata'][$m] = $val;
