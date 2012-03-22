@@ -63,7 +63,7 @@ class User extends CI_Controller {
 	function edit($id = -1) {
 		$current_user = $this->utility->current_user();
 		if (!(new MongoId($id) === $current_user['_id']))
-			$this->utility->enforce_perm('site_user_edit');
+			$this->utility->enforce_perm('site_users_edit');
 
 		if (!$user = $this->usermodel->getData($id, false)) {
 			$this->utility->page_title('User not found');
