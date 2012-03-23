@@ -4,6 +4,7 @@ class Utility {
 	public function __construct()
 	{
 		$this->CI =& get_instance();
+		$this->CI->load->model('authtokenmodel');
 	}
 
 	function make_secret($length = 32) {
@@ -21,11 +22,21 @@ class Utility {
 	}
 
 	function logged_in() {
+		if ($this->CI->session->userdata('logged_in') && $this->CI->authtokenmodel->is_expired($this->CI->session->userdata('authtoken'))) {
+			$this->destroy_session();
+			redirect("/");
+			return false;
+		}
+
 		return $this->CI->session->userdata('logged_in');
 	}
 
+	function destroy_session() {
+		$this->CI->authtokenmodel->delete($this->CI->session->userdata('authtoken'));
+		$this->CI->session->sess_destroy();
+	}
+
 	function current_user($key = -1) {
-		$this->CI->load->model('authtokenmodel');
 		$user =  $this->CI->authtokenmodel->getUserForToken($this->CI->session->userdata('authtoken'));
 
 		if ($key == -1) {

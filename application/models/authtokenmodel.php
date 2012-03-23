@@ -21,11 +21,17 @@ class AuthTokenModel extends CI_Model {
     return $data;
   }
 
-  public function createTokenForUser($uid) {
+  public function createTokenForUser($uid, $expiration) {
     $data['_id'] = new MongoId();
     $data['user'] = new MongoId($uid);
+    $data['expiration'] = $expiration;
     $this->mongo->db->auth_tokens->save($data);
     return $data['_id'];
+  }
+
+  public function is_expired($tid) {
+    $tdata = $this->mongo->db->auth_tokens->findOne(array('_id' => new MongoId($tid)));
+    return $tdata['expiration'] <= time();
   }
 
   public function delete($atid) {

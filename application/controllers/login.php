@@ -28,7 +28,9 @@ class Login extends CI_Controller {
 			$data['redirect'] = $this->session->flashdata('login_redirect'); // redirect on success, defaults to private index
 			$this->load->view('login/login', $data);
 		} else {
-			$authtoken = $this->authtokenmodel->createTokenForUser($this->user_data['_id']);
+			$expiretime = ($this->input->post('remember_me'))? time() + (60 * 60 * 24 * 7 * 2): time() + (60 * 60 * 24);
+
+			$authtoken = $this->authtokenmodel->createTokenForUser($this->user_data['_id'], $expiretime);
 
 			$this->session->set_userdata('authtoken', $authtoken);
 			$this->session->set_userdata('logged_in', true);
