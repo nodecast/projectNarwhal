@@ -15,7 +15,7 @@ class Index extends CI_Controller {
 			$this->load->library('textformat');
 
 			$data = array();
-			$data['user'] = $this->session->all_userdata();
+			$data['user'] = $this->utility->current_user();
 			$data['news'] = $this->newsmodel->getNews();
 			$data['ci'] =& get_instance();
 

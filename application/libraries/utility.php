@@ -24,9 +24,15 @@ class Utility {
 		return $this->CI->session->userdata('logged_in');
 	}
 
-	function current_user() {
+	function current_user($key = -1) {
 		$this->CI->load->model('authtokenmodel');
-		return $this->CI->authtokenmodel->getUserForToken($this->CI->session->userdata('authtoken'));
+		$user =  $this->CI->authtokenmodel->getUserForToken($this->CI->session->userdata('authtoken'));
+
+		if ($key == -1) {
+			return $user;
+		} else {
+			return $user[$key];
+		}
 	}
 
 	function user_setting($key) {

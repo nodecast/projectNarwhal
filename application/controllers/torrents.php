@@ -80,13 +80,13 @@ class Torrents extends CI_Controller {
 		if(!$this->form_validation->run()) {
 			$data = array();
 			$data['categories'] = $this->config->item('categories');
-			$data['announce'] = $this->config->item('announce_url').'/'.$this->session->userdata('torrent_pass').'/announce';
+			$data['announce'] = $this->config->item('announce_url').'/'.$this->utility->current_user('torrent_pass').'/announce';
 			$this->load->view('torrents/upload', $data);
 		} else {
 			//continue processing on the torrent files
 			$data = array();
 			$data['name'] = $this->input->post('title');
-			$data['owner'] = $this->session->userdata('_id');
+			$data['owner'] = $this->utility->current_user('_id');
 			$data['description'] = $this->input->post('description');
 			$data['category'] = $this->input->post('type');
 			$data['seeders'] = 0;
@@ -121,7 +121,7 @@ class Torrents extends CI_Controller {
 			$this->mongo->db->torrents->save($data);
 
 			// log
-			$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') has uploaded torrent '.$data['_id'].' "'.$data['name'].'"');
+			$this->utility->log($this->utility->current_user('username').' ('.$this->utility->current_user('_id').') has uploaded torrent '.$data['_id'].' "'.$data['name'].'"');
 			
 			// TODO irc announce
 			
@@ -201,7 +201,7 @@ class Torrents extends CI_Controller {
 				$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 				$this->form_validation->set_rules('text', 'text', 'required|max_length['.$this->config->item('max_bytes_per_post').']');
 				if($this->form_validation->run()) {
-					$c = $this->torrentmodel->addComment($id, $this->session->userdata('_id'), $this->input->post('text'));
+					$c = $this->torrentmodel->addComment($id, $this->utility->current_user('_id'), $this->input->post('text'));
 					redirect('/torrents/view/'.$id.'/'.ceil(($data['results']+1) / 10).'#post'.$c);
 				}
 			}
@@ -230,7 +230,7 @@ class Torrents extends CI_Controller {
 			header('Content-Type: text/plain');
 		}
 		echo $tor->enc();
-		$this->utility->log($this->session->userdata('username').' ('.$this->session->userdata('_id').') downloaded torrent '.$id);
+		$this->utility->log($this->utility->current_user('username').' ('.$this->utility->current_user('_id').') downloaded torrent '.$id);
 		exit();
 	}
 	
