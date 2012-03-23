@@ -44,6 +44,7 @@ $config['stylesheets'] = array($config['static_server'].'/styles/default/style.c
 $config['max_img_per_post'] = 7;
 $config['max_yt_per_post'] = 2;
 $config['max_bytes_per_post'] = 8192; //8KiB
+$config['max_bytes_per_message'] = 8192; //8KiB
 
 //CACHE
 //User data cache time, in seconds
@@ -61,7 +62,7 @@ $config['news_cache'] = 1800; // 30 minutes
 //Alert cache time, in seconds -- Q: "Why is this so high?" A: "Because the cache value is deleted after sending a new alert"
 $config['alert_cache'] = 300; // 5 min
 //Message cache time, in seconds, alright, seriously? why am I still writing this out; it's self explanatory.
-$config['message_cache'] = 30; // 30 seconds
+$config['message_cache'] = 10; // 10 seconds
 
 //PERPAGE
 $config['torrent_perpage'] = 50;
@@ -91,7 +92,7 @@ $config['allowed_imagehosts'] = '('
 	.')\/';
 
 //user classes, for permissions and stuff. actual permissions and levels can be found in the collection 'permissions'
-$config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'DONOR' => 20, 'ARTIST' => 18, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'LEGEND' => 8, 'CELEB' => 9, 'COMM_MOD' => 10, 'MOD' => 11, 'STAFF_LEADER' => 12, 'DESIGNER' => 13, 'CODER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);
+$config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'MOD' => 11, 'DEVELOPER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);
 
 //categories
 //secondary [metadata], this will be displayed in search results nex to the title (like author/artist/etc.), also format

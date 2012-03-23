@@ -12,11 +12,7 @@ class MessagesModel extends CI_Model {
 	*/
 	function createConversation($to, $from, $subject, $body) {
 		if(!is_array($to)) {
-			$to = array(new MongoId($to));
-		} else {
-			for($i = 0; $i < count($to); $i++) {
-				$to[$i] = new MongoId($to[$i]);
-			}
+			$to = array($to);
 		}
 		$message = array('owner' => $from, 'time' => time(), 'body' => $body);
 		
@@ -29,6 +25,16 @@ class MessagesModel extends CI_Model {
 		}
 	}
 	
+	/*
+	Removes a user from a conversations ---- basically deletes it for that person
+	*/
+	function removeUserFromConversation($convo, $user) {
+		$this->mongo->db->conversations->update(array('_id' => new MongoId($convo)), array('$pull' => array('participants' => new MongoId($user))));
+	}
+	
+	/*
+	Gets the messages for a given user. If $inbox is false, it'll return the sentbox.
+	*/
 	function getMessages($user, $inbox = true, $limit = 25, $skip = 0) {
 		$key = 'messages_'.$user.'_'.$limit.'_'.$skip.'_'.$inbox;
 		

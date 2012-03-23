@@ -73,17 +73,23 @@ class AccountModel extends CI_Model {
 	}
 
 	/*
-	Checks to see if a username belongs to a user
+	Checks to see if a username belongs to a user, if so, returns the data.
 	*/
 	function user_exists($name) {
-		return count($this->mongo->db->users->findOne(array("username"=> new MongoRegex('/^'.preg_quote($name).'$/i'))));
+		$data = $this->mongo->db->users->findOne(array("username"=> new MongoRegex('/^'.preg_quote($name).'$/i')));
+		if($data)
+			return $data;
+		return false;
 	}
 	
 	/*
-	Checks to see if an email is in use
+	Checks to see if an email is in use, if so, returns the data of the user.
 	*/
 	function email_exists($email) {
-		return count($this->mongo->db->users->findOne(array("email"=> new MongoRegex('/^'.preg_quote($email).'$/i'))));
+		$data = $this->mongo->db->users->findOne(array("email"=> new MongoRegex('/^'.preg_quote($email).'$/i')));
+		if($data)
+			return $data;
+		return false;
 	}
 }
 ?>

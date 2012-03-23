@@ -1,13 +1,13 @@
 <div class="thin">
 	<h2><?= $box['this']; ?></h2>
 	<div class="linkbox">
-		<a href="/messages/browse/<?= strtolower($box['other']); ?>/">[<?= $box['other']; ?>]</a><br>
+		<a href="/messages/send/">[New Message]</a>&nbsp;<a href="/messages/browse/<?= strtolower($box['other']); ?>/">[<?= $box['other']; ?>]</a><br>
 		<?php if($results > $perpage) { ?>
 			<?= $this->utility->get_page_nav('/messages/browse/'.strtolower($box['this']).'/', $page, $results, $perpage); ?>
 		<?php } ?>
 	</div>
 	<div class="box pad">
-		<form action="/messages/delete/" method="post" id="messageform">
+		<?= form_open('/messages/delete/', array('id' => 'messageform')); ?>
 			<table>
 				<tr class="colhead">
 					<td style="width:10px"><input type="checkbox" id="checkAllBoxes"></td>
