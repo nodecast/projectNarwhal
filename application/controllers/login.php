@@ -6,6 +6,7 @@ class Login extends CI_Controller {
 	{
 		parent::__construct();
 		$this->load->model('accountmodel');
+		$this->load->model('authtokenmodel');
 		$this->utility->page_title('Login');
 	}
 
@@ -27,7 +28,9 @@ class Login extends CI_Controller {
 			$data['redirect'] = $this->session->flashdata('login_redirect'); // redirect on success, defaults to private index
 			$this->load->view('login/login', $data);
 		} else {
-			$this->session->set_userdata($this->user_data);
+			$authtoken = $this->authtokenmodel->createTokenForUser($this->user_data['_id']);
+
+			$this->session->set_userdata('authtoken', $authtoken);
 			$this->session->set_userdata('logged_in', true);
 			$redir = $this->input->post('redirect');
 			redirect($redir ? $redir : "");

@@ -184,7 +184,7 @@ class Torrents extends CI_Controller {
 			$data = array();
 			$data['torrent'] = $torrent;
 			$data['owner'] = $this->usermodel->getData($torrent['owner']);
-			$data['user'] = $this->session->all_userdata();
+			$data['user'] = $this->utility->current_user();
 			$data['categories'] = $this->config->item('categories');
 			$data['ci'] =& get_instance();
 			$data['can_delete_tags'] = $this->utility->check_perm('site_torrents_tags_delete');

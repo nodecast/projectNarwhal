@@ -25,7 +25,8 @@ class Utility {
 	}
 
 	function current_user() {
-		return $this->CI->session->userdata;
+		$this->CI->load->model('authtokenmodel');
+		return $this->CI->authtokenmodel->getUserForToken($this->CI->session->userdata('authtoken'));
 	}
 
 	function user_setting($key) {
@@ -119,8 +120,10 @@ class Utility {
 	}
 	
 	function check_perm($perm, $id = -1) {
-		if($id == -1)
-			$id = $this->CI->session->userdata('_id');
+		if($id == -1) {
+			$cu = $this->current_user();
+			$id = $cu['_id'];
+		}
 		$this->CI->load->model('usermodel');
 		
 		$p = $this->CI->usermodel->getPermissions($id);
