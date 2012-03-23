@@ -33,7 +33,6 @@ class Design extends CI_Controller {
 	function privateheader() {
 		$this->load->model('authtokenmodel');
 		$user = $this->authtokenmodel->getUserForToken($this->session->userdata('authtoken'));
-		#$res = $this->usermodel->getData($this->session->userdata('id'));
 
 		$this->load->model('statsmodel');
 		$this->statsmodel->lastAccess($user['_id']);

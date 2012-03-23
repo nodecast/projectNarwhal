@@ -27,5 +27,9 @@ class AuthTokenModel extends CI_Model {
     $this->mongo->db->auth_tokens->save($data);
     return $data['_id'];
   }
+
+  public function delete($atid) {
+    $this->mongo->db->auth_tokens->remove(array('_id' => new MongoId($atid)));
+  }
 }
 ?>
