@@ -693,6 +693,23 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
   display: none;
 }
 
+.exchange_table {
+  width: 750px;
+  margin: 0px auto 0px auto;
+}
+
+.exchange_table .action {
+  width: 100px;
+}
+
+.exchange_table .price {
+  width: 100px;
+}
+
+.exchange_table .tax {
+  width: 50px;
+}
+
 /* BBCode Specific */
 .bbcode_quote_head
 {

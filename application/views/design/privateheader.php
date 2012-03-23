@@ -30,7 +30,7 @@
 			<li>Ratio: <span class="stat"><?= $display['ratio'] ?></span></li>
 			<li>(<a href="kb.php?id=5">required</a>: <span class="stat">--</span>)</li>
 			<li class="ratiopipe"> | </li>
-			<li>Points: <span class="stat"><a href="exchange.php"><?= number_format($user['points']) ?></a></span></li>
+			<li>Points: <span class="stat"><a href="/exchange"><?= number_format($user['points']) ?></a></span></li>
 		</ul>
 		<ul id="userinfo_minor">
 			<li><a href="/messages/">Messages</a></li>
