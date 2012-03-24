@@ -80,7 +80,7 @@ class Messages extends CI_Controller {
 		foreach($to as $t) {
 			$data = $this->accountmodel->user_exists(trim($t));
 			if($data && ($this->utility->current_user('_id') != $data['_id']))
-				$this->recipients[] = $data['_id'];
+				$this->recipients = $data['_id'];
 		}
 		return (count($this->recipients) > 0);
 	}
