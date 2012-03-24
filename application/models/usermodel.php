@@ -7,7 +7,7 @@ class UserModel extends CI_Model {
 	}
 
 	/*
-	Gets the data for a given username.
+	Gets the data for a given user id.
 	*/
 	function getData($id, $cache = true) {
 		if(new MongoId($id) === new MongoId(0)) { //system
@@ -22,6 +22,21 @@ class UserModel extends CI_Model {
 			return $data;
 		} else {
 			return $this->mongo->db->users->findOne(array('_id' => new MongoId($id)));
+		}
+	}
+
+	/*
+	Gets the data for a given username.
+	*/
+	function getDataForUsername($un, $cache = true) {
+		if($cache) {
+			if(!($data = $this->mcache->get('user_un_'.$un.'_data'))) {
+				$data = $this->mongo->db->users->findOne(array('username' => $un));
+				$this->mcache->set('user_un_'.$un.'_data', $data, $this->config->item('userdata_cache'));
+			}
+			return $data;
+		} else {
+			return $this->mongo->db->users->findOne(array('username' => $un));
 		}
 	}
 	

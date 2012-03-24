@@ -11,7 +11,7 @@
         <td class="label">Amount</td>
         <td>
           <input type="number" min="1" max="1023" name="amount" size="10" value="<?= set_value('amount') ?>" />
-          BP (1GiB per 1000BP)
+          BP (1GiB per 1,000BP)
         </td>
       </tr>
     </table>
