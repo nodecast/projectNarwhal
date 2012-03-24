@@ -74,7 +74,7 @@ class Messages extends CI_Controller {
 	}
 	
 	public function view($_id = '') {
-		$message = $this->messagesmodel->getMessage($_id, $this->session->userdata('_id'));
+		$message = $this->messagesmodel->getMessage($_id, $this->utility->current_user('_id'));
 		if(!$message)
 			show_404();
 			

@@ -16,7 +16,7 @@
 					<td>Date</td>
 				</tr>
 				<?php foreach($messages as $message):
-					$unread = !in_array($this->session->userdata('_id'), $message['read']);
+					$unread = !in_array($this->utility->current_user('_id'), $message['read']);
 				?>
 				<tr>
 					<td class="center"><input type="checkbox" class="deletebox" name="messages[]" value="<?= $message['_id']; ?>"></td>
