@@ -37,7 +37,7 @@ class Messages extends CI_Controller {
 	
 	public function delete() {
 		$messages = $this->input->post('messages');
-		$id = $this->session->userdata('_id');
+		$id = $this->utility->current_user('_id');
 		if($messages) {
 			foreach($messages as $m) {
 				$this->messagesmodel->removeUserFromConversation($m, $id);
@@ -68,7 +68,7 @@ class Messages extends CI_Controller {
 			$data['user'] = $user;
 			$this->load->view('messages/new', $data);
 		} else {
-			$this->messagesmodel->createConversation($this->recipients, $this->session->userdata('_id'), $this->input->post('subject'), $this->input->post('body'));
+			$this->messagesmodel->createConversation($this->recipients, $this->utility->current_user('_id'), $this->input->post('subject'), $this->input->post('body'));
 			redirect('/messages/browse');
 		}
 	}
@@ -79,7 +79,7 @@ class Messages extends CI_Controller {
 		$this->recipients = array();
 		foreach($to as $t) {
 			$data = $this->accountmodel->user_exists(trim($t));
-			if($data && ($this->session->userdata('_id') != $data['_id']))
+			if($data && ($this->utility->current_user('_id') != $data['_id']))
 				$this->recipients[] = $data['_id'];
 		}
 		return (count($this->recipients) > 0);
