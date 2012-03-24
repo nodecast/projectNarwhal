@@ -1,5 +1,17 @@
 	<h2><?= $user['username'] ?></h2>
-
+	<div class="linkbox">
+		<?php
+			if($view < 0) {
+		?>
+				<a href="/user/edit/<?= $user['_id']; ?>">[Edit profile]</a>
+		<?php
+			}
+			if($view != -1) {
+		?>
+				<a href="/messages/send/<?= $user['_id']; ?>">[Send Message]</a>
+		<?php } ?>
+	</div>
+	
 	<div class="sidebar">
 		<div class="box">
 			<div class="head colhead_dark">Avatar</div>
@@ -53,7 +65,6 @@
 			<div class="head colhead_dark">Community</div>
 			<ul class="stats nobullet">
 				<li>Forum Posts: 2704 [<a href="userhistory.php?action=posts&amp;userid=7005" title="View">View</a>]</li>
-				<li>Torrent Comments: 69</li>
 				<li>Requests filled: 30 for 468.87 GB [<a href="requests.php?type=filled&amp;userid=7005" title="View">View</a>]</li>
 				<li>Uploaded: 81 [<a href="torrents.php?type=uploaded&amp;userid=7005" title="View">View</a>]</li>
 			</ul>

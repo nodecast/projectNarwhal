@@ -53,7 +53,7 @@ class Messages extends CI_Controller {
 		
 		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 		$this->form_validation->set_rules('to', 'to', 'required|callback__check_to');
-		$this->form_validation->set_rules('subject', 'subject', 'required|max_length[50]');
+		$this->form_validation->set_rules('subject', 'subject', 'required|max_length[80]');
 		$this->form_validation->set_rules('body', 'body', 'required|max_length['.$this->config->item('max_bytes_per_message').']');
 		
 		if(!$this->form_validation->run()) {
@@ -79,7 +79,7 @@ class Messages extends CI_Controller {
 			show_404();
 			
 		$data = array();
-		$this->load->view('messsages/view', $data);
+		$this->load->view('messages/view', $data);
 	}
 	
 	public function _check_to($to) {
