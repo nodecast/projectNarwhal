@@ -31,17 +31,14 @@ class Design extends CI_Controller {
 	}
 
 	function privateheader() {
-		$id = $this->session->userdata('id');
-		
-		$this->load->model('usermodel');
-		$res = $this->usermodel->getData($this->session->userdata('id'));
-		$this->session->set_userdata($res);
+		$this->load->model('authtokenmodel');
+		$user = $this->authtokenmodel->getUserForToken($this->session->userdata('authtoken'));
 
 		$this->load->model('statsmodel');
-		$this->statsmodel->lastAccess($id);
+		$this->statsmodel->lastAccess($user['_id']);
 		$this->load->model('alertmodel');
 		
-		$data['user'] = $this->session->all_userdata();
+		$data['user'] = $user;
 		$data['alerts'] = $this->alertmodel->getAlerts($data['user']['_id']);
 		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);
 		$data['display']['download'] = $this->utility->format_bytes($data['user']['download']);
