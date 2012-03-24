@@ -19,6 +19,11 @@ class Alerts extends CI_Controller {
 			redirect('/');
 		
 		$this->alertmodel->deleteAlert($this->utility->current_user('_id'), $id);
-		redirect('/');
+		
+		$this->load->library('user_agent');
+		if($this->agent->is_referral())
+			redirect(parse_url($this->agent->referrer(), PHP_URL_PATH));
+		else
+			redirect('/');
 	}
 }
