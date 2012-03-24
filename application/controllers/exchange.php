@@ -74,7 +74,7 @@ class Exchange extends CI_Controller {
     }
   }
 
-  public function transfer()
+  public function transfer($un = '')
   {
     $this->utility->page_title('Transfer BP');
 
@@ -87,7 +87,9 @@ class Exchange extends CI_Controller {
     $username = $this->input->post('username');
 
     if ($this->form_validation->run() == FALSE) {
-      $this->load->view('exchange/transfer');
+      $data = array();
+      if ($un != '') $data['username'] = $un;
+      $this->load->view('exchange/transfer', $data);
     } else {
       if ($confirm != FALSE) {
         $fromuser = $this->utility->current_user();

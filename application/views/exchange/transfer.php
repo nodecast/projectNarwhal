@@ -15,7 +15,7 @@
       <tr>
         <td class="label">Username</td>
         <td>
-          <input type="text" name="username" size="20" value="<?= set_value('username') ?>" />
+          <input type="text" name="username" size="20" value="<?= (isset($username))?htmlspecialchars($username):set_value('username') ?>" />
         </td>
       </tr>
       <tr>

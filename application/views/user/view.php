@@ -9,6 +9,7 @@
 			if($view != -1) {
 		?>
 				<a href="/messages/send/<?= $user['_id']; ?>">[Send Message]</a>
+				<a href="/exchange/transfer/<?= $user['username']; ?>">[Transfer Points]</a>
 		<?php } ?>
 	</div>
 	
