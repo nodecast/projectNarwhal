@@ -73,6 +73,15 @@ class Messages extends CI_Controller {
 		}
 	}
 	
+	public function view($_id = '') {
+		$message = $this->messagesmodel->getMessage($_id, $this->session->userdata('_id'));
+		if(!$message)
+			show_404();
+			
+		$data = array();
+		$this->load->view('messsages/view', $data);
+	}
+	
 	public function _check_to($to) {
 		$this->form_validation->set_message('_check_to', 'You need to enter at least one valid recipient.');
 		$to = array_filter(explode(',', $to), 'trim');

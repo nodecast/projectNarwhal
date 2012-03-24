@@ -15,11 +15,13 @@
 					<td>Sender</td>
 					<td>Date</td>
 				</tr>
-				<?php foreach($messages as $message): ?>
+				<?php foreach($messages as $message):
+					$unread = !in_array($this->session->userdata('_id'), $message['read']);
+				?>
 				<tr>
 					<td class="center"><input type="checkbox" class="deletebox" name="messages[]" value="<?= $message['_id']; ?>"></td>
 					<td>
-						<a href="/messages/view/<?= $message['_id']; ?>"><?= $message['subject']; ?></a>
+						<?= $unread ? '<strong>' : '' ?><a href="/messages/view/<?= $message['_id']; ?>"><?= $message['subject']; ?></a><?= $unread ? '</strong>' : '' ?>
 					</td>
 					<td><?= $this->utility->format_name($message['owner']); ?></td>
 					<td><span title="<?= $this->utility->format_datetime($message['time']); ?>"><?= $this->utility->time_diff_string($message['time']); ?></span></td>
