@@ -130,3 +130,25 @@ $config['metadata'] = array(
 $config['default_user_settings'] = array(
 	'download_as_txt' => false
 );
+
+// exchange
+$config['exchange_items'] = array(
+	'upload' => array(
+		'title' => 'Convert BP to Upload',
+		'price' => '1,000 BP/GiB',
+		'tax' => 0.00,
+		'action' => 'Convert BP'
+	),
+	'invite' => array(
+		'title' => 'Buy an invite! Invite your friends!',
+		'price' => '10,000 BP',
+		'tax' => 0.00,
+		'action' => 'Buy Invite'
+	),
+	'transfer' => array(
+		'title' => 'Transfer points to anyone else!',
+		'price' => 'N/A',
+		'tax' => 0.20,
+		'action' => 'Transfer BP',
+	),
+);
