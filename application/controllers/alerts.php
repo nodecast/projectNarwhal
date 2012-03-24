@@ -18,7 +18,7 @@ class Alerts extends CI_Controller {
 		if($id == '')
 			redirect('/');
 		
-		$this->alertmodel->deleteAlert($this->session->userdata('_id'), $id);
+		$this->alertmodel->deleteAlert($this->utility->current_user('_id'), $id);
 		redirect('/');
 	}
 }

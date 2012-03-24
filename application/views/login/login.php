@@ -9,6 +9,9 @@
 			<tr>
 				<td><div class="label">Password:&nbsp;&nbsp;<input type="password" name="password"></div></td>
 			</tr>
+			<tr>
+				<td><div class="label">Remember me?&nbsp;&nbsp;<input type="checkbox" name="remember_me"></div></td>
+			</tr>
 		</table>
 		<?php if($redirect) { echo '<input type="hidden" name="redirect" value="'.$redirect.'">'; }?>
 		<div class="center">

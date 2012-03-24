@@ -19,7 +19,7 @@ class User extends CI_Controller {
 	public function view($id = -1) {
 		$this->usermodel->buildpercentile(0);
 		if($id <= 0)
-			$id = $this->session->userdata('_id'); 
+			$id = $this->utility->current_user('_id'); 
 
 		$data['user'] = $this->usermodel->getData($id, false); //don't cache user view
 
@@ -28,9 +28,9 @@ class User extends CI_Controller {
 		}
 		
 		$data['view'] = $data['user']['paranoia'];
-		if($id == $this->session->userdata('_id'))
+		if($id == $this->utility->current_user('_id'))
 			$data['view'] = -1;
-		if($this->usermodel->isStaff($this->session->userdata('_id')))
+		if($this->usermodel->isStaff($this->utility->current_user('_id')))
 			$data['view'] = -2;
 		$data['display']['upload'] = $this->utility->format_bytes($data['user']['upload']);
 		$data['display']['download'] = $this->utility->format_bytes($data['user']['download']);
