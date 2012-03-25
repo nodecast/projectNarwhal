@@ -74,12 +74,32 @@ class Messages extends CI_Controller {
 	}
 	
 	public function view($_id = '') {
+		$this->load->library('textformat');
+		$this->load->helper('form');
 		$message = $this->messagesmodel->getMessage($_id, $this->utility->current_user('_id'));
 		if(!$message)
 			show_404();
 			
+		$this->messagesmodel->markMessageAsRead($_id, $this->utility->current_user('_id'));
+			
 		$data = array();
+		$data['message'] = $message;
 		$this->load->view('messages/view', $data);
+	}
+	
+	public function reply($message) {
+		
+	}
+	
+	public function invite($message) {
+		$this->load->model('accountmodel');
+		
+		$data = $this->accountmodel->user_exists(trim($this->input->post('invite')));
+		if($data) {
+			$this->messagesmodel->addUser($message, $data['_id'], $this->utility->current_user('_id'));
+		}
+			
+		redirect('/messages/view/'.$message);
 	}
 	
 	public function _check_to($to) {

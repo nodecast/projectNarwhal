@@ -225,11 +225,14 @@ class Utility {
 		// TODO metadata and such
 	}
 	
-	function format_name($id) {
+	function format_name($id, $pretty = true) {
 		$this->CI->load->model('usermodel');
 		$data = $this->CI->usermodel->getData($id);
 		
-		return '<a class="username" href="/user/view/'.$data['_id'].'">'.$data['username'].'</a>';
+		if($pretty && $data['_id'] != new MongoId(SYSTEM_ID))
+			return '<a class="username" href="/user/view/'.$data['_id'].'">'.$data['username'].'</a>';
+		else
+			return $data['username'];
 	}
 	
 	// TODO this does nothing right now
@@ -238,18 +241,6 @@ class Utility {
 	-10 - problem
 	*/
 	function log($str, $code = 0) {
-	}
-
-	function get_seq_id($name) {
-		$c = $this->CI->mongo->db->command(
-			array(
-				'findandmodify' => 'counters',
-				'query'=> array('name'=>$name),
-				'update' => array('$inc'=>array('c'=>1))
-			)
-		);
-
-		return $c['value']['c'];
 	}
 
 	function is_valid_image($img) {

@@ -15,7 +15,7 @@
     </td>
     <td class="body" valign="top">
       <div id="content<?= $_id ?>">
-        <?= $ci->textformat->parse($body, $this->config->item('torrent_cache')) ?>
+        <?= $this->textformat->parse($body, $this->config->item('torrent_cache')) ?>
       </div>
     </td>
   </tr>

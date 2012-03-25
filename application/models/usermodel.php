@@ -10,8 +10,8 @@ class UserModel extends CI_Model {
 	Gets the data for a given user id.
 	*/
 	function getData($id, $cache = true) {
-		if(new MongoId($id) === new MongoId(0)) { //system
-			return array('_id' => new MongoId(0), 'username' => 'System', 'title' => 'Totally Not Self-Aware', 'avatar' => $this->config->item('system_avatar'));
+		if(new MongoId($id) == new MongoId(SYSTEM_ID)) { //system
+			return array('_id' => new MongoId(SYSTEM_ID), 'username' => 'System', 'title' => 'Totally Not Self-Aware', 'avatar' => $this->config->item('system_avatar'));
 		}
 		
 		if($cache) {

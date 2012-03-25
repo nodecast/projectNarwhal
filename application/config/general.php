@@ -152,3 +152,5 @@ $config['exchange_items'] = array(
 		'action' => 'Transfer BP',
 	),
 );
+
+define('SYSTEM_ID', 'aaaaaaaaaaaaaaaaaaaaaaaa');

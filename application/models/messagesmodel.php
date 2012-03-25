@@ -15,7 +15,7 @@ class MessagesModel extends CI_Model {
 			$to = array($to);
 		}
 		$message = array('owner' => $from, 'time' => time(), 'body' => $body);
-		$to[] = $from;
+		array_unshift($to, $from);
 		
 		$conversation = array('owner' => $from, 'subject' => $subject, 'time' => time(), 'participants' => $to, 'messages' => array($message), 'read' => array($from));
 		$this->mongo->db->conversations->save($conversation);
@@ -32,6 +32,13 @@ class MessagesModel extends CI_Model {
 	*/
 	function removeUserFromConversation($convo, $user) {
 		$this->mongo->db->conversations->update(array('_id' => new MongoId($convo)), array('$pull' => array('participants' => new MongoId($user))));
+	}
+	
+	/*
+	Marks a message as read for a user
+	*/
+	function markMessageAsRead($message, $user) {
+		$this->mongo->db->conversations->update(array('_id' => new MongoId($message)), array('$addToSet' => array('read' => new MongoId($user))));
 	}
 	
 	/*
@@ -74,6 +81,45 @@ class MessagesModel extends CI_Model {
 		}
 		
 		return $data;
+	}
+	
+	/*
+	Adds a new message to a conversation
+	*/
+	function addMessage($conv, $owner, $body, $alert = true) {
+		$query = array('_id' => new MongoId($conv));
+		if($owner != new MongoId(SYSTEM_ID))
+			$query['participants'] = new MongoId($owner);
+			
+		$conv = $this->getMessage($conv, '', false);
+		$message = array('owner' => $owner, 'time' => time(), 'body' => $body);
+			
+		$r = $this->mongo->db->conversations->update($query, array('$push' => array('messages' => $message)), array('safe' => true));
+
+		if($r['n'] > 0 && $alert) {
+			foreach($conv['participants'] as $p) {
+				$this->alertmodel->createAlert($p, '<a href="/messages/">You have one or more unread messages.</a>', 5);
+			}
+		}
+	}
+	
+	/*
+	Adds the given user to the given message. If '$by' is given, it will only add the user if the user given in $by is participating in the message.
+	*/
+	function addUser($message, $user, $by = '') {
+		$this->load->model('alertmodel');
+		
+		$query = array('_id' => new MongoId($message));
+		if($by)
+			$query['participants'] = new MongoId($by);
+		
+		$r = $this->mongo->db->conversations->update($query, array('$addToSet' => array('participants' => new MongoId($user))), array('safe' => true));
+		
+		if($r['n'] > 0) {
+			$this->alertmodel->createAlert($user, '<a href="/messages/">You have one or more unread messages.</a>', 5);
+			if($by)
+				$this->addMessage($message, new MongoId(SYSTEM_ID), $this->utility->format_name($user, false).' has been invited to this conversation by '.$this->utility->format_name($by, false), false);
+		}
 	}
 }
 ?>
