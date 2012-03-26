@@ -10,14 +10,14 @@ class MessagesModel extends CI_Model {
 	Creates a new conversation between $from and the users in $to. Supply 0 as $from to send it from the system.
 	$subject is well, the subject, and $body is the body of the first message in the conversation.
 	*/
-	function createConversation($to, $from, $subject, $body) {
+	function createConversation($to, $from, $subject, $body, $private = false) {
 		if(!is_array($to)) {
 			$to = array($to);
 		}
 		$message = array('owner' => $from, 'time' => time(), 'body' => $body);
 		array_unshift($to, $from);
 		
-		$conversation = array('owner' => $from, 'subject' => $subject, 'time' => time(), 'participants' => $to, 'messages' => array($message), 'read' => array($from));
+		$conversation = array('owner' => $from, 'subject' => $subject, 'time' => time(), 'participants' => $to, 'messages' => array($message), 'read' => array($from), 'private' => $private);
 		$this->mongo->db->conversations->save($conversation);
 		
 		$this->load->model('alertmodel');
@@ -74,7 +74,7 @@ class MessagesModel extends CI_Model {
 		if($cache) {
 			if(($data = $this->mcache->get('messages_view_'.$_id.'_'.$to)) === FALSE) {
 				$data = $this->mongo->db->conversations->findOne($query);
-				$this->mcache->set('messages_view_'.$_id.'_'.$to, $data, $this->config->item('message_cache'));
+				$this->mcache->set('messages_view_'.$_id, $data, $this->config->item('message_cache'));
 			}
 		} else {
 			$data = $this->mongo->db->conversations->findOne($query);
@@ -87,18 +87,25 @@ class MessagesModel extends CI_Model {
 	Adds a new message to a conversation
 	*/
 	function addMessage($conv, $owner, $body, $alert = true) {
+		$owner = new MongoId($owner);
 		$query = array('_id' => new MongoId($conv));
 		if($owner != new MongoId(SYSTEM_ID))
-			$query['participants'] = new MongoId($owner);
+			$query['participants'] = $owner;
+			
 			
 		$conv = $this->getMessage($conv, '', false);
 		$message = array('owner' => $owner, 'time' => time(), 'body' => $body);
 			
-		$r = $this->mongo->db->conversations->update($query, array('$push' => array('messages' => $message)), array('safe' => true));
+		$r = $this->mongo->db->conversations->update($query, array('$push' => array('messages' => $message), '$set' => array('time' => time(), 'read' => array())), array('safe' => true));
 
-		if($r['n'] > 0 && $alert) {
-			foreach($conv['participants'] as $p) {
-				$this->alertmodel->createAlert($p, '<a href="/messages/">You have one or more unread messages.</a>', 5);
+		if($r['n'] > 0) {
+			$this->mcache->delete('$messages_view_'.$conv);
+			if($alert) {
+				$this->load->model('alertmodel');
+				foreach($conv['participants'] as $p) {
+					if($p != $owner)
+						$this->alertmodel->createAlert($p, '<a href="/messages/">You have one or more unread messages.</a>', 5);
+				}
 			}
 		}
 	}
@@ -109,7 +116,7 @@ class MessagesModel extends CI_Model {
 	function addUser($message, $user, $by = '') {
 		$this->load->model('alertmodel');
 		
-		$query = array('_id' => new MongoId($message));
+		$query = array('_id' => new MongoId($message), 'private' => false);
 		if($by)
 			$query['participants'] = new MongoId($by);
 		

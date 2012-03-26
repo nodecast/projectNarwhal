@@ -1,6 +1,6 @@
 <h2><?= $message['subject'] ?></h2>
 <div class="linkbox">
-	<a href="/messages/">[Back to inbox]</a>
+	<a href="#reply">[Reply]</a> <a href="/messages/">[Back to inbox]</a>
 </div>
 
 <div class="sidebar">
@@ -14,10 +14,16 @@
 			?>
 		</ul>
 		
-		<?= form_open('/messages/invite/'.$message['_id']) ?>
-			Add a new member:
-			<input type="text" name="invite">
-		</form>
+		<?php
+			if(!$message['private']) {
+		?>
+				<?= form_open('/messages/invite/'.$message['_id']) ?>
+					Add a new member:
+					<input type="text" name="invite">
+				</form>
+		<?php
+			}
+		?>
 	</div>
 </div>
 
@@ -35,7 +41,7 @@
 		</div>
 		<?php endforeach; ?>
 		
-		<h2>Reply</h2>
+		<h2 id="reply">Reply</h2>
 		<?= form_open('/messages/reply/'.$message['_id']) ?>
 			<div class="box pad center">
 			<textarea name="body" cols="90" rows="10"></textarea><br>

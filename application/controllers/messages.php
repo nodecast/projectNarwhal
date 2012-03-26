@@ -68,7 +68,7 @@ class Messages extends CI_Controller {
 			$data['user'] = $user;
 			$this->load->view('messages/new', $data);
 		} else {
-			$this->messagesmodel->createConversation($this->recipients, $this->utility->current_user('_id'), $this->input->post('subject'), $this->input->post('body'));
+			$this->messagesmodel->createConversation($this->recipients, $this->utility->current_user('_id'), $this->input->post('subject'), $this->input->post('body'), !$this->input->post('private'));
 			redirect('/messages/browse');
 		}
 	}
@@ -88,7 +88,12 @@ class Messages extends CI_Controller {
 	}
 	
 	public function reply($message) {
-		
+		$body = $this->input->post('body');
+		if($body) {
+			$this->messagesmodel->addMessage($message, $this->utility->current_user('_id'), $body);
+		}
+	
+		redirect('/messages/view/'.$message);
 	}
 	
 	public function invite($message) {

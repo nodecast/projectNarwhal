@@ -15,6 +15,10 @@
 				<td><div class="label">Body:&nbsp;&nbsp;</div></td>
 				<td><textarea name="body" rows="10" cols="50"></textarea></td>
 			</tr>
+			<tr>
+				<td><div class="label">Allow the invitation of users:&nbsp;&nbsp;</div></td>
+				<td><input type="checkbox" name="private" value="true" checked="checked"></td>
+			</tr>
 		</table>
 		<input type="submit" name="submit" value="Send">
 	</form>
