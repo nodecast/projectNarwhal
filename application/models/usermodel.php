@@ -40,6 +40,7 @@ class UserModel extends CI_Model {
 		}
 	}
 	
+	//TODO don't use the collection 'tmp', instead just load them into memory...maybe?
 	/*
 	Builds percentile tables
 	*/
@@ -68,7 +69,11 @@ class UserModel extends CI_Model {
 					$r = $this->mongo->db->command(array('mapreduce' => 'requests', 'map' => $map, 'reduce' => $reduce, 'out' => array('replace' => 'tmp')));
 					$res = $this->mongo->db->tmp->find()->sort(array("value"=>1));
 					break;
-				case 4: // TODO posts made
+				case 4: // posts made
+					$map = new MongoCode('function() {emit(this.owner, 1);}');
+					$reduce = new MongoCode('function(key,values){var num=0;values.forEach(function(value){num+=value;});return num;}');
+					$r = $this->mongo->db->command(array('mapreduce' => 'forum_posts', 'map' => $map, 'reduce' => $reduce, 'out' => array('replace' => 'tmp')));
+					$res = $this->mongo->db->tmp->find()->sort(array("value"=>1));
 					break;
 				default:
 					return null;
@@ -95,8 +100,6 @@ class UserModel extends CI_Model {
 	}
 	
 	function getPercentile($what, $value) {
-		if($what == 4) // TODO ^^
-			return 0;
 		$t = $this->buildPercentile($what);
 		$LastPercentile = 0;
 		$Percentile = 0;
@@ -139,8 +142,7 @@ class UserModel extends CI_Model {
 	}
 	
 	function numPosts($id) {
-		// TODO this
-		return 0;
+		return $this->mongo->db->forum_posts->find(array('owner' => new MongoId($id)))->count();
 	}
 	
 	function getPermissions($id) {
