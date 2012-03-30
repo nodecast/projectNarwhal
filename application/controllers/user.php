@@ -66,15 +66,13 @@ class User extends CI_Controller {
 			$this->utility->enforce_perm('site_users_edit');
 
 		if (!$user = $this->usermodel->getData($id, false)) {
-			$this->utility->page_title('User not found');
-			$this->load->view('user/view_dne');
+			show_404();
 		} else {
 			$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
 			$this->form_validation->set_rules('email', 'Email', 'required');
 			$this->form_validation->set_rules('avatar', 'Avatar', 'callback__avatar_check');
 
-			if ($this->input->post('download_as_txt'))
-				$user['settings']['download_as_txt'] = true;
+			$user['settings']['download_as_txt'] = $this->input->post('download_as_txt') == true;
 
 			if ($this->input->post('email'))
 				$user['email'] = $this->input->post('email');
@@ -109,5 +107,9 @@ class User extends CI_Controller {
 			$this->form_validation->set_message('_avatar_check', 'The %s field must contain a valid URL to a whitelisted image host.');
 			return false;
 		}
+	}
+	
+	function posts($id) {
+		//TODO
 	}
 }

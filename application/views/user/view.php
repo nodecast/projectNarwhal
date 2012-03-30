@@ -65,9 +65,9 @@
 		<div class="box"> <!-- TODO paranoia and implementation -->
 			<div class="head colhead_dark">Community</div>
 			<ul class="stats nobullet">
-				<li>Forum Posts: 2704 [<a href="userhistory.php?action=posts&amp;userid=7005" title="View">View</a>]</li>
+				<li>Forum Posts: <?= $user['posts']; ?> [<a href="/user/posts/<?= $user['_id']; ?>" title="View">View</a>]</li>
 				<li>Requests filled: 30 for 468.87 GB [<a href="requests.php?type=filled&amp;userid=7005" title="View">View</a>]</li>
-				<li>Uploaded: 81 [<a href="torrents.php?type=uploaded&amp;userid=7005" title="View">View</a>]</li>
+				<li>Uploaded: <?= $user['uploads']; ?> [<a href="#" title="View">View</a>]</li>
 			</ul>
 		</div>
 	</div>
