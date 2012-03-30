@@ -323,6 +323,20 @@ td h4,td p
   position:relative;
 }
 
+.unread_icon
+{
+	width:24px;
+	height:24px;
+	background:url(unread.png) no-repeat center center;
+}
+
+.read_icon
+{
+	width:24px;
+	height:24px;
+	background:url(read.png) no-repeat center center;
+}
+
 #logo a
 {
   position:absolute;

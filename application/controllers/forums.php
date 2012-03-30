@@ -13,6 +13,7 @@ class Forums extends CI_Controller {
 	{
 		$data = array();
 		$data['forums'] = $this->forumsmodel->getForums();
+		$data['userid'] = $this->utility->current_user('_id');
 		$this->load->view('forums/list', $data);
 	}
 	

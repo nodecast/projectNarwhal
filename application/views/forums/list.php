@@ -13,7 +13,7 @@
 			$posts = $this->forumsmodel->countPostsInForum($forum['_id']);
 		?>
 		<tr>
-			<td></td>
+			<td><div class="<?= (in_array($userid, $forum['read']) ? 'read' : 'unread'); ?>_icon"></div></td>
 			<td>
 				<h4 class="min_padding">
 					<a href="/forums/view/<?= $forum['_id']; ?>"><?= $forum['name']; ?></a>
