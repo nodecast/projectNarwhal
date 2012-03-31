@@ -69,6 +69,8 @@ $config['forums_cache'] = 300; // 5 min
 $config['torrent_perpage'] = 50;
 $config['torrent_comments_perpage'] = 10;
 $config['messages_perpage'] = 25;
+$config['threads_perpage'] = 25;
+$config['posts_perpage'] = 25;
 
 //site urls
 $config['https_siteurl'] = 'dev.projectnarwhal.org';

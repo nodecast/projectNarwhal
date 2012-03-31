@@ -17,27 +17,45 @@ class Forums extends CI_Controller {
 		$this->load->view('forums/list', $data);
 	}
 	
-	public function view($forum, $thread = null)
+	public function view_forum($forum, $page = 1)
 	{
+		if($page < 1)
+			$page = 1;
+		$off = ($page - 1) * $this->config->item('threads_perpage');
+	
 		$forum = $this->forumsmodel->getForum($forum);
 		if(!$forum)
 			show_404();
-		if($thread) {
-			$thread = $this->forumsmodel->getThread($thread);
-			if(!$thread)
-				show_404();
-		}
 
-		if($thread) {
-			$data = array();
-			$this->load->view('forums/viewthread', $data);
-		} else {
-			$data = array();
-			$this->load->view('forums/viewforum', $data);
-		}
+		$data = array();
+		$data['forum'] = $forum;
+		$data['perpage'] = $this->config->item('threads_perpage');
+		$data['posts_pp'] = $this->config->item('posts_perpage');
+		$data['off'] = $off;
+		$data['page'] = $page;
+		$return = $this->forumsmodel->getThreads($forum['_id'], $data['perpage'], $off);
+		$data['threads'] = $return['data'];
+		$data['results'] = $return['count'];
+		$data['userid'] = $this->utility->current_user('_id');
+		$this->load->view('forums/viewforum', $data);
+	}
+	
+	public function view_thread($thread, $page = 1) {
+		if($page < 1)
+			$page = 1;
+		$off = ($page - 1) * $this->config->item('posts_perpage');
+		
+		$thread = $this->forumsmodel->getThread($thread);
+		if(!$thread)
+			show_404();
 	}
 	
 	public function catchup()
+	{
+		//TODO
+	}
+	
+	public function newthread()
 	{
 		//TODO
 	}

@@ -30,6 +30,39 @@ class ForumsModel extends CI_Model {
 	}
 	
 	/*
+	Gets threads in a specific forum
+	*/
+	function getThreads($forum, $limit = 25, $skip = 0) {
+		$key = 'forums_threads_forum_'.$forum.'_'.$limit.'_'.$skip;
+		
+		if(($data = $this->mcache->get($key)) === FALSE) {
+			$result = $this->mongo->db->forum_threads->find(array('forum' => new MongoId($forum)))->sort(array('stickied' => -1, 'time' => -1));
+			$count = $result->count();
+			$result = $result->limit($limit)->skip($skip);
+			$result = iterator_to_array($result);
+			$data = array('data' => $result, 'count' => $count);
+			$this->mcache->set($key, $data, $this->config->item('forums_cache'));
+		}
+		return $data;
+	}
+	
+	/*
+	Gets the last post in a thread, as well as the total number of posts
+	*/
+	function getLastPost($thread) {
+		$key = 'forums_lastpost_'.$thread;
+		
+		if(($data = $this->mcache->get($key)) === FALSE) {
+			$result = $this->mongo->db->forum_posts->find(array('thread' => new MongoId($thread)))->sort(array('time' => -1));
+			$count = $result->count();
+			$result = $result->hasNext() ? $result->getNext() : null;
+			$data = array('data' => $result, 'count' => $count);
+			$this->mcache->set($key, $data, $this->config->item('forums_cache'));
+		}
+		return $data;
+	}
+	
+	/*
 	Gets data for a specific thread
 	*/
 	function getThread($id) {

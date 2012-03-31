@@ -218,6 +218,28 @@ class Utility {
 		if ($total_pages>1) { return $pages; }
 	}
 	
+	function get_mini_nav($thread, $pages) {
+		$ellipses = false;
+		$text = '';
+		if($pages > 1){
+			$text = ' (';
+			$links = array();
+			for($i = 1; $i <= $pages; $i++) {
+				if($pages > 4 && ($i > 2 && $i <= $pages - 2)) {
+					if(!$ellipses) {
+						$links[] = '...';
+						$ellipses = true;
+					}
+					continue;
+				}
+				$links[] = '<a href="/forums/view_thread/'.$thread.'/'.$i.'/">'.$i.'</a>';
+			}
+			$text .= implode(' ', $links);
+			$text .= ')';
+		}
+		return $text;
+	}
+	
 	function torrent_name($id, $pretty = true) {
 		$this->CI->load->model('torrentmodel');
 		$d = $this->CI->torrentmodel->getData($id);
