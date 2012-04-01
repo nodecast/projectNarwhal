@@ -4,7 +4,7 @@
 		<a href="/forums/newthread/<?= $forum['_id']; ?>">New Thread</a>
 	</div>
 	<div class="linkbox">
-		<?= $this->utility->get_page_nav('/forums/view_forum/'.$forum['_id'], $page, $results, $perpage); ?>
+		<?= $this->utility->get_page_nav('/forums/view_forum/'.$forum['_id'].'/', $page, $results, $perpage); ?>
 	</div>
 	<table width="100%">
 		<tr class="colhead">
@@ -18,7 +18,7 @@
 			$post = $this->forumsmodel->getLastPost($thread['_id']);
 		?>
 		<tr>
-			<td><div class="<?= (in_array($userid, $thread['read']) ? 'read' : 'unread'); ?>_icon"></div></td>
+			<td><div class="<?= ((in_array($userid, $thread['read']) || $catchuptime > $thread['lastupdate']) ? 'read' : 'unread'); ?>_icon"></div></td>
 			<td>
 				<p class="min_padding">
 					<?= ($thread['stickied'] ? 'Sticky: ' : '') ?><strong>
@@ -30,12 +30,14 @@
 			<td><?= ($post['count'] - 1); ?></td>
 			<td><?= $this->utility->format_name($thread['owner']); ?></td>
 			<td>
+				<?php if($post['count']) { ?>
 				<p class="min_padding">By <?= $this->utility->format_name($post['data']['owner']); ?> <br><span title="<?= $this->utility->format_datetime($post['data']['time']); ?>"><?= $this->utility->time_diff_string($post['data']['time']); ?></span></p>
+				<?php } ?>
 			</td>
 		</tr>
 		<?php endforeach; ?>
 </table>
 	<div class="linkbox">
-		<?= $this->utility->get_page_nav('/forums/view_forum/'.$forum['_id'], $page, $results, $perpage); ?>
+		<?= $this->utility->get_page_nav('/forums/view_forum/'.$forum['_id'].'/', $page, $results, $perpage); ?>
 	</div>
 </div>

@@ -27,7 +27,7 @@ class StatsModel extends CI_Model {
 
 	function lastAccess($id)
 	{
-		$this->mongo->db->users->update(array('id'=> $id), array('$set' => array('lastaccess'=>time())));
+		$this->mongo->db->users->update(array('_id'=> new MongoId($id)), array('$set' => array('lastaccess'=>time())));
 	}
 	
 	function getTorrents()

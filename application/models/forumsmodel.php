@@ -117,5 +117,13 @@ class ForumsModel extends CI_Model {
 		}
 		return $data;
 	}
+	
+	/*
+	Marks all forums and threads as read for a user
+	*/
+	function catchup($user) {
+		$this->mongo->db->users->update(array('_id' => new MongoId($user)), array('$set' => array('catchuptime' => time())));
+		$this->mongo->db->forum_forums->update(array(), array('$addToSet' => array('read' => new MongoId($user))), array('multiple' => true));
+	}
 }
 ?>

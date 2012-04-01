@@ -37,6 +37,7 @@ class Forums extends CI_Controller {
 		$data['threads'] = $return['data'];
 		$data['results'] = $return['count'];
 		$data['userid'] = $this->utility->current_user('_id');
+		$data['catchuptime'] = $this->utility->current_user('catchuptime');
 		$this->load->view('forums/viewforum', $data);
 	}
 	
@@ -52,7 +53,8 @@ class Forums extends CI_Controller {
 	
 	public function catchup()
 	{
-		//TODO
+		$this->forumsmodel->catchup($this->utility->current_user('_id'));
+		redirect('/forums/');
 	}
 	
 	public function newthread()
