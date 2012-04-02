@@ -32,6 +32,29 @@ class TextFormat {
     return '<div class="bbcode_spoiler_box"><input type="button" class="bbcode_spoiler_btn" value="Show/Hide '.$name.'" /><br /><div class="bbcode_spoiler">'.$content.'</div></div>';
   }
 
+  public static function do_blinkies($bbcode, $action, $name, $default, $params, $content) {
+    if ($action == BBCODE_CHECK) {
+      return true;
+    }
+
+    return '<div class="blink" style="text-align:center;">
+      <div style="font-size:12pt; color:red;">'.$content.'</div>
+      <div style="font-size:18pt; color:orange;">'.$content.'</div>
+      <div style="font-size:32pt; color:yellow;">'.$content.'</div>
+      <div style="font-size:48pt; color:green;">'.$content.'</div>
+      <div style="font-size:56pt; color:blue;">'.$content.'</div>
+      <div style="font-size:72pt; color:indigo;">'.$content.'</div>
+      <div style="font-size:96pt; color:purple;">'.$content.'</div>
+      <div style="font-size:128pt; color:red;">'.$content.'</div>
+      <div style="font-size:160pt; color:orange;">'.$content.'</div>
+      <!--div style="font-size:200pt; color:yellow;">'.$content.'</div>
+      <div style="font-size:250pt; color:green;">'.$content.'</div>
+      <div style="font-size:320pt; color:blue;">'.$content.'</div>
+      <div style="font-size:400pt; color:indigo;">'.$content.'</div>
+      <div style="font-size:550pt; color:purple;">'.$content.'</div -->
+    </div>';
+  }
+
   public function __construct() {
     require_once(APPPATH.'/libraries/nbbc.php');
     $this->CI =& get_instance();
@@ -85,6 +108,14 @@ class TextFormat {
         'block',
         'columns'
       )
+    ));
+
+    // [rainbow]$BODY[/rainbow]
+    $this->bbcode->AddRule('rainbow',  Array(
+        'mode' => BBCODE_MODE_CALLBACK,
+        'method' => array(&$this, 'do_blinkies'),
+        'class' => 'inline',
+        'allow_in' => Array('listitem', 'block', 'columns'),
     ));
   }
 

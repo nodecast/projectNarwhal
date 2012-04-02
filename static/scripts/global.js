@@ -55,4 +55,15 @@ $(function() {
 
 		r.linechart(30, 10, 150, 155, [timevals, timevals], [ratiovals, reqvals], {axis:"0 0 1 1", miny: 0});
 	}
+
+	$('.blink').each(function() {
+    var elem = $(this);
+    setInterval(function() {
+        if (elem.css('visibility') == 'hidden') {
+            elem.css('visibility', 'visible');
+        } else {
+            elem.css('visibility', 'hidden');
+        }    
+    }, 500);
+	});
 });
