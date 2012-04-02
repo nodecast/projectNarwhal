@@ -47,12 +47,29 @@ class TextFormat {
       <div style="font-size:96pt; color:purple;">'.$content.'</div>
       <div style="font-size:128pt; color:red;">'.$content.'</div>
       <div style="font-size:160pt; color:orange;">'.$content.'</div>
-      <!--div style="font-size:200pt; color:yellow;">'.$content.'</div>
-      <div style="font-size:250pt; color:green;">'.$content.'</div>
-      <div style="font-size:320pt; color:blue;">'.$content.'</div>
-      <div style="font-size:400pt; color:indigo;">'.$content.'</div>
-      <div style="font-size:550pt; color:purple;">'.$content.'</div -->
     </div>';
+  }
+
+  public static function do_user($bbcode, $action, $name, $default, $params, $content) {
+    if ($action == BBCODE_CHECK) {
+      return true;
+    }
+
+    $ci =& get_instance();
+    $ci->load->model('usermodel');
+
+    $user = $ci->usermodel->getDataForUsername($params['_default']);
+    if (!$user)
+      $user = $ci->usermodel->getData($params['_default']);
+
+    if ($user) {
+      $class = $ci->usermodel->getPermissions($user['_id']);
+      $class = $class['name'];
+      $title = ($user['title'])? '('.$user['title'].')':'';
+      return '<a href="/user/view/'.$user['_id'].'">'.$user['username'].'</a> ('.$class.') '.$title;
+    } else {
+      return '[No such user]';
+    }
   }
 
   public function __construct() {
@@ -114,6 +131,14 @@ class TextFormat {
     $this->bbcode->AddRule('rainbow',  Array(
         'mode' => BBCODE_MODE_CALLBACK,
         'method' => array(&$this, 'do_blinkies'),
+        'class' => 'inline',
+        'allow_in' => Array('listitem', 'block', 'columns'),
+    ));
+
+    // [user=$USER]
+    $this->bbcode->AddRule('user',  Array(
+        'mode' => BBCODE_MODE_CALLBACK,
+        'method' => array(&$this, 'do_user'),
         'class' => 'inline',
         'allow_in' => Array('listitem', 'block', 'columns'),
     ));
