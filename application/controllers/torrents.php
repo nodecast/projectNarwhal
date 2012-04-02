@@ -9,6 +9,7 @@ class Torrents extends CI_Controller {
 		$this->load->model('torrentmodel');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->library('atheme');
 	}
 
 	public function index()
@@ -120,10 +121,13 @@ class Torrents extends CI_Controller {
 			}
 			$this->mongo->db->torrents->save($data);
 
+			$logline = $this->utility->current_user('username').' ('.$this->utility->current_user('_id').') has uploaded torrent '.$data['_id'].' "'.$data['name'].'"';
+
 			// log
-			$this->utility->log($this->utility->current_user('username').' ('.$this->utility->current_user('_id').') has uploaded torrent '.$data['_id'].' "'.$data['name'].'"');
+			$this->utility->log($logline);
 			
-			// TODO irc announce
+			// IRC announce
+			$this->atheme->announce($logline);
 			
 			redirect('/torrents/view/'.$data['_id']);
 		}

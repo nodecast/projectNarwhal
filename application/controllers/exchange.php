@@ -10,6 +10,7 @@ class Exchange extends CI_Controller {
     $this->load->helper('form');
     $this->load->library('form_validation');
     $this->load->library('textformat');
+    $this->load->library('atheme');
   }
 
   public function index()
@@ -102,6 +103,8 @@ class Exchange extends CI_Controller {
 
         $this->mongo->db->users->save($fromuser);
         $this->mongo->db->users->save($touser);
+
+        $this->atheme->announce($fromuser['username'].' sent '.$toamt.' points to '.$touser['username']);
 
         redirect('/exchange/');
       } else {
