@@ -251,10 +251,14 @@ class Utility {
 		$this->CI->load->model('usermodel');
 		$data = $this->CI->usermodel->getData($id);
 		
-		if($pretty && $data['_id'] != new MongoId(SYSTEM_ID))
-			return '<a class="username" href="/user/view/'.$data['_id'].'">'.$data['username'].'</a>';
-		else
+		if($pretty && $data['_id'] != new MongoId(SYSTEM_ID)) {
+			$class = $this->CI->usermodel->getPermissions($data['_id']);
+			$class = $class['name'];
+			$title = ($data['title'])? '('.$data['title'].')':'';
+			return '<a href="/user/view/'.$data['_id'].'">'.$data['username'].'</a> ('.$class.') '.$title;
+		} else {
 			return $data['username'];
+		}
 	}
 	
 	// TODO this does nothing right now
