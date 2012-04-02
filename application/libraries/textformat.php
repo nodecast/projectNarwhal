@@ -45,8 +45,6 @@ class TextFormat {
       <div style="font-size:56pt; color:blue;">'.$content.'</div>
       <div style="font-size:72pt; color:indigo;">'.$content.'</div>
       <div style="font-size:96pt; color:purple;">'.$content.'</div>
-      <div style="font-size:128pt; color:red;">'.$content.'</div>
-      <div style="font-size:160pt; color:orange;">'.$content.'</div>
     </div>';
   }
 
@@ -63,10 +61,7 @@ class TextFormat {
       $user = $ci->usermodel->getData($params['_default']);
 
     if ($user) {
-      $class = $ci->usermodel->getPermissions($user['_id']);
-      $class = $class['name'];
-      $title = ($user['title'])? '('.$user['title'].')':'';
-      return '<a href="/user/view/'.$user['_id'].'">'.$user['username'].'</a> ('.$class.') '.$title;
+      return $ci->utility->format_name($user['_id']);
     } else {
       return '[No such user]';
     }
