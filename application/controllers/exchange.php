@@ -114,6 +114,42 @@ class Exchange extends CI_Controller {
     }
   }
 
+  public function vhost()
+  {
+    $this->utility->page_title('Change Vhost');
+
+    $this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+    $this->form_validation->set_rules('vhost', 'Vhost', 'required|callback__check_vhost');
+
+    $vhost = $this->input->post('vhost');
+    $confirm = $this->input->post('confirm');
+
+    if ($this->form_validation->run() == FALSE || !$this->_has_enough_points(5000)) {
+      $data = array();
+      $data['vhost'] = $vhost;
+      $this->load->view('exchange/vhost', $data);
+    } else {
+      $user = $this->utility->current_user();
+      $user['points'] -= 5000;
+      $this->mongo->db->users->save($user);
+
+      $this->atheme->setVhost($user['username'], $vhost);
+
+      redirect('/exchange/');
+    }
+  }
+
+  public function _check_vhost($vhost) {
+    $url = preg_quote($this->config->item('http_siteurl'));
+    if (#!preg_match($url, $vhost) &&
+         preg_match('/^([\w\.\-]{3,16})$/', $vhost)) {
+      return true;
+    } else {
+      $this->form_validation->set_message('_check_vhost', 'Invalid vhost.');
+      return false;
+    }
+  }
+
   public function _has_enough_points($amt) {
     if ($this->utility->current_user('points') >= $amt) {
       return true;
@@ -133,10 +169,10 @@ class Exchange extends CI_Controller {
   }
 
   public function _user_exists($username) {
-    if ($this->mongo->db->users->findOne(array('username' => $username))) {
+    if ($username != $this->utility->current_user('username') && $this->mongo->db->users->findOne(array('username' => $username))) {
       return true;
     } else {
-      $this->form_validation->set_message('_user_exists', 'User does not exist!');
+      $this->form_validation->set_message('_user_exists', 'Invalid user!');
       return false;
     }
   }

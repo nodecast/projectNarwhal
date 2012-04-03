@@ -81,5 +81,9 @@ class Atheme {
   public function changePassword($username, $newpw) {
     return $this->run('NickServ', 'opersetpass', array($username, $newpw));
   }
+
+  public function setVhost($username, $vhost) {
+    return $this->run('NickServ', 'VHOST', array($username, 'ON', $vhost, 'FORCE'));
+  }
 }
 

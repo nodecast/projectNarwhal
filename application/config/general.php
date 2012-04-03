@@ -158,6 +158,12 @@ $config['exchange_items'] = array(
 		'tax' => 0.20,
 		'action' => 'Transfer BP',
 	),
+	'vhost' => array(
+		'title' => 'Buy a custom vhost!',
+		'price' => '5,000 BP',
+		'tax' => 0.00,
+		'action' => 'Change Vhost',
+	),
 );
 
 define('SYSTEM_ID', 'aaaaaaaaaaaaaaaaaaaaaaaa');
