@@ -1,4 +1,5 @@
 /application/torrents
+/application/logs
 
 .DS_Store
 access.log
