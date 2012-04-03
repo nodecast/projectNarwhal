@@ -85,5 +85,8 @@ class Atheme {
   public function setVhost($username, $vhost) {
     return $this->run('NickServ', 'VHOST', array($username, 'ON', $vhost, 'FORCE'));
   }
-}
 
+  public function sendNotice($username, $msg) {
+    return $this->run('SiteServ', 'NOTICE', array($username, $msg));
+  }
+}
