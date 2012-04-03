@@ -9,6 +9,8 @@ class Atheme {
   }
 
   private function run($service, $command, $params) {
+  	if(!$this->ci->config->item('irc_enabled'))
+  		return;
     $hostname = $this->ci->config->item('atheme_server');
     $port = $this->ci->config->item('atheme_port');
     $path = $this->ci->config->item('atheme_path');

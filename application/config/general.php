@@ -1,5 +1,8 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// Whether to use IRC based features
+$config['irc_enabled'] = true;
+
 // Public contact email
 $config['contact_email'] = "narwhal@projectnarwhal.org";
 
