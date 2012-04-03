@@ -73,9 +73,10 @@ $config['threads_perpage'] = 25;
 $config['posts_perpage'] = 25;
 
 //site urls
-$config['https_siteurl'] = 'dev.projectnarwhal.org';
-$config['http_siteurl'] = 'dev.projectnarwhal.org';
-$config['announce_url'] = 'http://dev.projectnarwhal.org:9999';
+$config['https_siteurl'] = 'phos.projectnarwhal.org';
+$config['http_siteurl'] = 'phos.projectnarwhal.org';
+$config['announce_url'] = 'http://phos.projectnarwhal.org:9999';
+$config['chat_url'] = 'http://phos.projectnarwhal.org:9090';
 
 //allowed image hosts
 $config['allowed_imagehosts'] = '('

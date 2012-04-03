@@ -31,7 +31,7 @@ class Atheme {
     }
     else
     {
-      return "Authorisation failed";
+      return "Authorization failed";
     }
 
     $message = new xmlrpcmsg("atheme.command");
@@ -42,23 +42,9 @@ class Atheme {
     $message->addParam(new xmlrpcval($command, "string"));
     if ($params != NULL)
     {
-      if (sizeof($params) < 2)
+      foreach($params as $param)
       {
-        foreach($params as $param)
-        {
-          $message->addParam(new xmlrpcval($param, "string"));
-        }
-      }
-      else
-      {
-        $firstparam = $params[0];
-        $secondparam = "";
-        for ($i = 1; $i < sizeof($params); $i++)
-        {
-          $secondparam .= $params[$i] . " ";
-        }
-        $message->addParam(new xmlrpcval($firstparam, "string"));
-        $message->addParam(new xmlrpcval($secondparam, "string"));
+        $message->addParam(new xmlrpcval($param, "string"));
       }
       $response = $client->send($message);
     }
@@ -80,6 +66,18 @@ class Atheme {
 
   public function announce($message) {
     return $this->say('#announce', $message);
+  }
+
+  public function createAccount($username, $email, $irckey) {
+    return $this->run('NickServ', 'FREGISTER', array($username, $irckey, $email));
+  }
+
+  public function deleteAccount($username) {
+    return $this->run('NickServ', 'FDROP', array($username));
+  }
+
+  public function changePassword($username, $newpw) {
+    return $this->run('NickServ', 'opersetpass', array($username, $newpw));
   }
 }
 

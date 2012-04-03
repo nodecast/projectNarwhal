@@ -8,6 +8,7 @@ class User extends CI_Controller {
 		$this->load->model('usermodel');
 		$this->load->helper('form');
 		$this->load->library('form_validation');
+		$this->load->library('atheme');
 		$this->utility->enforce_login();
 	}
 
@@ -74,6 +75,8 @@ class User extends CI_Controller {
 
 			$user['settings']['download_as_txt'] = $this->input->post('download_as_txt') == true;
 
+			$olduser = $user;
+
 			if ($this->input->post('email'))
 				$user['email'] = $this->input->post('email');
 
@@ -93,6 +96,10 @@ class User extends CI_Controller {
 			} else {
 				if (!$this->input->post('download_as_txt'))
 					$user['settings']['download_as_txt'] = false;
+
+				if ($olduser['irc_key'] != $user['irc_key']) {
+					$this->atheme->changePassword($user['username'], $user['irc_key']);
+				}
 
 				$this->mongo->db->users->save($user);
 				redirect('user/view/'.$user['_id']);

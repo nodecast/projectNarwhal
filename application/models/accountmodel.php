@@ -4,6 +4,7 @@ class AccountModel extends CI_Model {
 	function __construct()
 	{	
 		parent::__construct();
+		$this->load->library('atheme');
 	}
 
 	/*
@@ -55,6 +56,9 @@ class AccountModel extends CI_Model {
 		$data['catchuptime'] = 0;
 		
 		$this->mongo->db->users->save($data);
+
+		$this->atheme->createAccount($data['username'], $data['email'], $data['irc_key']);
+		$this->atheme->announce('A new user, '.$data['username'].', has joined!');
 		
 		return $data['_id'];
 	}

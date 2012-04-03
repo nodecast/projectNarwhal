@@ -128,6 +128,7 @@ class Torrents extends CI_Controller {
 			
 			// IRC announce
 			$this->atheme->announce($logline);
+			$this->atheme->say('#torrents', $logline);
 			
 			redirect('/torrents/view/'.$data['_id']);
 		}
