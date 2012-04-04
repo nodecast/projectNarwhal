@@ -26,6 +26,7 @@ class Forums extends CI_Controller {
 		$forum = $this->forumsmodel->getForum($forum);
 		if(!$forum)
 			show_404();
+		$this->forumsmodel->markForumAsRead($forum['_id'], $this->utility->current_user('_id'));
 
 		$data = array();
 		$data['forum'] = $forum;

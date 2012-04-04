@@ -125,5 +125,13 @@ class ForumsModel extends CI_Model {
 		$this->mongo->db->users->update(array('_id' => new MongoId($user)), array('$set' => array('catchuptime' => time())));
 		$this->mongo->db->forum_forums->update(array(), array('$addToSet' => array('read' => new MongoId($user))), array('multiple' => true));
 	}
+	
+	/*
+	Marks a forum as read for a specific user
+	*/
+	function markForumAsRead($forum, $user) {
+		$this->mongo->db->forum_forums->update(array('_id' => new MongoId($forum)), array('$addToSet' => array('read' => new MongoId($user))));
+		$this->mcache->delete('forums_list');
+	}
 }
 ?>

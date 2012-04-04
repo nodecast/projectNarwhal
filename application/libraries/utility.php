@@ -161,6 +161,7 @@ class Utility {
 	// TODO rewrite this
 	function get_page_nav($location, $start_item, $total_number, $per_page, $show_record_count = true, $show_pages = 10) {
 		$pages = "";
+		$total_pages = 0;
 		$start_item = ceil($start_item);
 		if($start_item == 0)
 			$start_item = 1;
@@ -215,7 +216,8 @@ class Utility {
 			}
 		}
 
-		if ($total_pages>1) { return $pages; }
+		if ($total_pages > 1)
+			return $pages;
 	}
 	
 	function get_mini_nav($thread, $pages) {
