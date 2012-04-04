@@ -13,6 +13,7 @@ class Staff extends CI_Controller {
   {
     $classes = $this->config->item('classes');
     $data['staff'] = array();
+    $data['staff']['Helper'] = $this->usermodel->getUsersForClass($classes['HELPER']);
     $data['staff']['Moderator'] = $this->usermodel->getUsersForClass($classes['MOD']);
     $data['staff']['Developer'] = $this->usermodel->getUsersForClass($classes['DEVELOPER']);
     $data['staff']['Admin'] = $this->usermodel->getUsersForClass($classes['ADMIN']);

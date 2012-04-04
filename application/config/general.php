@@ -99,7 +99,7 @@ $config['allowed_imagehosts'] = '('
 	.')\/';
 
 //user classes, for permissions and stuff. actual permissions and levels can be found in the collection 'permissions'
-$config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'MOD' => 11, 'DEVELOPER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);
+$config['classes'] = array('USER' => 2, 'MEMBER' => 3, 'POWER' => 4, 'ELITE' => 5, 'VIP' => 6, 'TORRENT_MASTER' => 7, 'HELPER' => 10, 'MOD' => 11, 'DEVELOPER' => 14, 'ADMIN' => 1, 'SYSOP' => 15);
 
 //categories
 //secondary [metadata], this will be displayed in search results nex to the title (like author/artist/etc.), also format
