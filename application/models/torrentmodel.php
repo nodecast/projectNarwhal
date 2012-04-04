@@ -13,11 +13,9 @@ class TorrentModel extends CI_Model {
 		$key = 'torrent_search_'.md5(serialize($query).$limit.$skip.$order.$way);
 		
 		if(($data = $this->mcache->get($key)) === FALSE) {
-			$result = $this->mongo->db->torrents->find($query)->sort(array($order => $way));
-			$count = $result->count();
-			$result = $result->limit($limit)->skip($skip);
-			$result = iterator_to_array($result);
-			$data = array('data' => $result, 'count' => $count);
+			$result = $this->mongo->db->torrents->find($query)->sort(array($order => $way))->limit($limit)->skip($skip);
+			$array = iterator_to_array($result);
+			$data = array('data' => $array, 'count' => $result->count());
 			$this->mcache->set($key, $data, $this->config->item('torrent_cache'));
 		}
 		return $data;
