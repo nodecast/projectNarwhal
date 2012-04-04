@@ -74,6 +74,10 @@ class Atheme {
     return $this->run('NickServ', 'FREGISTER', array($username, $irckey, $email));
   }
 
+  public function renameAccount($oldname, $newname) {
+    return $this->run('SiteServ', 'RENAME', array($oldname, $newname));
+  }
+
   public function deleteAccount($username) {
     return $this->run('NickServ', 'FDROP', array($username));
   }
