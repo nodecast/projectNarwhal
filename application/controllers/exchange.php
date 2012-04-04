@@ -140,9 +140,9 @@ class Exchange extends CI_Controller {
   }
 
   public function _check_vhost($vhost) {
-    $url = preg_quote($this->config->item('http_siteurl'));
-    if (#!preg_match($url, $vhost) &&
-         preg_match('/^([\w\.\-]{3,16})$/', $vhost)) {
+    $url = $this->config->item('http_siteurl');
+    if ((strpos($vhost, $url) === false) &&
+         preg_match('/^([\w\.\-]{3,63})$/', $vhost)) {
       return true;
     } else {
       $this->form_validation->set_message('_check_vhost', 'Invalid vhost.');
