@@ -724,6 +724,11 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
   width: 50px;
 }
 
+.staff_box {
+  width: 750px;
+  margin: 0px auto 0px auto;
+}
+
 /* BBCode Specific */
 .bbcode_quote_head
 {

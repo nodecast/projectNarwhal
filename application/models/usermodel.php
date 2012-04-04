@@ -39,6 +39,23 @@ class UserModel extends CI_Model {
 			return $this->mongo->db->users->findOne(array('username' => $un));
 		}
 	}
+
+	/*
+	Gets data for all users in a specific class.
+	*/
+	function getUsersForClass($class, $cache = true) {
+		$key = 'users_by_class_'.$class.'_data';
+		if($cache) {
+			if(!($data = $this->mcache->get($key))) {
+				$data = $this->mongo->db->users->find(array('class' => $class));
+				$this->mcache->set($key, $data, $this->config->item('userdata_cache'));
+			}
+			return $data;
+		} else {
+			return $this->mongo->db->users->find(array('class' => $class));
+		}
+	}
+
 	
 	//TODO don't use the collection 'tmp', instead just load them into memory...maybe?
 	/*
