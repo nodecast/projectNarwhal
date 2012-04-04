@@ -16,6 +16,21 @@ class TextFormat {
       return "<b>INVALID YOUTUBE URL</b>";
   }
 
+  public static function do_vimeo($bbcode, $action, $name, $default, $params, $content) {
+    if ($action == BBCODE_CHECK) {
+      return true;
+    }
+
+    $pattern = '/https?:\/\/(www\.)?vimeo\.com\/(\d+)/is';
+    $n = preg_match($pattern, $content, $matches);
+    $vid = $matches[2];
+
+    if ($vid)
+      return '<iframe src="http://player.vimeo.com/video/'.$vid.'?title=0&amp;byline=0&amp;portrait=0" width="640" height="360" frameborder="0" allowFullScreen></iframe>';
+    else
+      return '<b>INVALID VIMEO URL</b>';
+  }
+
   public static function do_spoiler($bbcode, $action, $name, $default, $params, $content) {
     if ($action == BBCODE_CHECK) {
       return true;
@@ -98,6 +113,14 @@ class TextFormat {
     $this->bbcode->AddRule('youtube',  Array(
         'mode' => BBCODE_MODE_CALLBACK,
         'method' => array(&$this, 'do_youtube'),
+        'class' => 'block',
+        'allow_in' => Array('listitem', 'block', 'columns'),
+    ));
+
+    // [vimeo]$URL[/vimeo]
+    $this->bbcode->AddRule('vimeo',  Array(
+        'mode' => BBCODE_MODE_CALLBACK,
+        'method' => array(&$this, 'do_vimeo'),
         'class' => 'block',
         'allow_in' => Array('listitem', 'block', 'columns'),
     ));
