@@ -4,7 +4,7 @@
       <span style="float:left;">
         <a href="#post<?= $_id ?>">Post</a>
         by <strong><?= $this->utility->format_name($owner); ?></strong>
-          <span title="<?= $ci->utility->format_datetime($time) ?>"><?= $ci->utility->time_diff_string($time) ?></span> - <a href="#quickpost" class="quickpost">[Quote]</a>
+          <span title="<?= $this->utility->format_datetime($time) ?>"><?= $this->utility->time_diff_string($time) ?></span> - <a href="#quickpost" class="quickpost">[Quote]</a>
       </span>
       <span id="bar<?= $_id ?>" style="float:right;"></span>
     </td>
@@ -15,7 +15,7 @@
     </td>
     <td class="body" valign="top">
       <div id="content<?= $_id ?>">
-        <?= $this->textformat->parse($body, $this->config->item('torrent_cache')) ?>
+        <?= $this->textformat->parse($body, $this->config->item('bbcode_cache')) ?>
       </div>
     </td>
   </tr>

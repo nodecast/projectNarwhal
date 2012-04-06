@@ -130,5 +130,19 @@ class ForumsModel extends CI_Model {
 	function markForumAsRead($forum, $user) {
 		$this->mongo->db->forum_forums->update(array('_id' => new MongoId($forum)), array('$addToSet' => array('read' => new MongoId($user))));
 	}
+	
+	/*
+	Creates a thread in the given forum, by the given user, with the given title, with the given body
+	Returns the _id of the new thread.
+	*/
+	function createThread($forum, $owner, $title, $body) {
+		$thread = array('forum' => new MongoId($forum), 'name' => $title, 'owner' => new MongoId($owner), 'read' => array(new MongoId($owner)), 'lastupdate' => time(), 'locked' => false, 'stickied' => false);
+		$this->mongo->db->forum_threads->save($thread);
+		
+		$post = array('forum' => $thread['forum'], 'thread' => $thread['_id'], 'owner' => $thread['owner'], 'time' => time(), 'body' => $body, 'lastedit' => array());
+		$this->mongo->db->forum_posts->save($post);
+		
+		return $thread['_id'];
+	}
 }
 ?>

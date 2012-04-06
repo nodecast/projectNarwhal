@@ -67,6 +67,7 @@ $config['alert_cache'] = 600; // 10 min
 //Message cache time, in seconds, alright, seriously? why am I still writing this out; it's self explanatory.
 $config['message_cache'] = 10; // 10 seconds
 $config['forums_cache'] = 30; //30 sec
+$config['bb_cache'] = 300; // 5 min
 
 //PERPAGE
 $config['torrent_perpage'] = 50;

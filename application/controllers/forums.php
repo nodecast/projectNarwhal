@@ -7,6 +7,7 @@ class Forums extends CI_Controller {
 		parent::__construct();
 		$this->utility->enforce_login();
 		$this->load->model('forumsmodel');
+		$this->load->library('textformat');
 	}
 
 	public function index()
@@ -71,9 +72,25 @@ class Forums extends CI_Controller {
 		$this->utility->page_title('New Thread');
 		$this->load->library('form_validation');
 		$this->load->helper('form');
-			
-		$data = array();
-		$data['forum'] = $forum;
-		$this->load->view('forums/newthread', $data);
+		
+		$this->form_validation->set_error_delimiters('<div class="error_message">', '</div>');
+		$this->form_validation->set_rules('title', 'title', 'required|max_length[60]');
+		$this->form_validation->set_rules('body', 'body', 'required|max_length['.$this->config->item('max_bytes_per_post').']');
+		
+		if(!$this->form_validation->run()) {
+			$data = array();
+			$data['forum'] = $forum;
+			$data['preview'] = false;
+			$this->load->view('forums/newthread', $data);
+		} else if($this->input->post('preview')) {
+			$data = array();
+			$data['preview'] = true;
+			$data['body'] = $this->input->post('body');
+			$data['forum'] = $forum;
+			$this->load->view('forums/newthread', $data);
+		} else {
+			$thread = $this->forumsmodel->createThread($forum['_id'], $this->utility->current_user('_id'), $this->input->post('title'), $this->input->post('body'));
+			redirect('/forums/view_thread/'.$thread);
+		}
 	}
 }
