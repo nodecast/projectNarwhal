@@ -129,7 +129,6 @@ class ForumsModel extends CI_Model {
 	*/
 	function markForumAsRead($forum, $user) {
 		$this->mongo->db->forum_forums->update(array('_id' => new MongoId($forum)), array('$addToSet' => array('read' => new MongoId($user))));
-		$this->mcache->delete('forums_list');
 	}
 }
 ?>

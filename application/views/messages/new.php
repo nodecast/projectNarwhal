@@ -20,6 +20,8 @@
 				<td><input type="checkbox" name="private" value="true" checked="checked"></td>
 			</tr>
 		</table>
-		<input type="submit" name="submit" value="Send">
+		<div class="pad">
+			<input type="submit" name="submit" value="Send">
+		</div>
 	</form>
 </div>

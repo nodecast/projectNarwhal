@@ -11,6 +11,8 @@ class Forums extends CI_Controller {
 
 	public function index()
 	{
+		$this->utility->page_title('Forums');
+		
 		$data = array();
 		$data['forums'] = $this->forumsmodel->getForums();
 		$data['userid'] = $this->utility->current_user('_id');
@@ -27,6 +29,7 @@ class Forums extends CI_Controller {
 		if(!$forum)
 			show_404();
 		$this->forumsmodel->markForumAsRead($forum['_id'], $this->utility->current_user('_id'));
+		$this->utility->page_title('Forums > '.$forum['name']);
 
 		$data = array();
 		$data['forum'] = $forum;
@@ -50,16 +53,27 @@ class Forums extends CI_Controller {
 		$thread = $this->forumsmodel->getThread($thread);
 		if(!$thread)
 			show_404();
+		$this->forumsmodel->markForumAsRead($thread['forum'], $this->utility->current_user('_id'));
+		
+		$forum = $this->forumsmodel->getForum($thread['forum']);
+		$this->utility->page_title('Forums > '.$forum['name'].' > '.$thread['name']);
 	}
 	
-	public function catchup()
-	{
+	public function catchup() {
 		$this->forumsmodel->catchup($this->utility->current_user('_id'));
 		redirect('/forums/');
 	}
 	
-	public function newthread()
-	{
-		//TODO
+	public function new_thread($forum) {
+		$forum = $this->forumsmodel->getForum($forum);
+		if(!$forum)
+			show_404();
+		$this->utility->page_title('New Thread');
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+			
+		$data = array();
+		$data['forum'] = $forum;
+		$this->load->view('forums/newthread', $data);
 	}
 }

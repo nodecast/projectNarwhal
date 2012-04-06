@@ -1,7 +1,7 @@
 <div class="thin">
 	<h2><a href="/forums/">Forums</a> &gt; <?= $forum['name']; ?></h2>
 	<div class="linkbox">
-		<a href="/forums/newthread/<?= $forum['_id']; ?>">New Thread</a>
+		<a href="/forums/new_thread/<?= $forum['_id']; ?>">New Thread</a>
 	</div>
 	<div class="linkbox">
 		<?= $this->utility->get_page_nav('/forums/view_forum/'.$forum['_id'].'/', $page, $results, $perpage); ?>
