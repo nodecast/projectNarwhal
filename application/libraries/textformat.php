@@ -170,7 +170,7 @@ class TextFormat {
     } else {
       if (!($data = $this->mcache->get($key))) {
         $data = $this->bbcode->Parse($raw);
-        $this->mcache->set($key, $data, $this->config->item('bbcode_cache'));
+        $this->mcache->set($key, $data, $this->config->item('bb_cache'));
       }
 
       return $data;
