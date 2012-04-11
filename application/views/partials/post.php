@@ -15,6 +15,7 @@
     </td>
     <td class="body" valign="top">
       <div id="content<?= $_id ?>">
+      	<?= isset($html) ? $html : ''; ?>
         <?= $this->textformat->parse($body, $this->config->item('bbcode_cache')) ?>
       </div>
     </td>

@@ -31,12 +31,6 @@ class Ajax extends CI_Controller {
 		$this->load->view('ajax/peerlist');
 	}
 	
-	public function preview()
-	{
-		$this->load->library('textformat');
-		echo $this->textformat->parse($this->input->post('text'));
-	}
-	
 	public function search_field($name = '')
 	{
 		if($name == '')
@@ -75,5 +69,10 @@ class Ajax extends CI_Controller {
 			echo '[error fetching comment body]';
 		else
 			echo $comment['body'];
+	}
+	
+	public function preview() {
+		$this->load->library('textformat');
+		echo $this->textformat->parse($this->input->post('body'), true);
 	}
 }

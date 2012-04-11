@@ -162,17 +162,16 @@ class TextFormat {
     ));
   }
 
-  public function parse($raw, $cache=false) {
+  public function parse($raw, $cache = false) {
     $key = 'bbcode_'.md5($raw);
 
     if ($cache === false) {
       return $this->bbcode->Parse($raw);
     } else {
-      if (!($data = $this->mcache->get($key))) {
+      if (!($data = $this->CI->mcache->get($key))) {
         $data = $this->bbcode->Parse($raw);
-        $this->mcache->set($key, $data, $this->config->item('bb_cache'));
+        $this->CI->mcache->set($key, $data, $this->CI->config->item('bb_cache'));
       }
-
       return $data;
     }
   }
