@@ -50,7 +50,7 @@
 			<li id="nav_top10"><a href="/top10">Top&nbsp;10</a></li>
 			<li id="nav_kb"><a href="/kb">Knowledge&nbsp;Base</a></li>
 			<li id="nav_staff"><a href="/staff">Staff</a></li>
-			<li id="nav_chat"><a target="_blank" href="<?= $this->config->item('chat_url') ?>/?nick=<?= $user['username'] ?>&channels=#lounge">Chat</a></li>
+			<li id="nav_chat"><a href="/chat">Chat</a></li>
 		</ul>
 	</div>
 	<div id="alerts">

@@ -142,8 +142,7 @@ class Utility {
 	
 	function check_perm($perm, $id = -1) {
 		if($id == -1) {
-			$cu = $this->current_user();
-			$id = $cu['_id'];
+			$id = $this->current_user('_id');
 		}
 		$this->CI->load->model('usermodel');
 		
