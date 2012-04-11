@@ -57,7 +57,17 @@ class Forums extends CI_Controller {
 		$this->forumsmodel->markForumAsRead($thread['forum'], $this->utility->current_user('_id'));
 		
 		$forum = $this->forumsmodel->getForum($thread['forum']);
+		$posts = $this->forumsmodel->getPosts($thread['_id']);
 		$this->utility->page_title('Forums > '.$forum['name'].' > '.$thread['name']);
+		
+		$data = array();
+		$data['forum'] = $forum;
+		$data['thread'] = $thread;
+		$data['perpage'] = $this->config->item('posts_perpage');
+		$data['page'] = $page;
+		$data['posts'] = $posts['data'];
+		$data['count'] = $posts['count'];
+		$this->load->view('forums/viewthread', $data);
 	}
 	
 	public function catchup() {

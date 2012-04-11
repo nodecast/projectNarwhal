@@ -83,6 +83,21 @@ class ForumsModel extends CI_Model {
 	}
 	
 	/*
+	Gets the posts in a specific thread
+	*/
+	function getPosts($thread, $limit = 25, $skip = 0) {
+		$key = 'forums_posts_thread_'.$thread.'_'.$limit.'_'.$skip;
+		
+		if(($data = $this->mcache->get($key)) === FALSE) {
+			$result = $this->mongo->db->forum_posts->find(array('thread' => new MongoId($thread)))->sort(array('time' => -1))->limit($limit)->skip($skip);
+			$array = iterator_to_array($result);
+			$data = array('data' => $array, 'count' => $result->count());
+			$this->mcache->set($key, $data, $this->config->item('forums_cache'));
+		}
+		return $data;
+	}
+	
+	/*
 	Gets the number of threads in a given forum
 	*/
 	function countThreadsInForum($id) {

@@ -105,14 +105,12 @@
 					</blockquote>
 					<div class="center">
 						<a href="javascript:;" onclick="$('#filelist').fadeToggle('fast', 'swing');">Show/Hide Filelist</a>
-						<blockquote id="filelist">
-							<table style="overflow-x:auto;">
-								<tr class="colhead_dark"><td><strong>File Name</strong></td><td><strong>Size</strong></td></tr>
-								<?php foreach($torrent['files'] as $file): ?>
-									<tr><td><?= $file['name'] ?></td><td><?= $ci->utility->format_bytes($file['size']); ?></td></tr>
-								<?php endforeach; ?>
-							</table>
-						</blockquote>
+						<table style="overflow-x:auto;">
+							<tr class="colhead_dark"><td><strong>File Name</strong></td><td><strong>Size</strong></td></tr>
+							<?php foreach($torrent['files'] as $file): ?>
+								<tr><td><?= $file['name'] ?></td><td><?= $ci->utility->format_bytes($file['size']); ?></td></tr>
+							<?php endforeach; ?>
+						</table>
 						<br>
 						<a href="javascript:;" onclick="loadPeerlist(); $('#peerlist').fadeToggle('fast', 'swing');">Show/Hide Peerlist</a>
 						<blockquote id="peerlist">

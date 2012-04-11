@@ -26,6 +26,13 @@ $hook['post_controller'][] = array(
 								'filepath'	=> 'hooks',
 								'params'	=> array()
 								);
+$hook['pre_system'][] = array(
+								'class'		=> 'CSRF',
+								'function'	=> '_disable_csrf',
+								'filename'	=> 'csrf.php',
+								'filepath'	=> 'hooks',
+								'params'	=> array()
+								);
 
 /* End of file hooks.php */
 /* Location: ./application/config/hooks.php */
