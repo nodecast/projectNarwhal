@@ -194,6 +194,7 @@ td.body
   vertical-align:top;
   border:none;
   padding:24px;
+  overflow:auto;
 }
 
 td h3,td h4,.left
@@ -667,9 +668,14 @@ tr.colhead a,tr.colhead_dark a,.head a,#header a:hover,.head a
   color:#fff;
 }
 
-.pad,.box .body
+.pad,.box
 {
   padding:10px;
+}
+.body
+{
+padding:10px;
+overflow:auto;
 }
 
 .alertbar,.error_message

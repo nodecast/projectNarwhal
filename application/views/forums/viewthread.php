@@ -40,6 +40,7 @@
 			{body: $('#body').val(), fancy: true},
 			function(responseText){
 				$('#preview_box').html(responseText);
+				document.location = '#preview_post';
 			},
 			"html"
 		);

@@ -62,14 +62,6 @@ class Kb extends CI_Controller {
       $data['ucverb'] = 'Create';
       $data['preview'] = false;
       $this->load->view('kb/form', $data);
-    } else if ($this->input->post('preview')) {
-        $data = array();
-        $data['name'] = $this->input->post('name');
-        $data['bb_src'] = $this->input->post('bb_src');
-        $data['formurl'] = 'kb/create';
-        $data['ucverb'] = 'Create';
-        $data['preview'] = $this->textformat->Parse($this->input->post('bb_src'));
-        $this->load->view('kb/form', $data);
     } else {
       $data = array();
       $data['name'] = $this->input->post('name');

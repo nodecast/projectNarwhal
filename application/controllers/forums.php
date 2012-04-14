@@ -92,12 +92,6 @@ class Forums extends CI_Controller {
 			$data['forum'] = $forum;
 			$data['preview'] = false;
 			$this->load->view('forums/newthread', $data);
-		} else if($this->input->post('preview')) {
-			$data = array();
-			$data['preview'] = true;
-			$data['body'] = $this->input->post('body');
-			$data['forum'] = $forum;
-			$this->load->view('forums/newthread', $data);
 		} else {
 			$thread = $this->forumsmodel->createThread($forum['_id'], $this->utility->current_user('_id'), $this->input->post('title'), $this->input->post('body'));
 			redirect('/forums/view_thread/'.$thread);
