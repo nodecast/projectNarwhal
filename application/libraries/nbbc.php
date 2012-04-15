@@ -1878,11 +1878,13 @@ $/Dx", $string);
      $is_a_url = false;
      foreach ($output as $index =>$token)
      {
+       $is_email = false;
        if ($is_a_url)
          {
            if (preg_match ("/^[a-zA-Z0-9._-]{2,}@/", $token))
           {
-            $url = "mailto:".$token;
+            $url = $token;
+            $is_email = true;
           }
            else
           if (preg_match
@@ -1902,7 +1904,7 @@ $/Dx", $string);
            $params['url'] = 'http://www.dereferer.org/?'.urlencode($url);
            $params['link'] = $url;
            $params['text'] = $token;
-           $output[$index] =
+           $output[$index] = $is_email ? $url :
           $this->FillTemplate ($this->url_pattern, $params);
          }
        $is_a_url = !$is_a_url;

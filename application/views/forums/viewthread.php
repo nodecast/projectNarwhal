@@ -6,13 +6,13 @@
 	$post['owner_data'] = $this->usermodel->getData($post['owner']);
 	$this->load->view('partials/post', $post);
 } ?>
-<h3>Reply</h3>
-<div class="box pad">
-	<form id="quickpostform" action="" method="post" class="center">
-		<div id="quickreplytext">
+<div class="box pad center" id="reply">
+	<h2>Reply</h2>
+	<?= form_open('/forums/reply/'.$thread['_id']); ?>
+		<div id="replytext">
 			<textarea id="body" name="body" cols="90" rows="8"></textarea><br>
 		</div>
-		<div id="quickreplybuttons">
+		<div id="replybuttons">
 			<input type="button" value="Preview" id="preview_button">
 			<input type="submit" value="Reply">
 		</div>

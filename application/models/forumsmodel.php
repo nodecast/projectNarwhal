@@ -36,7 +36,7 @@ class ForumsModel extends CI_Model {
 		$key = 'forums_threads_forum_'.$forum.'_'.$limit.'_'.$skip;
 		
 		if(($data = $this->mcache->get($key)) === FALSE) {
-			$result = $this->mongo->db->forum_threads->find(array('forum' => new MongoId($forum)))->sort(array('stickied' => -1, 'time' => -1))->limit($limit)->skip($skip);
+			$result = $this->mongo->db->forum_threads->find(array('forum' => new MongoId($forum)))->sort(array('stickied' => -1, 'lastupdate' => -1))->limit($limit)->skip($skip);
 			$array = iterator_to_array($result);
 			$data = array('data' => $array, 'count' => $result->count());
 			$this->mcache->set($key, $data, $this->config->item('forums_cache'));
@@ -89,7 +89,7 @@ class ForumsModel extends CI_Model {
 		$key = 'forums_posts_thread_'.$thread.'_'.$limit.'_'.$skip;
 		
 		if(($data = $this->mcache->get($key)) === FALSE) {
-			$result = $this->mongo->db->forum_posts->find(array('thread' => new MongoId($thread)))->sort(array('time' => -1))->limit($limit)->skip($skip);
+			$result = $this->mongo->db->forum_posts->find(array('thread' => new MongoId($thread)))->sort(array('time' => 1))->limit($limit)->skip($skip);
 			$array = iterator_to_array($result);
 			$data = array('data' => $array, 'count' => $result->count());
 			$this->mcache->set($key, $data, $this->config->item('forums_cache'));
@@ -115,6 +115,17 @@ class ForumsModel extends CI_Model {
 		if(($data = $this->mcache->get('forums_count_posts_'.$id)) === FALSE) {
 			$data = $this->mongo->db->forum_posts->find(array('forum' => new MongoId($id)))->count();
 			$this->mcache->set('forums_count_posts_'.$id, $data, $this->config->item('forums_cache'));
+		}
+		return $data;
+	}
+	
+	/*
+	Gets the number of posts in a given thread
+	*/
+	function countPostsInThread($id) {
+		if(($data = $this->mcache->get('forums_thread_count_posts_'.$id)) === FALSE) {
+			$data = $this->mongo->db->forum_posts->find(array('thread' => new MongoId($id)))->count();
+			$this->mcache->set('forums_thread_count_posts_'.$id, $data, $this->config->item('forums_cache'));
 		}
 		return $data;
 	}
@@ -157,7 +168,35 @@ class ForumsModel extends CI_Model {
 		$post = array('forum' => $thread['forum'], 'thread' => $thread['_id'], 'owner' => $thread['owner'], 'time' => time(), 'body' => $body, 'lastedit' => array());
 		$this->mongo->db->forum_posts->save($post);
 		
+		$this->mcache->delete('forums_threads_forum_'.$thread['forum'].'_'.$this->config->item('threads_perpage').'_0');
+		
 		return $thread['_id'];
+	}
+	
+	/*
+	Changes the lastupdate on a thread to time()
+	*/
+	function updateThread($thread) {
+		$this->mongo->db->forum_threads->update(array('_id' => new MongoId($thread)), array('$set' => array('lastupdate' => time())));
+	}
+	
+	/*
+	Adds a reply to the given thread, returns an array of the new post containing the page that it's on, as well as the 
+	*/
+	function replyToThread($thread, $owner, $body) {
+		$thread = $this->getThread($thread);
+		$this->updateThread($thread['_id']);
+		$post = array('forum' => $thread['forum'], 'thread' => $thread['_id'], 'owner' => new MongoId($owner), 'time' => time(), 'body' => $body, 'lastedit' => array());
+		$this->mongo->db->forum_posts->save($post);
+		
+		$this->mcache->delete('forums_threads_forum_'.$thread['forum'].'_'.$this->config->item('threads_perpage').'_'.(0));
+		$this->mcache->delete('forums_thread_count_posts_'.$thread['_id']);
+		
+		$postsperpage = $this->config->item('posts_perpage');
+		$page = floor($this->countPostsInThread($thread['_id']) / $postsperpage) + 1;
+		$this->mcache->delete('forums_posts_thread_'.$thread['_id'].'_'.$postsperpage.'_'.($postsperpage * ($page - 1)));
+		
+		return array('_id' => $post['_id'], 'page' => $page);
 	}
 }
 ?>

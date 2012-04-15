@@ -24,7 +24,7 @@
 					<?= ($thread['stickied'] ? 'Sticky: ' : '') ?><strong>
 						<a href="/forums/view_thread/<?= $thread['_id']; ?>" title="<?= $thread['name']; ?>"><?= $thread['name']; ?></a>
 					</strong>
-				 	<?= $this->utility->get_mini_nav($thread['_id'], $post['count']); ?>
+				 	<?= $this->utility->get_mini_nav($thread['_id'], floor($post['count'] / $perpage) + 1); ?>
 				</p>
 			</td>
 			<td><?= ($post['count'] - 1); ?></td>

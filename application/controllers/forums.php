@@ -57,8 +57,11 @@ class Forums extends CI_Controller {
 		$this->forumsmodel->markForumAsRead($thread['forum'], $this->utility->current_user('_id'));
 		
 		$forum = $this->forumsmodel->getForum($thread['forum']);
-		$posts = $this->forumsmodel->getPosts($thread['_id']);
+		$posts = $this->forumsmodel->getPosts($thread['_id'], $this->config->item('posts_perpage'), $off);
 		$this->utility->page_title('Forums > '.$forum['name'].' > '.$thread['name']);
+		
+		$this->load->library('form_validation');
+		$this->load->helper('form');
 		
 		$data = array();
 		$data['forum'] = $forum;
@@ -95,6 +98,25 @@ class Forums extends CI_Controller {
 		} else {
 			$thread = $this->forumsmodel->createThread($forum['_id'], $this->utility->current_user('_id'), $this->input->post('title'), $this->input->post('body'));
 			redirect('/forums/view_thread/'.$thread);
+		}
+	}
+	
+	public function reply($thread) {
+		$thread = $this->forumsmodel->getThread($thread);
+		if(!$thread)
+			show_404();
+		$this->load->library('form_validation');
+		$this->load->helper('form');
+		
+		$this->form_validation->set_rules('body', 'body', 'required|max_length['.$this->config->item('max_bytes_per_post').']');
+		
+		if(!$this->form_validation->run()) {
+			redirect('/forums/view_thread/'.$thread['_id'].'#reply');
+		} else {
+			$post = $this->forumsmodel->replyToThread($thread['_id'], $this->utility->current_user('_id'), $this->input->post('body'));
+			redirect('/forums/view_thread/'.$thread['_id'].'/'.$post['page'].'#post'.$post['_id']);
+			//reply, then do #reply12831928389123 to go to it
+			//redirect('/forums/view_thread/'.$thread['_id']);
 		}
 	}
 }
