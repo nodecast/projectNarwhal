@@ -32,8 +32,67 @@ $(function() {
 		var id = $(this).attr('data-id');
 
 		$($(".post .quickpost")[idx]).on('click', function(e) {
-			$.get('/ajax/getTorrentCommentBBCode/' + id.toString(), function(data) {
+			$.get('/ajax/' + ajaxQuoteString + '/' + id.toString(), function(data) {
 				$("#quickpost").val($("#quickpost").val()+'[quote='+username+']'+data+'[/quote]');
+			});
+		});
+		$($(".post .editpost")[idx]).on('click', function(e) {
+			$.get('/ajax/' + ajaxQuoteString + '/' + id.toString(), function(data) {
+				var parent = $('#content'+id).parent();
+				parent.empty();
+				$('<input/>', {
+					type: 'button',
+					value: 'Preview',
+					click: function() {
+						$.post('/ajax/preview/', {body: $('#edit-text-'+id).val()}, function(data) {
+							$('#edit-preview-'+id).html(data);
+						});
+					}
+				}).appendTo(parent);
+				$('<input/>', {
+					type: 'button',
+					value: 'Post',
+					click: function() {
+						$.post('/forums/edit_post/' + id.toString(), {
+								narwhal_token: $.cookie('narwhal_sec'),
+								body: $('#edit-text-'+id).val()
+							}, 
+							function(data) {
+								parent.empty();
+								$('<div/>', {
+									id: 'content'+id,
+									html: data
+								}).appendTo(parent);
+							}
+						);
+					}
+				}).appendTo(parent);
+				$('<input/>', {
+					type: 'button',
+					value: 'Cancel',
+					click: function() {
+						$.get('/ajax/' + ajaxQuoteString + '/' + id.toString() + '/true', function(data) {
+								parent.empty();
+								$('<div/>', {
+									id: 'content'+id,
+									html: data
+								}).appendTo(parent);
+							}
+						);
+					}
+				}).appendTo(parent);
+				$('<hr/>').appendTo(parent);
+				$('<textarea/>', {
+					rows: 10,
+					cols: 90,
+					id: 'edit-text-'+id,
+					text: data
+				}).appendTo(parent);
+				$('<hr/>').appendTo(parent);
+				$('<div/>', {
+					'class': 'pad',
+					id: 'edit-preview-'+id,
+				}).appendTo(parent);
 			});
 		});
 	});

@@ -119,4 +119,11 @@ class Forums extends CI_Controller {
 			//redirect('/forums/view_thread/'.$thread['_id']);
 		}
 	}
+	
+	//supposed to be done over ajax
+	public function edit_post($post) {
+		$body = $this->input->post('body');
+		echo $this->textformat->Parse($body);
+		exit();
+	}
 }

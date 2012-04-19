@@ -198,5 +198,13 @@ class ForumsModel extends CI_Model {
 		
 		return array('_id' => $post['_id'], 'page' => $page);
 	}
+	
+	/*
+	Edits the given post
+	*/
+	function editPost($post, $body) {
+		$this->mongo->db->forum_posts->update(array('_id' => new MongoId($post)), array('$set' => array('body' => $body)));
+		$this->mcache->delete('forums_post_'.$post);
+	}
 }
 ?>

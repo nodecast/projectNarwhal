@@ -59,16 +59,29 @@ class Ajax extends CI_Controller {
 		}
 	}
 
-	public function getTorrentCommentBBCode($id = -1) {
+	public function getTorrentCommentBBCode($id = -1, $rendered = false) {
 		$this->utility->enforce_perm('site_torrents_comment');
 		$this->load->model('torrentmodel');
+		$this->load->library('textformat');
 
 		$comment = $this->torrentmodel->getComment($id);
 
 		if (!$comment)
 			echo '[error fetching comment body]';
 		else
-			echo $comment['body'];
+			echo $rendered ? $this->textformat->parse($comment['body']) : $comment['body'];
+	}
+	
+	public function getForumPostBBCode($id = -1, $rendered = false) {
+		$this->load->model('forumsmodel');
+		$this->load->library('textformat');
+		
+		$post = $this->forumsmodel->getPost($id);
+
+		if (!$post)
+			echo '[error fetching post body]';
+		else
+			echo $rendered ? $this->textformat->parse($post['body']) : $post['body'];
 	}
 	
 	public function preview() {

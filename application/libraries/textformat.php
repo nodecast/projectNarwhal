@@ -158,6 +158,7 @@ class TextFormat {
         'mode' => BBCODE_MODE_CALLBACK,
         'method' => array(&$this, 'do_user'),
         'class' => 'inline',
+        'end_tag' => BBCODE_PROHIBIT,
         'allow_in' => Array('listitem', 'block', 'columns'),
     ));
   }

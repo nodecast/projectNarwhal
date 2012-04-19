@@ -5,6 +5,8 @@
 	<link rel="stylesheet" href="<?= $user['stylesheet']; ?>" type="text/css" media="screen">
 	<meta http-equiv="Content-Type" CONTENT="text/html; charset=utf-8">
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/jquery.min.js"></script>
+	<script type="text/javascript" src="<?= $static_server; ?>/scripts/jquery.cookie.js"></script>
+	
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/global.js"></script>
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/raphael-min.js"></script>
 	<script type="text/javascript" src="<?= $static_server; ?>/scripts/g.raphael-min.js"></script>

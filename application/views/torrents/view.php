@@ -1,3 +1,6 @@
+<script type="text/javascript">
+	ajaxQuoteString = 'getTorrentCommentBBCode';
+</script>
 <div class="thin">
 	<h2><?= htmlspecialchars($torrent['name']); ?></h2>
 	<div class="linkbox">
