@@ -15,7 +15,7 @@
 	<h2>Reply</h2>
 	<?= form_open('/forums/reply/'.$thread['_id']); ?>
 		<div id="replytext">
-			<textarea id="body" name="body" cols="90" rows="8"></textarea><br>
+			<textarea id="quickpost" name="body" cols="90" rows="8"></textarea><br>
 		</div>
 		<div id="replybuttons">
 			<input type="button" value="Preview" id="preview_button">
@@ -42,7 +42,7 @@
 		$('#preview_post').show();
 		$.post(
 			'/ajax/preview/',
-			{body: $('#body').val(), fancy: true},
+			{body: $('#quickpost').val(), fancy: true},
 			function(responseText){
 				$('#preview_box').html(responseText);
 				document.location = '#preview_post';

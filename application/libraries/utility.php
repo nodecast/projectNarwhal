@@ -256,7 +256,7 @@ class Utility {
 			$class = $this->CI->usermodel->getPermissions($data['_id']);
 			$class = $class['name'];
 			$title = ($data['title'])? '('.$data['title'].')':'';
-			return '<a href="/user/view/'.$data['_id'].'">'.$data['username'].'</a> ('.$class.') '.$title;
+			return '<a class="username" href="/user/view/'.$data['_id'].'">'.$data['username'].'</a> ('.$class.') '.$title;
 		} else {
 			return $data['username'];
 		}

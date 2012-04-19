@@ -122,8 +122,14 @@ class Forums extends CI_Controller {
 	
 	//supposed to be done over ajax
 	public function edit_post($post) {
+		$post = $this->forumsmodel->getPost($post);
+		if(!$post || $post['owner'] != $this->utility->current_user('_id'))
+			show_404();
+			
 		$body = $this->input->post('body');
+		$this->forumsmodel->editPost($post['_id'], $body);
+		
 		echo $this->textformat->Parse($body);
-		exit();
+		exit;
 	}
 }
