@@ -202,8 +202,8 @@ class ForumsModel extends CI_Model {
 	/*
 	Edits the given post
 	*/
-	function editPost($post, $body) {
-		$this->mongo->db->forum_posts->update(array('_id' => new MongoId($post)), array('$set' => array('body' => $body)));
+	function editPost($post, $body, $owner) {
+		$this->mongo->db->forum_posts->update(array('_id' => new MongoId($post)), array('$set' => array('body' => $body, 'lastedit' => array('time' => time(), 'owner' => new MongoId($owner)))));
 		$this->mcache->delete('forums_post_'.$post);
 	}
 }

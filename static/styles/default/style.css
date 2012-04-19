@@ -160,6 +160,12 @@ textarea
   margin: 0px auto;
 }
 
+.lastedit
+{
+text-align:right;
+font-size: xx-small;
+}
+
 tr
 {
   background:#e3e3e3;

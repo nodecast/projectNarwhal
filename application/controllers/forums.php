@@ -127,7 +127,7 @@ class Forums extends CI_Controller {
 			show_404();
 			
 		$body = $this->input->post('body');
-		$this->forumsmodel->editPost($post['_id'], $body);
+		$this->forumsmodel->editPost($post['_id'], $body, $this->utility->current_user('_id'));
 		
 		echo $this->textformat->Parse($body);
 		exit;

@@ -17,6 +17,7 @@
       <div id="content<?= $_id ?>">
       	<?= isset($html) ? $html : ''; ?>
         <?= $this->textformat->parse($body, $this->config->item('bbcode_cache')) ?>
+        <?= (isset($lastedit) && count($lastedit)) ? '<div class="lastedit">Last edited by '.$this->utility->format_name($lastedit['owner']).' on '.$this->utility->format_datetime($lastedit['time']).'</div>' : ''?>
       </div>
     </td>
   </tr>
