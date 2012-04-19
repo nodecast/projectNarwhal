@@ -1,4 +1,4 @@
-<table class="post box vertical_margin" id="post<?= $_id ?>" data-id="<?= $_id ?>">
+<table class="post box vertical_margin" id="post<?= $_id ?>" data-id="<?= $_id ?>" data-owner="<?= $owner_data['username']; ?>">
   <tr class="colhead_dark">
     <td colspan="2">
       <span style="float:left;">
