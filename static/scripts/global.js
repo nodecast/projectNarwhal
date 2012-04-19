@@ -28,7 +28,7 @@ $(function() {
 	});
 
 	$(".post").each(function(idx, val) {
-		var username = $(this).attr('owner');
+		var username = $(this).attr('data-owner');
 		var id = $(this).attr('data-id');
 
 		$($(".post .quickpost")[idx]).on('click', function(e) {
