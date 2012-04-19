@@ -31,12 +31,12 @@ $(function() {
 		var username = $(this).attr('data-owner');
 		var id = $(this).attr('data-id');
 
-		$($(".post .quickpost")[idx]).on('click', function(e) {
+		$('btn-quickpost-'+id).on('click', function(e) {
 			$.get('/ajax/' + ajaxQuoteString + '/' + id.toString(), function(data) {
 				$("#quickpost").val($("#quickpost").val()+'[quote='+username+']'+data+'[/quote]');
 			});
 		});
-		$($(".post .editpost")[idx]).on('click', function(e) {
+		$('btn-editpost-'+id).on('click', function(e) {
 			$.get('/ajax/' + ajaxQuoteString + '/' + id.toString(), function(data) {
 				var parent = $('#content'+id).parent();
 				parent.empty();

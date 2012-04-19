@@ -4,7 +4,7 @@
       <span style="float:left;">
         <a href="#post<?= $_id ?>">Post</a>
         by <strong><?= $this->utility->format_name($owner); ?></strong>
-          <span title="<?= $this->utility->format_datetime($time) ?>"><?= $this->utility->time_diff_string($time) ?></span> - <a href="#quickpost" class="quickpost">[Quote]</a><?= (isset($edit) && $edit) ? ' - <a href="javascript:;" class="editpost" data-id="'.$_id.'">[Edit]</a>' : '' ?>
+          <span title="<?= $this->utility->format_datetime($time) ?>"><?= $this->utility->time_diff_string($time) ?></span> - <a href="#quickpost" id="btn-quickpost-<?= $_id ?>" class="quickpost">[Quote]</a><?= (isset($edit) && $edit) ? ' - <a href="javascript:;" class="editpost" id="btn-editpost-'.$_id.'" data-id="'.$_id.'">[Edit]</a>' : '' ?>
       </span>
       <span id="bar<?= $_id ?>" style="float:right;"></span>
     </td>
