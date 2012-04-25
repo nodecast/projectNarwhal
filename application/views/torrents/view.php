@@ -107,28 +107,23 @@
 						Uploaded by <a href="/user/view/<?= $owner['_id']; ?>"><?= $owner['username']; ?></a> on <span title="<?= $ci->utility->time_diff_string($torrent['time']); ?>"><?= $ci->utility->format_datetime($torrent['time']); ?></span>
 					</blockquote>
 					<div class="center">
+					
 						<a href="javascript:;" onclick="$('#filelist').fadeToggle('fast', 'swing');">Show/Hide Filelist</a>
-						<table style="overflow-x:auto;">
-							<tr class="colhead_dark"><td><strong>File Name</strong></td><td><strong>Size</strong></td></tr>
+						<table style="overflow-x:auto;" id="filelist">
+							<tr class="colhead_dark"><td>File Name</td><td>Size</td></tr>
 							<?php foreach($torrent['files'] as $file): ?>
 								<tr><td><?= $file['name'] ?></td><td><?= $ci->utility->format_bytes($file['size']); ?></td></tr>
 							<?php endforeach; ?>
 						</table>
 						<br>
-						<a href="javascript:;" onclick="loadPeerlist(); $('#peerlist').fadeToggle('fast', 'swing');">Show/Hide Peerlist</a>
-						<blockquote id="peerlist">
-						</blockquote>
+						
+						<a href="javascript:;" onclick="$('#peerlist').fadeToggle('fast', 'swing');">Show/Hide Peerlist</a>
+						<table style="overflow-x:auto;" id="peerlist">
+							<tr class="colhead_dark"><td>User</td><td>Active</td><td>Connectable</td><td>Up</td><td>%</td><td>Client</td></tr>
+							<!-- //TODO -->
+						</table>
+						
 						<script type="text/javascript">
-							var peerlistLoaded = false;
-							function loadPeerlist() {
-								if(!peerlistLoaded) {
-									$.get('/ajax/peerlist/<?= $torrent['_id'] ?>', function(data) {
-										$('#peerlist').html(data);
-									});
-									peerlistLoaded = true;
-								}
-							}
-							
 							$('#filelist').hide();
 							$('#peerlist').hide();
 						</script>

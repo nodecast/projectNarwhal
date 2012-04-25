@@ -25,12 +25,6 @@ class Ajax extends CI_Controller {
 		$this->load->view('ajax/upload_form', $data);
 	}
 	
-	public function peerlist($id = -1)
-	{
-		//TODO
-		$this->load->view('ajax/peerlist');
-	}
-	
 	public function search_field($name = '')
 	{
 		if($name == '')
